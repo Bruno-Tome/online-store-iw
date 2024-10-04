@@ -110,7 +110,7 @@ const trendingProducts = [
     color: 'Black',
     price: '$35',
     href: '/product',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-product-01.jpg',
+    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg',
     imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
     availableColors: [
       { name: 'Black', colorBg: '#111827' },
@@ -124,21 +124,21 @@ const collections = [
   {
     name: 'Desk and Office',
     description: 'Work from home accessories',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg',
+    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-01.jpg',
     imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
     href: '#',
   },
   {
     name: 'Self-Improvement',
     description: 'Journals and note-taking',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg',
+    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-02.jpg',
     imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
     href: '#',
   },
   {
     name: 'Travel',
     description: 'Daily commute essentials',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg',
+    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-03.jpg',
     imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
     href: '#',
   },
@@ -262,7 +262,7 @@ export default function Example() {
             <div className="h-48 w-full sm:h-64 lg:absolute lg:right-0 lg:top-0 lg:h-full lg:w-1/2">
               <img
                 alt=""
-                src="https://tailwindui.com/img/ecommerce-images/home-page-02-hero-half-width.jpg"
+                src="https://tailwindui.com/plus/img/ecommerce-images/home-page-02-hero-half-width.jpg"
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -376,7 +376,7 @@ export default function Example() {
             <div className="absolute inset-0 mx-auto max-w-7xl overflow-hidden xl:px-8">
               <img
                 alt=""
-                src="https://tailwindui.com/img/ecommerce-images/home-page-02-sale-full-width.jpg"
+                src="https://tailwindui.com/plus/img/ecommerce-images/home-page-02-sale-full-width.jpg"
                 className="h-full w-full object-cover object-center"
               />
             </div>

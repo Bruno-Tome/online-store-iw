@@ -33,7 +33,8 @@ const user = {
 }
 const navigation = [
   { name: 'Home', href: '/', current: true },
-  { name: 'Account', href: '/product', current: false },
+  { name: 'Product', href: '/product', current: false },
+  { name: 'Cart', href: '/cart', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
