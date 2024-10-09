@@ -1,21 +1,6 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-'use client'
+"use client";
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -29,187 +14,210 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-} from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+} from "@headlessui/react";
+import {
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  ShoppingCartIcon,
+  UserIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
+const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
   categories: [
     {
-      name: 'Women',
+      name: "Women",
       featured: [
-        { name: 'Sleep', href: '#' },
-        { name: 'Swimwear', href: '#' },
-        { name: 'Underwear', href: '#' },
+        { name: "Sleep", href: "#" },
+        { name: "Swimwear", href: "#" },
+        { name: "Underwear", href: "#" },
       ],
       collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
+        { name: "Everything", href: "#" },
+        { name: "Core", href: "#" },
+        { name: "New Arrivals", href: "#" },
+        { name: "Sale", href: "#" },
       ],
       categories: [
-        { name: 'Basic Tees', href: '#' },
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Bottoms', href: '#' },
-        { name: 'Underwear', href: '#' },
-        { name: 'Accessories', href: '#' },
+        { name: "Basic Tees", href: "#" },
+        { name: "Artwork Tees", href: "#" },
+        { name: "Bottoms", href: "#" },
+        { name: "Underwear", href: "#" },
+        { name: "Accessories", href: "#" },
       ],
       brands: [
-        { name: 'Full Nelson', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Significant Other', href: '#' },
+        { name: "Full Nelson", href: "#" },
+        { name: "My Way", href: "#" },
+        { name: "Re-Arranged", href: "#" },
+        { name: "Counterfeit", href: "#" },
+        { name: "Significant Other", href: "#" },
       ],
     },
     {
-      name: 'Men',
+      name: "Men",
       featured: [
-        { name: 'Casual', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Outdoor', href: '#' },
+        { name: "Casual", href: "#" },
+        { name: "Boxers", href: "#" },
+        { name: "Outdoor", href: "#" },
       ],
       collection: [
-        { name: 'Everything', href: '#' },
-        { name: 'Core', href: '#' },
-        { name: 'New Arrivals', href: '#' },
-        { name: 'Sale', href: '#' },
+        { name: "Everything", href: "#" },
+        { name: "Core", href: "#" },
+        { name: "New Arrivals", href: "#" },
+        { name: "Sale", href: "#" },
       ],
       categories: [
-        { name: 'Artwork Tees', href: '#' },
-        { name: 'Pants', href: '#' },
-        { name: 'Accessories', href: '#' },
-        { name: 'Boxers', href: '#' },
-        { name: 'Basic Tees', href: '#' },
+        { name: "Artwork Tees", href: "#" },
+        { name: "Pants", href: "#" },
+        { name: "Accessories", href: "#" },
+        { name: "Boxers", href: "#" },
+        { name: "Basic Tees", href: "#" },
       ],
       brands: [
-        { name: 'Significant Other', href: '#' },
-        { name: 'My Way', href: '#' },
-        { name: 'Counterfeit', href: '#' },
-        { name: 'Re-Arranged', href: '#' },
-        { name: 'Full Nelson', href: '#' },
+        { name: "Significant Other", href: "#" },
+        { name: "My Way", href: "#" },
+        { name: "Counterfeit", href: "#" },
+        { name: "Re-Arranged", href: "#" },
+        { name: "Full Nelson", href: "#" },
       ],
     },
   ],
   pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
+    { name: "Company", href: "#" },
+    { name: "Stores", href: "#" },
   ],
-}
+};
 const offers = [
-  { name: 'Download the app', description: 'Get an exclusive $5 off code', href: '#' },
-  { name: "Return when you're ready", description: '60 days of free returns', href: '#' },
-  { name: 'Sign up for our newsletter', description: '15% off your first order', href: '#' },
-]
+  {
+    name: "Download the app",
+    description: "Get an exclusive $5 off code",
+    href: "#",
+  },
+  {
+    name: "Return when you're ready",
+    description: "60 days of free returns",
+    href: "#",
+  },
+  {
+    name: "Sign up for our newsletter",
+    description: "15% off your first order",
+    href: "#",
+  },
+];
 const trendingProducts = [
   {
     id: 1,
-    name: 'Machined Pen',
-    color: 'Black',
-    price: '$35',
-    href: '/product',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg',
-    imageAlt: 'Black machined steel pen with hexagonal grip and small white logo at top.',
+    name: "Machined Pen",
+    color: "Black",
+    price: "$35",
+    href: "/product",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg",
+    imageAlt:
+      "Black machined steel pen with hexagonal grip and small white logo at top.",
     availableColors: [
-      { name: 'Black', colorBg: '#111827' },
-      { name: 'Brass', colorBg: '#FDE68A' },
-      { name: 'Chrome', colorBg: '#E5E7EB' },
+      { name: "Black", colorBg: "#111827" },
+      { name: "Brass", colorBg: "#FDE68A" },
+      { name: "Chrome", colorBg: "#E5E7EB" },
     ],
   },
   // More products...
-]
+];
 const collections = [
   {
-    name: 'Desk and Office',
-    description: 'Work from home accessories',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-01.jpg',
-    imageAlt: 'Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.',
-    href: '#',
+    name: "Desk and Office",
+    description: "Work from home accessories",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-01.jpg",
+    imageAlt:
+      "Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.",
+    href: "#",
   },
   {
-    name: 'Self-Improvement',
-    description: 'Journals and note-taking',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-02.jpg',
-    imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
-    href: '#',
+    name: "Self-Improvement",
+    description: "Journals and note-taking",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-02.jpg",
+    imageAlt:
+      "Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.",
+    href: "#",
   },
   {
-    name: 'Travel',
-    description: 'Daily commute essentials',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-03.jpg',
-    imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
-    href: '#',
+    name: "Travel",
+    description: "Daily commute essentials",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-edition-03.jpg",
+    imageAlt: "Collection of four insulated travel bottles on wooden shelf.",
+    href: "#",
   },
-]
+];
 const testimonials = [
   {
     id: 1,
     quote:
-      'My order arrived super quickly. The product is even better than I hoped it would be. Very happy customer over here!',
-    attribution: 'Sarah Peters, New Orleans',
+      "My order arrived super quickly. The product is even better than I hoped it would be. Very happy customer over here!",
+    attribution: "Sarah Peters, New Orleans",
   },
   {
     id: 2,
     quote:
-      'I had to return a purchase that didn’t fit. The whole process was so simple that I ended up ordering two new items!',
-    attribution: 'Kelly McPherson, Chicago',
+      "I had to return a purchase that didn’t fit. The whole process was so simple that I ended up ordering two new items!",
+    attribution: "Kelly McPherson, Chicago",
   },
   {
     id: 3,
     quote:
-      'Now that I’m on holiday for the summer, I’ll probably order a few more shirts. It’s just so convenient, and I know the quality will always be there.',
-    attribution: 'Chris Paul, Phoenix',
+      "Now that I’m on holiday for the summer, I’ll probably order a few more shirts. It’s just so convenient, and I know the quality will always be there.",
+    attribution: "Chris Paul, Phoenix",
   },
-]
+];
 const footerNavigation = {
   products: [
-    { name: 'Bags', href: '#' },
-    { name: 'Tees', href: '#' },
-    { name: 'Objects', href: '#' },
-    { name: 'Home Goods', href: '#' },
-    { name: 'Accessories', href: '#' },
+    { name: "Bags", href: "#" },
+    { name: "Tees", href: "#" },
+    { name: "Objects", href: "#" },
+    { name: "Home Goods", href: "#" },
+    { name: "Accessories", href: "#" },
   ],
   customerService: [
-    { name: 'Contact', href: '#' },
-    { name: 'Shipping', href: '#' },
-    { name: 'Returns', href: '#' },
-    { name: 'Warranty', href: '#' },
-    { name: 'Secure Payments', href: '#' },
-    { name: 'FAQ', href: '#' },
-    { name: 'Find a store', href: '#' },
+    { name: "Contact", href: "#" },
+    { name: "Shipping", href: "#" },
+    { name: "Returns", href: "#" },
+    { name: "Warranty", href: "#" },
+    { name: "Secure Payments", href: "#" },
+    { name: "FAQ", href: "#" },
+    { name: "Find a store", href: "#" },
   ],
   company: [
-    { name: 'Who we are', href: '#' },
-    { name: 'Sustainability', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Careers', href: '#' },
-    { name: 'Terms & Conditions', href: '#' },
-    { name: 'Privacy', href: '#' },
+    { name: "Who we are", href: "#" },
+    { name: "Sustainability", href: "#" },
+    { name: "Press", href: "#" },
+    { name: "Careers", href: "#" },
+    { name: "Terms & Conditions", href: "#" },
+    { name: "Privacy", href: "#" },
   ],
   legal: [
-    { name: 'Terms of Service', href: '#' },
-    { name: 'Return Policy', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Shipping Policy', href: '#' },
+    { name: "Terms of Service", href: "#" },
+    { name: "Return Policy", href: "#" },
+    { name: "Privacy Policy", href: "#" },
+    { name: "Shipping Policy", href: "#" },
   ],
   bottomLinks: [
-    { name: 'Accessibility', href: '#' },
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
+    { name: "Accessibility", href: "#" },
+    { name: "Privacy", href: "#" },
+    { name: "Terms", href: "#" },
   ],
-}
+};
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="bg-white">
       {/* Mobile menu */}
-    
 
- 
       <main>
         {/* Hero */}
         <div className="flex flex-col border-b border-gray-200 lg:border-0">
@@ -226,7 +234,9 @@ export default function Example() {
                       className="relative flex flex-1 flex-col justify-center bg-white px-4 py-6 text-center focus:z-10"
                     >
                       <p className="text-sm text-gray-500">{offer.name}</p>
-                      <p className="font-semibold text-gray-900">{offer.description}</p>
+                      <p className="font-semibold text-gray-900">
+                        {offer.description}
+                      </p>
                     </a>
                   </li>
                 ))}
@@ -235,7 +245,10 @@ export default function Example() {
           </nav>
 
           <div className="relative">
-            <div aria-hidden="true" className="absolute hidden h-full w-1/2 bg-gray-100 lg:block" />
+            <div
+              aria-hidden="true"
+              className="absolute hidden h-full w-1/2 bg-gray-100 lg:block"
+            />
             <div className="relative bg-gray-100 lg:bg-transparent">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
                 <div className="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
@@ -244,8 +257,8 @@ export default function Example() {
                       Focus on what matters
                     </h1>
                     <p className="mt-4 text-xl text-gray-600">
-                      All the charts, datepickers, and notifications in the world can't beat checking off some items on
-                      a paper card.
+                      All the charts, datepickers, and notifications in the
+                      world can't beat checking off some items on a paper card.
                     </p>
                     <div className="mt-6">
                       <a
@@ -273,10 +286,16 @@ export default function Example() {
         <section aria-labelledby="trending-heading" className="bg-white">
           <div className="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:px-8 lg:py-32">
             <div className="flex items-center justify-between px-4 sm:px-6 lg:px-0">
-              <h2 id="trending-heading" className="text-2xl font-bold tracking-tight text-gray-900">
+              <h2
+                id="trending-heading"
+                className="text-2xl font-bold tracking-tight text-gray-900"
+              >
                 Trending products
               </h2>
-              <a href="#" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block">
+              <a
+                href="#"
+                className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-500 sm:block"
+              >
                 See everything
                 <span aria-hidden="true"> &rarr;</span>
               </a>
@@ -289,7 +308,10 @@ export default function Example() {
                   className="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0"
                 >
                   {trendingProducts.map((product) => (
-                    <li key={product.id} className="inline-flex w-64 flex-col text-center lg:w-auto">
+                    <li
+                      key={product.id}
+                      className="inline-flex w-64 flex-col text-center lg:w-auto"
+                    >
                       <div className="group relative">
                         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
                           <img
@@ -299,7 +321,9 @@ export default function Example() {
                           />
                         </div>
                         <div className="mt-6">
-                          <p className="text-sm text-gray-500">{product.color}</p>
+                          <p className="text-sm text-gray-500">
+                            {product.color}
+                          </p>
                           <h3 className="mt-1 font-semibold text-gray-900">
                             <a href={product.href}>
                               <span className="absolute inset-0" />
@@ -311,7 +335,10 @@ export default function Example() {
                       </div>
 
                       <h4 className="sr-only">Available colors</h4>
-                      <ul role="list" className="mt-auto flex items-center justify-center space-x-3 pt-6">
+                      <ul
+                        role="list"
+                        className="mt-auto flex items-center justify-center space-x-3 pt-6"
+                      >
                         {product.availableColors.map((color) => (
                           <li
                             key={color.name}
@@ -329,7 +356,10 @@ export default function Example() {
             </div>
 
             <div className="mt-12 px-4 sm:hidden">
-              <a href="#" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+              <a
+                href="#"
+                className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
+              >
                 See everything
                 <span aria-hidden="true"> &rarr;</span>
               </a>
@@ -341,7 +371,10 @@ export default function Example() {
         <section aria-labelledby="collections-heading" className="bg-gray-100">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
-              <h2 id="collections-heading" className="text-2xl font-bold text-gray-900">
+              <h2
+                id="collections-heading"
+                className="text-2xl font-bold text-gray-900"
+              >
                 Collections
               </h2>
 
@@ -361,7 +394,9 @@ export default function Example() {
                         {collection.name}
                       </a>
                     </h3>
-                    <p className="text-base font-semibold text-gray-900">{collection.description}</p>
+                    <p className="text-base font-semibold text-gray-900">
+                      {collection.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -390,12 +425,15 @@ export default function Example() {
             className="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8"
           >
             <div className="mx-auto max-w-2xl lg:max-w-none">
-              <h2 id="sale-heading" className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+              <h2
+                id="sale-heading"
+                className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+              >
                 Get 25% off during our one-time sale
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-xl text-gray-600">
-                Most of our products are limited releases that won't come back. Get your favorite items while they're in
-                stock.
+                Most of our products are limited releases that won't come back.
+                Get your favorite items while they're in stock.
               </p>
               <a
                 href="#"
@@ -412,7 +450,10 @@ export default function Example() {
             className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
           >
             <div className="mx-auto max-w-2xl lg:max-w-none">
-              <h2 id="testimonial-heading" className="text-2xl font-bold tracking-tight text-gray-900">
+              <h2
+                id="testimonial-heading"
+                className="text-2xl font-bold tracking-tight text-gray-900"
+              >
                 What are people saying?
               </h2>
 
@@ -432,7 +473,9 @@ export default function Example() {
                       />
                     </svg>
                     <div className="mt-8 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-10">
-                      <p className="text-lg text-gray-600">{testimonial.quote}</p>
+                      <p className="text-lg text-gray-600">
+                        {testimonial.quote}
+                      </p>
                       <cite className="mt-4 block font-semibold not-italic text-gray-900">
                         {testimonial.attribution}
                       </cite>
@@ -444,6 +487,6 @@ export default function Example() {
           </section>
         </div>
       </main>
-
     </div>
-  )}
+  );
+}
