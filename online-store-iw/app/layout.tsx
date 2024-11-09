@@ -43,8 +43,8 @@ const navigation = [
   { name: "Checkout", href: "/checkout", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" }, 
+  { name: "Your Profile", href: "/profile" },
+, 
   { name: "Sign out", href: "#" },
 ];
 

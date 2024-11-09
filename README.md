@@ -122,37 +122,35 @@ npm run build
 
   <s>4. **Cart Page**   - Shows items added to the cart with options to update quantities or remove items</s>.
 
-5. **Checkout Page**  
-   - Collects user information and payment details to complete the order.
 
-6. **Order Confirmation Page**  
-   - Displays a confirmation message after a successful order, along with order details.
+<s>5. **Checkout Page**  
+   - Collects user information and payment details to complete the order.</s>
 
-7. **User Login Page**  
-   - Allows users to log into their accounts.
+<s>6. **Order Confirmation Page**  
+   - Displays a confirmation message after a successful order, along with order details.</s>
 
-8. **User Registration Page**  
-   - Enables new users to create an account.
+<s>7. **User Login Page**  
+   - Allows users to log into their accounts.</s>
 
-9. **User Profile Page**  
-   - Shows user account details and past orders.
+<s?>8. **User Profile Page**  
+   - Shows user account details and past orders.</s>
 
-10. **Order History Page**  
-    - Lists previous orders with details such as order date, total, and status.
+<s>9. **Order History Page**  
+    - Lists previous orders with details such as order date, total, and status.</s>
 
-11. **Error Page (404)**  
-    - Displays a message when a page is not found.
+<s>10. **Error Page (404)**  
+    - Displays a message when a page is not found.</s>
 
 ### Admin Pages
 
 
-12. **Product Management Page**  
+11. **Product Management Page**  
     - Allows admin to view, add, edit, or delete products in the store.
 
-13. **Order Management Page**  
+12. **Order Management Page**  
     - Lists all orders with details, statuses, and options to update order status or handle returns.
 
-14. **User Management Page**  
+13. **User Management Page**  
     - Provides a list of registered users with options to view details, edit information, or delete accounts.
 
 
