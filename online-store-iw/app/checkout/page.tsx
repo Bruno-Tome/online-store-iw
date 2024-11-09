@@ -1,43 +1,76 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/20/solid'
+"use client";
+import {
+  CheckIcon,
+  ClockIcon,
+  QuestionMarkCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 
 const products = [
   {
     id: 1,
-    name: 'Micro Backpack',
-    href: '#',
-    price: '$70.00',
-    color: 'Moss',
-    size: '5L',
-    imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/checkout-page-04-product-01.jpg',
-    imageAlt:
-      'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
+    name: "Basic Tee",
+    href: "#",
+    price: "$32.00",
+    color: "Sienna",
+    inStock: true,
+    size: "Large",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-01-product-01.jpg",
+    imageAlt: "Front of men's Basic Tee in sienna.",
   },
-  // More products...
+  {
+    id: 2,
+    name: "Basic Tee",
+    href: "#",
+    price: "$32.00",
+    color: "Black",
+    inStock: false,
+    leadTime: "3–4 weeks",
+    size: "Large",
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-01-product-02.jpg",
+    imageAlt: "Front of men's Basic Tee in black.",
+  },
+  {
+    id: 3,
+    name: "Nomad Tumbler",
+    href: "#",
+    price: "$35.00",
+    color: "White",
+    inStock: true,
+    imageSrc:
+      "https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-01-product-03.jpg",
+    imageAlt: "Insulated bottle with white base and black snap lid.",
+  },
+];
+import { ChevronRightIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
+import { Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react'
+
+const steps = [
+  { name: 'Cart', href: '#', status: 'complete' },
+  { name: 'Billing Information', href: '#', status: 'current' },
+  { name: 'Confirmation', href: '#', status: 'upcoming' },
 ]
+// const products = [
+//   {
+//     id: 1,
+//     name: 'Micro Backpack',
+//     href: '#',
+//     price: '$70.00',
+//     color: 'Moss',
+//     size: '5L',
+//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-04-product-01.jpg',
+//     imageAlt:
+//       'Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps.',
+//   },
+//   // More products...
+// ]
 
 export default function Example() {
   return (
-    <div className="bg-white">
-      {/* Background color split screen for large screens */}
-      <div aria-hidden="true" className="fixed left-0 top-0 hidden h-full w-1/2 bg-white lg:block" />
-      <div aria-hidden="true" className="fixed right-0 top-0 hidden h-full w-1/2 bg-gray-50 lg:block" />
+    <div>
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 xl:gap-x-48">
         <h1 className="sr-only">Order information</h1>
 
         <section
@@ -339,19 +372,21 @@ export default function Example() {
             </section>
 
             <div className="mt-10 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
-              <button
-                type="submit"
-                className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last sm:ml-6 sm:w-auto"
+            <a
+              href="/order-confirmation"
+              type="submit"
+              className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last sm:ml-6 sm:w-auto"
               >
+              
                 Continue
-              </button>
+              </a>
               <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
                 You won't be charged until the next step.
               </p>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
+          </form>
+        </div>
+          
   )
 }
