@@ -44,6 +44,7 @@ const navigation = [
 ];
 const userNavigation = [
   { name: "Your Profile", href: "/profile" },
+  { name: "Orders", href: "/user/orders" },
 , 
   { name: "Sign out", href: "#" },
 ];
