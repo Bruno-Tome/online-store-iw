@@ -111,6 +111,50 @@ npm run build
 
 ---
 ---
+## Pages to Be Done
+
+<s>1. **Home Page**  
+   - Displays featured products and promotional content</s>
+
+  <s>2. **Product Listing Page**   - Shows all available products with filters for category, price, and availability</s>.
+
+  <s>3. **Product Detail Page**   - Provides detailed information about a single product, including images, description, and reviews</s>.
+
+  <s>4. **Cart Page**   - Shows items added to the cart with options to update quantities or remove items</s>.
+
+5. **Checkout Page**  
+   - Collects user information and payment details to complete the order.
+
+6. **Order Confirmation Page**  
+   - Displays a confirmation message after a successful order, along with order details.
+
+7. **User Login Page**  
+   - Allows users to log into their accounts.
+
+8. **User Registration Page**  
+   - Enables new users to create an account.
+
+9. **User Profile Page**  
+   - Shows user account details and past orders.
+
+10. **Order History Page**  
+    - Lists previous orders with details such as order date, total, and status.
+
+11. **Error Page (404)**  
+    - Displays a message when a page is not found.
+
+### Admin Pages
+
+
+12. **Product Management Page**  
+    - Allows admin to view, add, edit, or delete products in the store.
+
+13. **Order Management Page**  
+    - Lists all orders with details, statuses, and options to update order status or handle returns.
+
+14. **User Management Page**  
+    - Provides a list of registered users with options to view details, edit information, or delete accounts.
+
 
 ## Comments
 The project successfully fulfills the requirements set out for an online store with additional features like user authentication,   and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.
