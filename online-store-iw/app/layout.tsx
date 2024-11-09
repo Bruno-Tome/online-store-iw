@@ -40,10 +40,11 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Product", href: "/product", current: false },
   { name: "Cart", href: "/cart", current: false },
+  { name: "Checkout", href: "/checkout", current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
+  { name: "Settings", href: "#" }, 
   { name: "Sign out", href: "#" },
 ];
 
