@@ -1,7 +1,31 @@
 const products = [
-  { productId: 'P001', name: 'Smartphone XYZ', price: '$599.00', stock: 25, category: 'Electronics' },
-  { productId: 'P002', name: 'Laptop ABC', price: '$999.00', stock: 10, category: 'Computers' },
-  { productId: 'P003', name: 'Headphones 123', price: '$49.99', stock: 100, category: 'Accessories' },
+  {
+    productId: 'P001',
+    name: 'Smartphone XYZ',
+    price: '$599.00',
+    stock: 25,
+    category: 'Electronics',
+    imageUrl: 'https://example.com/images/smartphone.jpg',
+    description: 'A high-quality smartphone with excellent camera and battery life.',
+  },
+  {
+    productId: 'P002',
+    name: 'Laptop ABC',
+    price: '$999.00',
+    stock: 10,
+    category: 'Computers',
+    imageUrl: 'https://example.com/images/laptop.jpg',
+    description: 'A powerful laptop designed for professionals and gamers.',
+  },
+  {
+    productId: 'P003',
+    name: 'Headphones 123',
+    price: '$49.99',
+    stock: 100,
+    category: 'Accessories',
+    imageUrl: 'https://example.com/images/headphones.jpg',
+    description: 'Comfortable headphones with noise cancellation and great sound quality.',
+  },
 ];
 
 export default function ProductManagement() {
@@ -11,7 +35,7 @@ export default function ProductManagement() {
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">Product Management</h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all products in your store, including their name, price, stock, and category.
+            A list of all products in your store, including their name, price, stock, category, image, and description.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -44,6 +68,12 @@ export default function ProductManagement() {
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Category
                   </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Image
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    Description
+                  </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
                   </th>
@@ -59,6 +89,10 @@ export default function ProductManagement() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.price}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.stock}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.category}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <img src={product.imageUrl} alt={product.name} className="w-10 h-10 object-cover" />
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{product.description}</td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a href="#" className="text-indigo-600 hover:text-indigo-900">
                         Edit<span className="sr-only">, {product.name}</span>
