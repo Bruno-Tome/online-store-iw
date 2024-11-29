@@ -76,7 +76,7 @@ export default function RootLayout({
                       <div className="flex-shrink-0">
                         <img
                           alt="Your Company"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
+                          src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=300"
                           className="block h-8 w-8"
                         />
                       </div>

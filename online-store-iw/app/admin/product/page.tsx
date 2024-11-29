@@ -7,7 +7,7 @@ const products = [
     price: '$599.00',
     stock: 25,
     category: 'Electronics',
-    imageUrl: 'https://example.com/images/smartphone.jpg',
+    imageUrl: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
     description: 'A high-quality smartphone with excellent camera and battery life.',
   },
   {
@@ -16,7 +16,7 @@ const products = [
     price: '$999.00',
     stock: 10,
     category: 'Computers',
-    imageUrl: 'https://example.com/images/laptop.jpg',
+    imageUrl: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
     description: 'A powerful laptop designed for professionals and gamers.',
   },
   {
@@ -25,7 +25,7 @@ const products = [
     price: '$49.99',
     stock: 100,
     category: 'Accessories',
-    imageUrl: 'https://example.com/images/headphones.jpg',
+    imageUrl: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
     description: 'Comfortable headphones with noise cancellation and great sound quality.',
   },
 ];
