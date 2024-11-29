@@ -1,3 +1,5 @@
+import Navbar from "@/app/components/navbar";
+
 const products = [
   {
     productId: 'P001',
@@ -31,6 +33,7 @@ const products = [
 export default function ProductManagement() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      <Navbar/>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">Product Management</h1>
