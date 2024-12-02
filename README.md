@@ -75,7 +75,114 @@ We will implement both unit and integration tests using **Jest** and **React Tes
 ### Prerequisites:
 1. Install Node.js (version 18.x or higher).
 2. Install npm (included with Node.js installation).
-3. Install PostgreSQL (optional, if using a database for persistent storage).
+
+### Running the Docker Compose Environment
+
+This guide provides instructions to run the Docker Compose environment, which includes the **backend**, **front-end**, and **MongoDB** services.
+
+---
+
+### Prerequisites
+1. **Install Docker**  
+   Ensure Docker and Docker Compose are installed on your system:
+   - [Docker Installation Guide](https://docs.docker.com/get-docker/)
+   - [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
+
+
+
+### Steps to Run the Environment
+
+#### 1. **Start All Services**
+To run all services together:
+```bash
+docker-compose up --build
+```
+
+- The `--build` flag ensures the Docker images are rebuilt with the latest code changes.
+- Services included:
+  - **Backend**: Exposed at `http://localhost:3000`
+  - **Front-end**: Exposed at `http://localhost:4000`
+  - **MongoDB**: Exposed at `mongodb://localhost:27017`
+
+#### 2. **Run Individual Services**
+
+If you want to run a specific service, use the `docker-compose up` command with the service name.
+
+##### a. **Run the Backend**
+```bash
+docker-compose up --build backend
+```
+- Exposed at: `http://localhost:3000`
+- Automatically connects to the MongoDB instance.
+
+##### b. **Run the Front-end**
+```bash
+docker-compose up --build front-end
+```
+- Exposed at: `http://localhost:4000`
+
+##### c. **Run MongoDB**
+```bash
+docker-compose up mongo
+```
+- Accessible at: `mongodb://localhost:27017`
+
+#### 3. **Stop Services**
+To stop the environment, press `Ctrl+C` in the terminal running `docker-compose up`. Alternatively, you can stop all services with:
+```bash
+docker-compose down
+```
+This will remove containers but retain volumes (like database data).
+
+---
+
+### Notes
+
+1. **Persistent MongoDB Data**  
+   Data stored in MongoDB is persisted in the `mongo-data` volume. If you want to remove this data, run:
+   ```bash
+   docker volume rm project-root_mongo-data
+   ```
+
+2. **Hot Reloading for Development**  
+   The backend and front-end services are configured to watch for code changes in their respective directories. Edit your code locally, and the changes will be reflected in the running containers.
+
+3. **Custom Network**  
+   All services are connected to the `app-network` to facilitate inter-service communication. The backend can access MongoDB via `mongodb://mongo:27017`.
+
+4. **Environment Variables**  
+   You can configure additional environment variables in the `environment` section of the `docker-compose.yml` file or using an `.env` file.
+
+---
+
+## Running the Frontend Locally
+1. ** CD into the frontend folder
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Set up environment variables**:
+4. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+5. **Access the application**:
+6. **Open your browser** and navigate to `http://localhost:4000` to view the application. (note: the port may vary depending on your configuration, if running directly on your machine, the port will be 5000)
+
+## Running the Backend Locally
+1. ** CD into the backend folder
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Set up environment variables**:
+4. **Start the development server**:
+   ```bash
+   npm run start:dev
+   ```
+5. **Access the application**:
+6. **Open your client** :
+   Navigate to `http://localhost:3000` to view the application.
 
 ### Installation Steps:
 1. Clone the repository:
