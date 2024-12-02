@@ -8,7 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     UsersModule,
-   MongooseModule.forRoot('mongodb://localhost/nest'), 
+   MongooseModule.forRoot('mongodb://mongo:27017/online-store'), 
   ],
   controllers: [AppController],
   providers: [AppService],
