@@ -1,0 +1,57 @@
+### Variables
+@baseUrl = http://localhost:3000
+@authToken = YOUR_AUTH_TOKEN  # Replace with a valid token if needed
+
+### GET Users
+GET {{baseUrl}}/users HTTP/1.1
+
+### POST Users
+POST {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "John Doe",
+   "email": "john.doe@example.com",
+   "password": "password123"
+}
+
+### GET User by ID
+GET {{baseUrl}}/users/USER_ID HTTP/1.1
+# Replace USER_ID with an actual user ID
+
+### PATCH Update User
+PATCH {{baseUrl}}/users/USER_ID HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Updated Name"
+}
+
+### DELETE User
+DELETE {{baseUrl}}/users/USER_ID HTTP/1.1
+
+### GET Products
+GET {{baseUrl}}/products HTTP/1.1
+
+### POST Products
+POST {{baseUrl}}/products HTTP/1.1
+Content-Type: application/json
+
+{
+   "name": "Product Name",
+   "description": "Product Description",
+   "price": 100.0
+}
+
+### GET Orders
+GET {{baseUrl}}/orders HTTP/1.1
+
+### POST Orders
+POST {{baseUrl}}/orders HTTP/1.1
+Content-Type: application/json
+
+{
+   "userId": "USER_ID",
+   "productIds": ["PRODUCT_ID_1", "PRODUCT_ID_2"],
+   "totalPrice": 200.0
+}

@@ -1,0 +1,46 @@
+version: '3.8'
+
+networks:
+  app-network:  # Define a custom network
+    driver: bridge
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./online-store-backend/
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      MONGO_URI: mongodb://mongo:27017/online-store
+    depends_on:
+      - mongo
+    networks:
+      - app-network  # Attach to the custom network
+    volumes:
+      - ./online-store-backend:/home
+      - /usr/src/app/node_modules
+  front-end:
+    container_name: front-end
+    build:
+      context: ./online-store-iw/
+      dockerfile: Dockerfile
+    ports:
+      - '4000:3000'
+    networks:
+      - app-network  # Attach to the custom network
+    volumes:
+      - .:/usr/src/app
+    
+
+  mongo:
+    container_name: mongodb
+    image: mongo:6.0
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network  # Attach to the custom network
+volumes:
+  mongo-data:
