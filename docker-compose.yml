@@ -21,9 +21,10 @@ services:
       - ./online-store-backend:/home
       - /usr/src/app/node_modules
   front-end:
-    container_name: front-end
+    container_name: frontend
     build:
-      context: ./online-store-iw/
+      context: ./online-store-frontend/
+      
       dockerfile: Dockerfile
     ports:
       - '4000:3000'
