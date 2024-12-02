@@ -27,8 +27,8 @@ export class UsersController {
         return this.usersService.update(id, updateUserDto);
     }
 
-    // @Delete(':id')
-    // async delete(@Param('id') id: string) {
-    //     return this.usersService.delete(id);
-    // }
+    @Delete(':id')
+    async delete(@Param('id') id: string) {
+        return this.usersService.delete(id);
+    }
 }

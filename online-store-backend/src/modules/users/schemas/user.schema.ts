@@ -15,6 +15,8 @@ export class User extends Document {
     @Prop({ default: true })
     isActive: boolean;
 
+    @Prop({ required: true, enum: ['user', 'admin'], default: 'user' })
+    role: string;
     @Prop({ default: Date.now })
     createdAt: Date;
 }

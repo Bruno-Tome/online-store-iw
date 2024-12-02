@@ -26,7 +26,7 @@ export class UsersService {
         return this.userModel.findByIdAndUpdate(id, data, { new: true }).exec();
     }
 
-    // async delete(id: string): Promise<User> {
-    //     return this.userModel.findByIdAndRemove(id).exec();
-    // }
+    async delete(id: string): Promise<User> {
+        return this.userModel.findByIdAndDelete(id).exec();
+    }
 }

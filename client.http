@@ -11,12 +11,12 @@ Content-Type: application/json
 
 {
    "name": "John Doe",
-   "email": "john.doe@example.com",
+   "email": "john.doe2@example.com",
    "password": "password123"
 }
 
 ### GET User by ID
-GET {{baseUrl}}/users/USER_ID HTTP/1.1
+GET {{baseUrl}}/users/674e3814227c64a96a5b6564 HTTP/1.1
 # Replace USER_ID with an actual user ID
 
 ### PATCH Update User
