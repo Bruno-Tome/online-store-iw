@@ -67,7 +67,15 @@ We will implement both unit and integration tests using **Jest** and **React Tes
 
 
 ---
+## HTTP Client
 
+The HTTP client used in this project is the Rest HTTP Client extension for Visual Studio Code. This extension allows us to send HTTP requests directly from the editor, making it easier to test the backend API endpoints and share the requests with the team.
+
+### Installation:
+1. Install the **Rest HTTP Client** extension from the Visual Studio Code Marketplace.
+2. Open the file with the `.http` extension (e.g., `client.http`).
+3. Click on the **Send Request** button next to the request you want to execute.
+4. View the response in the editor or the output panel.
 
 ---
 

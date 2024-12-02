@@ -6,10 +6,12 @@
 
 ### GET Users
 GET {{baseUrl}}/users HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### POST Users
 POST {{baseUrl}}/users HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
    "name": "John Doe",
@@ -19,10 +21,12 @@ Content-Type: application/json
 
 ### GET User by ID
 GET {{baseUrl}}/users/USER_ID HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### PATCH Update User
 PATCH {{baseUrl}}/users/USER_ID HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
    "name": "Updated Name"
@@ -30,30 +34,35 @@ Content-Type: application/json
 
 ### DELETE User
 DELETE {{baseUrl}}/users/USER_ID HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### Products Routes
 
 ### GET Products
 GET {{baseUrl}}/products HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### POST Products
 POST {{baseUrl}}/products HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
    "name": "Product Name",
    "description": "Product Description",
    "price": 200.0,
    "images": ["https://picsum.photos/200", "https://picsum.photos/200"] ,
-   "stock": 10
+   "stock": 100
 }
 
 ### GET Product by ID
 GET {{baseUrl}}/products/674e3d556cff29ac806a6f67 HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### PATCH Update Product
 PATCH {{baseUrl}}/products/674e3d556cff29ac806a6f67 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
    "name": "Updated Product Name",
@@ -62,18 +71,33 @@ Content-Type: application/json
 
 ### DELETE Product
 DELETE {{baseUrl}}/products/674e3c3937c3d3cdf17bfabc HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### Orders Routes
 
 ### GET Orders
 GET {{baseUrl}}/orders HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ### POST Orders
 POST {{baseUrl}}/orders HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
-   "userId": "USER_ID",
-   "productIds": ["PRODUCT_ID_1", "PRODUCT_ID_2"],
-   "totalPrice": 200.0
+   "customerId": "USER_ID",
+   "items": [
+       {
+           "productId": "674e466348eeabf9ee2865d6",
+           "quantity": 2
+       },
+       {
+           "productId": "674e466548eeabf9ee2865d8",
+           "quantity": 1
+       }
+   ]
 }
+
+### GET Order by ID
+GET {{baseUrl}}/orders/ORDER_ID HTTP/1.1
+Authorization: Bearer {{authToken}}
