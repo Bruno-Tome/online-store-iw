@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { ProductsService } from '../../products/services/products.service';
 import { Order } from '../schemas/orders.schema';
 import { CreateOrderDto } from '../dto/create-order.dto';
+import { UpdateOrderDto } from '../dto/update-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -31,12 +32,24 @@ export class OrdersService {
         const order = new this.orderModel({ customerId, items });
         return order.save();
     }
-
     async findAll(): Promise<Order[]> {
         return this.orderModel.find().exec();
     }
-
     async findOne(id: string): Promise<Order> {
         return this.orderModel.findById(id).exec();
+    }
+    async findByUser(customerId: string): Promise<Order[]> {
+        return this.orderModel.find({ customerId }).exec();
+    }
+
+    async update(updateOrderDto: UpdateOrderDto): Promise<Order> {
+        const {id, ...data} = updateOrderDto;
+        return this.orderModel
+            .findByIdAndUpdate(id, {
+                ...data,
+                updatedAt: new Date(),
+            }, { new: true
+            })
+            .exec();
     }
 }

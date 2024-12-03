@@ -19,10 +19,19 @@ export class AuthService {
         throw new UnauthorizedException('Invalid credentials');
     }
 
-    async login(user: any): Promise<{ accessToken: string }> {
-        const payload = { username: user.name, sub: user._id };
+    async login(user: any): Promise<{
+        accessToken: string,
+        username: string,
+        roles: string[],
+        sub: string
+    }> {
+        const payload = { username: user.name, sub: user._id, roles: user.roles };
         return {
             accessToken: this.jwtService.sign(payload),
+            username: user.name,
+            roles: user.roles,
+            sub: user._id
         };
     }
+    
 }
