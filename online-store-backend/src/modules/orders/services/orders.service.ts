@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable,  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProductsService } from '../../products/services/products.service';
@@ -19,11 +19,13 @@ export class OrdersService {
         for (const item of items) {
             const product = await this.productsService.findOne(item.productId);
             if (!product || product.stock < item.quantity) {
-                throw new NotFoundException(
+                throw new ForbiddenException(
                     `Product ${item.productId} does not exist or insufficient stock.`,
                 );
+            } else{
+                
+                await this.productsService.updateStock(item.productId, product.stock - item.quantity);
             }
-            await this.productsService.updateStock(item.productId, product.stock - item.quantity);
         }
 
         const order = new this.orderModel({ customerId, items });

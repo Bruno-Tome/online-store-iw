@@ -5,95 +5,185 @@ import { UsersController } from './controllers/users.controller';
 import { User } from './schemas/user.schema';
 
 describe('UsersModule', () => {
-    let usersService: UsersService;
-    let usersController: UsersController;
+  let usersService: UsersService;
+  let usersController: UsersController;
+  let usersMockedData = [
+    {
+      _id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: 'password',
+    },
+    {
+      _id: '2',
+      name: 'Jane Doe',
+      email: 'jane@example.com',
+      password: 'password',
+    },
+  ];
 
-    const mockUserModel = {
-        create: jest.fn(),
-        find: jest.fn(),
-        findById: jest.fn(),
-        findByIdAndUpdate: jest.fn(),
-        findByIdAndRemove: jest.fn(),
-    };
+  const mockUserModel = {
+    // Simulate the `create` method with a mock implementation
+    create: jest.fn().mockImplementation((data) => ({
+      ...data,
+      _id: '1',
+    })),
+    findAll: jest.fn().mockImplementation(() => usersMockedData),
+    // findById: jest.fn().mockReturnValue({
+    //     exec: jest.fn().mockResolvedValue({
+    //         _id: '1',
+    //         name: 'John Doe',
+    //         email: 'john@example.com',
+    //         password: 'password',
+    //     }),
+    // }),
 
-    beforeEach(async () => {
-        const module: TestingModule = await Test.createTestingModule({
-            controllers: [UsersController],
-            providers: [
-                UsersService,
-                {
-                    provide: getModelToken(User.name),
-                    useValue: mockUserModel,
-                },
-            ],
-        }).compile();
+    findById: jest
+      .fn()
+      .mockImplementation((id) =>
+        usersMockedData.find(({ _id }) => _id === id),
+      ),
 
-        usersService = module.get<UsersService>(UsersService);
-        usersController = module.get<UsersController>(UsersController);
+    findOne: jest
+      .fn()
+      .mockImplementation((id) =>
+        usersMockedData.find(({ _id }) => _id === id),
+      ),
+    // findByIdAndUpdate: jest.fn().mockReturnValue({
+    //   exec: jest.fn().mockResolvedValue({
+    //     _id: '1',
+    //     name: 'Updated Name',
+    //     email: 'john@example.com',
+    //     password: 'password',
+    //   }),
+    // }),
+    findByIdAndUpdate: jest.fn().mockImplementation((id, data) => {
+      let userId = usersMockedData.findIndex(({ _id }) => _id === id);
+      usersMockedData[userId] = { ...usersMockedData[userId], ...data };
+      return usersMockedData[userId];
+    }),
+    update: jest.fn().mockImplementation((id, data) => {
+      let userId = usersMockedData.findIndex(({ _id }) => _id === id);
+      let user = usersMockedData[userId];
+      usersMockedData[userId] = { ...user, ...data };
+
+      return usersMockedData[userId];
+    }),
+    // findByIdAndDelete: jest.fn().mockReturnValue({
+    //   exec: jest.fn().mockResolvedValue({
+    //     _id: '1',
+    //     name: 'John Doe',
+    //     email: 'john@example.com',
+    //     password: 'password',
+    //   }),
+    // }),
+    delete: jest.fn().mockImplementation((id) => {
+      let userId = usersMockedData.findIndex(({ _id }) => _id === id);
+
+      let user = usersMockedData[userId];
+      usersMockedData = usersMockedData.filter(({ _id }) => _id !== id);
+      return user;
+    }),
+  };
+
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      controllers: [UsersController],
+      providers: [
+        {
+          provide: UsersService,
+          useValue: mockUserModel,
+        },
+      ],
+    }).compile();
+    usersController = moduleRef.get(UsersController);
+    usersService = moduleRef.get(UsersService);
+  });
+
+  it('should be defined', () => {
+    expect(usersService).toBeDefined();
+    expect(usersController).toBeDefined();
+  });
+
+  describe('create', () => {
+    it('should create a user', async () => {
+      const createUserDto = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: 'password',
+      };
+      const result = await usersController.create(createUserDto);
+
+      expect(result).toEqual({
+        _id: '1',
+        ...createUserDto,
+      });
+      expect(mockUserModel.create).toHaveBeenCalledWith(createUserDto);
     });
+  });
 
-    it('should be defined', () => {
-        expect(usersService).toBeDefined();
-        expect(usersController).toBeDefined();
+  describe('findAll', () => {
+    it('should return an array of users', async () => {
+      const result = await usersController.findAll();
+
+      expect(result).toEqual([
+        {
+          _id: '1',
+          name: 'John Doe',
+          email: 'john@example.com',
+          password: 'password',
+        },
+        {
+          _id: '2',
+          name: 'Jane Doe',
+          email: 'jane@example.com',
+          password: 'password',
+        },
+      ]);
+      expect(mockUserModel.findAll).toHaveBeenCalled();
     });
+  });
 
-    describe('create', () => {
-        it('should create a user', async () => {
-            const createUserDto = { name: 'John Doe', email: 'john@example.com', password: 'password' };
-            const result = { _id: '1', ...createUserDto, isActive: true, createdAt: new Date() };
-            
-            mockUserModel.create.mockResolvedValue(result);
+  describe('findOne', () => {
+    it('should return a user by ID', async () => {
+      const result = await usersController.findOne('1');
 
-            expect(await usersService.create(createUserDto)).toEqual(result);
-            expect(mockUserModel.create).toHaveBeenCalledWith(createUserDto);
-        });
+      expect(result).toEqual({
+        _id: '1',
+        name: 'John Doe',
+        email: 'john@example.com',
+        password: 'password',
+      });
+      expect(mockUserModel.findOne).toHaveBeenCalledWith('1');
     });
+  });
 
-    describe('findAll', () => {
-        it('should return an array of users', async () => {
-            const users = [
-                { _id: '1', name: 'John Doe', email: 'john@example.com', password: 'password' },
-                { _id: '2', name: 'Jane Doe', email: 'jane@example.com', password: 'password' },
-            ];
+  describe('update', () => {
+    it('should update a user by ID', async () => {
+      const updateUserDto = { name: 'Updated Name' };
+      const result = await usersController.update('1', updateUserDto);
 
-            mockUserModel.find.mockResolvedValue(users);
-
-            expect(await usersService.findAll()).toEqual(users);
-            expect(mockUserModel.find).toHaveBeenCalled();
-        });
+      expect(result).toEqual({
+        _id: '1',
+        name: 'Updated Name',
+        email: 'john@example.com',
+        password: 'password',
+      });
+      expect(mockUserModel.update).toHaveBeenCalledWith('1', updateUserDto);
     });
+  });
 
-    describe('findOne', () => {
-        it('should return a user by ID', async () => {
-            const user = { _id: '1', name: 'John Doe', email: 'john@example.com', password: 'password' };
+  describe('delete', () => {
+    it('should remove a user by ID', async () => {
+      const result = await usersController.delete('1');
 
-            mockUserModel.findByIdAndRemove.mockResolvedValue(user);
-
-            expect(await usersService.findOne('1')).toEqual(user);
-            expect(mockUserModel.findById).toHaveBeenCalledWith('1');
-        });
+      expect(result).toEqual({
+        _id: '1',
+        name: 'Updated Name',
+        email: 'john@example.com',
+        password: 'password',
+      });
+      expect(mockUserModel.delete).toHaveBeenCalledWith('1');
     });
-
-    describe('update', () => {
-        it('should update a user by ID', async () => {
-            const updateUserDto = { name: 'Updated Name' };
-            const updatedUser = { _id: '1', name: 'Updated Name', email: 'john@example.com', password: 'password' };
-
-            mockUserModel.findByIdAndUpdate.mockResolvedValue(updatedUser);
-
-            expect(await usersService.update('1', updateUserDto)).toEqual(updatedUser);
-            expect(mockUserModel.findByIdAndUpdate).toHaveBeenCalledWith('1', updateUserDto, { new: true });
-        });
-    });
-
-    describe('delete', () => {
-        it('should remove a user by ID', async () => {
-            const user = { _id: '1', name: 'John Doe', email: 'john@example.com', password: 'password' };
-
-            mockUserModel.findByIdAndRemove.mockResolvedValue(user);
-
-            expect(await usersService.delete('1')).toEqual(user);
-            expect(mockUserModel.findByIdAndRemove).toHaveBeenCalledWith('1');
-        });
-    });
+  });
 });

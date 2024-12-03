@@ -8,6 +8,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 @Module({
   imports: [
     UsersModule,
+
    MongooseModule.forRoot('mongodb://mongo:27017/online-store'),
     ProductsModule, 
    OrdersModule

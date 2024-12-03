@@ -89,11 +89,11 @@ Authorization: Bearer {{authToken}}
    "items": [
        {
            "productId": "674e466348eeabf9ee2865d6",
-           "quantity": 2
+           "quantity": 5 
        },
        {
            "productId": "674e466548eeabf9ee2865d8",
-           "quantity": 1
+           "quantity": 5
        }
    ]
 }

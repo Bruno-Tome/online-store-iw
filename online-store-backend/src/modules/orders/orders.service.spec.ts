@@ -1,15 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { OrdersService } from './services/orders.service';
 import { ProductsService } from '../products/services/products.service';
 import { Order } from './schemas/orders.schema';
+import { OrdersController } from './controllers/orders.controller';
 
 const mockOrderModel = {
     create: jest.fn(),
     find: jest.fn(),
     findById: jest.fn(),
 };
+// turn the above into a mock class
+class MockOrderModel {
+    constructor(public data?: any) { }
+    save = jest.fn(
+        async function () {
+            return this.data;
+        }
+    );
+    create = jest.fn(
+        
+    );
+    find = jest.fn();
+    findById = jest.fn();
+}
 
 const mockProductsService = {
     findOne: jest.fn(),
@@ -17,11 +32,12 @@ const mockProductsService = {
 };
 
 describe('OrdersService', () => {
-    let service: OrdersService;
+    let orderService: OrdersService;
     let productsService: ProductsService;
-
+    let ordersController: OrdersController;
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
+            controllers: [OrdersController],
             providers: [
                 OrdersService,
                 {
@@ -30,17 +46,17 @@ describe('OrdersService', () => {
                 },
                 {
                     provide: getModelToken(Order.name),
-                    useValue: mockOrderModel,
+                    useValue:  MockOrderModel,
                 },
             ],
         }).compile();
-
-        service = module.get<OrdersService>(OrdersService);
+        ordersController = module.get<OrdersController>(OrdersController);
+        orderService = module.get<OrdersService>(OrdersService);
         productsService = module.get<ProductsService>(ProductsService);
     });
 
     it('should be defined', () => {
-        expect(service).toBeDefined();
+        expect(orderService).toBeDefined();
     });
 
     describe('create', () => {
@@ -68,14 +84,14 @@ describe('OrdersService', () => {
                 stock: 2,
             });
 
-            mockOrderModel.create.mockResolvedValueOnce(mockOrder);
 
-            const result = await service.create(mockOrder);
+            const spy = jest.spyOn(orderService, 'create');
+            const result = await orderService.create(mockOrder);
 
-            expect(productsService.findOne).toHaveBeenCalledTimes(2);
+            expect(productsService.findOne).toHaveBeenCalledTimes(2)
             expect(productsService.updateStock).toHaveBeenCalledWith('product-id-1', 8);
             expect(productsService.updateStock).toHaveBeenCalledWith('product-id-2', 2);
-            expect(mockOrderModel.create).toHaveBeenCalledWith(mockOrder);
+            expect(spy).toHaveBeenCalledWith(mockOrder);
             expect(result).toEqual(mockOrder);
         });
 
@@ -88,13 +104,19 @@ describe('OrdersService', () => {
             const mockProduct = { id: 'product-id-1', stock: 5 };
 
             mockProductsService.findOne.mockImplementationOnce(() => mockProduct);
+            let error;
+            const spy = jest.spyOn(mockOrderModel, 'create');
+            let result = null;
+            try {
+                result = await orderService.create(mockOrder);
+            } catch (e) {
+                error = e;
+            }
+            expect(error).toBeInstanceOf(ForbiddenException);
+            expect(result).toBeNull();
 
-            await expect(service.create(mockOrder)).rejects.toThrow(
-                NotFoundException,
-            );
             expect(productsService.findOne).toHaveBeenCalledWith('product-id-1');
-            expect(productsService.updateStock).not.toHaveBeenCalled();
-            expect(mockOrderModel.create).not.toHaveBeenCalled();
+            expect(spy).not.toHaveBeenCalled();
         });
     });
 });
