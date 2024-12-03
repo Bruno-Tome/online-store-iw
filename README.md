@@ -64,7 +64,11 @@ We will implement both unit and integration tests using **Jest** and **React Tes
 ### Integration Tests:
 - **Product Page**: Ensures the correct display of product details and interactions.
 - **Checkout Process**: Verifies the payment process from cart to Stripe integration.
+---
 
+## API Documentation
+
+The backend API is built using **Nest.js** and provides endpoints to manage products, users, and orders. To access the swagger documentation, run the backend server and navigate to `http://localhost:3000/api`.
 
 ---
 ## HTTP Client
