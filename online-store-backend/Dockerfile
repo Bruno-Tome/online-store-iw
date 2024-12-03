@@ -5,12 +5,14 @@ FROM node:18-alpine
 WORKDIR /home
 
 
+COPY package*.json ./
+
+
+RUN npm install -g @nestjs/cli && npm install 
+
+
 # Copy the rest of the application code
 COPY . .
-
-# Install dependencies
-RUN npm install
-
 
 
 # Expose the application port

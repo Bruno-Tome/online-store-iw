@@ -19,7 +19,7 @@ services:
       - app-network  # Attach to the custom network
     volumes:
       - ./online-store-backend:/home
-      - /usr/src/app/node_modules
+      - node_modules:/home/node_modules
   front-end:
     container_name: frontend
     build:
@@ -45,3 +45,4 @@ services:
       - app-network  # Attach to the custom network
 volumes:
   mongo-data:
+  node_modules:
