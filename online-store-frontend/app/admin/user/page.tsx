@@ -1,4 +1,4 @@
-import Navbar from "@/app/components/navbar"
+import AdminNavbar from "@/app/components/AdminNavbar"
 
 const people = [
   { name: 'John Walton', email: 'johnwalton@example.com', role: 'Member' },
@@ -9,7 +9,7 @@ const people = [
 export default function Example() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-      <Navbar/>
+      <AdminNavbar/>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">Users</h1>

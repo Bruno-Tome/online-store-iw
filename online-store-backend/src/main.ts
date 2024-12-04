@@ -11,10 +11,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
     const options: SwaggerDocumentOptions =  {
-      operationIdFactory: (
-        controllerKey: string,
-        methodKey: string
-      ) => methodKey,
+     
       deepScanRoutes: true,
     };
   const documentFactory = () => SwaggerModule.createDocument(app, config,options);

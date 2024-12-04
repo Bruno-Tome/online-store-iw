@@ -272,6 +272,48 @@ npm run build
 13. **User Management Page**  
     - Provides a list of registered users with options to view details, edit information, or delete accounts.
 
+## To Do
+### Context Store
+- [ ] Create Provider Wrappers
+- [ ] Create Provider for Cart
+  - [ ] Create a context to store the cart state
+- [ ] Create Provider for Products
+  - [ ] Create a context for the product data (List of products, current product)
+- [ ] Create Provider for Orders
+  - [ ] Create a context for the order data (List of orders, current order) 
+  - [ ] Create a context for the current order being done
+- [ ] Create Provider for Auth
+  - [ ] Create a context to store the user data
+  - [ ] Create a context for the login status
+  - [ ] Use Auth provider to wrap the app and routes that require authentication
+
+### API interface
+- [ ] integrate api client with context update calls 
+
+### Components and integration
+
+- [ ] Componentize the app
+  - [ ] Store
+      - [ ] Create a component for the Navbar
+      - [ ] Create a component for the Product Card
+        - [ ] Fetch products from the API
+      - [ ] Create a component for the Cart Item
+        - [ ] Fetch cart items from the context
+    - [ ] Profile
+      - [ ] Create a component for the Profile Page and Update
+        - [ ] Fetch user data from the context and update with API
+  - [ ] Admin 
+    - [ ] Create shareable components for the Admin pages
+    - [ ] Componentize Orders
+      - [ ] Fetch orders from the API
+      - [ ] Update order with PopUp
+    - [ ] Componentize Users
+      - [ ] Fetch users from the API
+      - [ ] Update user with PopUp
+    - [ ] Componentize Products
+      - [ ] Fetch products from the API
+      - [ ] Update user with PopUp
+
 
 ## Comments
 The project successfully fulfills the requirements set out for an online store with additional features like user authentication,   and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.

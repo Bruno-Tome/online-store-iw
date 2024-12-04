@@ -23,6 +23,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import DataFetchingComponent from "./providers/ProductDataFetching";
 
 const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
 const navigation = {
@@ -217,6 +218,7 @@ export default function Example() {
   return (
     <div className="bg-white">
       {/* Mobile menu */}
+      <DataFetchingComponent />
 
       <main>
         {/* Hero */}

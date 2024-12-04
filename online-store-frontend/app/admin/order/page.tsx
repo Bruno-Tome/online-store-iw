@@ -3,11 +3,11 @@ const orders = [
   { orderId: '1002', customerName: 'Mark Zuckerberg', amount: '$300.00', date: '2024-10-02', status: 'Shipped' },
   { orderId: '1003', customerName: 'Edson Arantes do Nascimento', amount: '$500.00', date: '2024-10-03', status: 'Delivered' },
 ];
-import Navbar from "@/app/components/navbar";
+import AdminNavbar from "@/app/components/AdminNavbar";
 export default function OrderManagement() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
-        <Navbar/>
+        <AdminNavbar/>
 
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
