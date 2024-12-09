@@ -1,9 +1,8 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function AdminNavbar() {
   return (
     <nav className="bg-white">
-
       <div className="mx-auto ">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">

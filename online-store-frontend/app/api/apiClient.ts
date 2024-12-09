@@ -1,9 +1,10 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-const BASE_URL = "http://backend:3000";
+// Request interceptor to add Authorization header dynamically
+import { InternalAxiosRequestConfig } from "axios";
+const BASE_URL = "http://localhost:3000";
 
-let authToken =
-  ""; // Initial token
+let authToken = ""; // Initial token
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -23,9 +24,6 @@ const refreshToken = async (): Promise<string> => {
   return authToken;
 };
 
-// Request interceptor to add Authorization header dynamically
-import { InternalAxiosRequestConfig } from "axios";
-
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (authToken) {
     config.headers.Authorization = `Bearer ${authToken}`;
@@ -36,7 +34,7 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // Response interceptor to handle JWT expiration
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response,
-  async (error:any) => {
+  async (error: any) => {
     const originalRequest = error.config;
 
     // If the error is due to an invalid token, attempt to refresh it
@@ -53,52 +51,57 @@ apiClient.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 // Auth Routes
 export const authApi = {
-    login: (email: string, password: string) =>
-      apiClient.post("/auth/login", { email, password }),
-  };
-  
-  // Users Routes
-  export const usersApi = {
-    getUsers: () => apiClient.get("/users"),
-    getUserById: (userId: string) => apiClient.get(`/users/${userId}`),
-    createUser: (user: { name: string; email: string; password: string; roles: string[] }) =>
-      apiClient.post("/users", user),
-    updateUser: (userId: string, updatedFields: Record<string, any>) =>
-      apiClient.patch(`/users/${userId}`, updatedFields),
-    deleteUser: (userId: string) => apiClient.delete(`/users/${userId}`),
-  };
-  
-  // Products Routes
-  export const productsApi = {
-    getProducts: () => apiClient.get("/products"),
-    getProductById: (productId: string) => apiClient.get(`/products/${productId}`),
-    createProduct: (product: {
-      name: string;
-      description: string;
-      price: number;
-      images: string[];
-      stock: number;
-    }) => apiClient.post("/products", product),
-    updateProduct: (productId: string, updatedFields: Record<string, any>) =>
-      apiClient.patch(`/products/${productId}`, updatedFields),
-    deleteProduct: (productId: string) => apiClient.delete(`/products/${productId}`),
-  };
-  
-  // Orders Routes
-  export const ordersApi = {
-    getOrders: () => apiClient.get("/orders"),
-    getOrderById: (orderId: string) => apiClient.get(`/orders/${orderId}`),
-    createOrder: (order: {
-      customerId: string;
-      items: { productId: string; quantity: number }[];
-    }) => apiClient.post("/orders", order),
-    getOrdersByCustomerId: (customerId: string) =>
-      apiClient.get(`/orders/customer/${customerId}`),
-  };
+  login: (email: string, password: string) =>
+    apiClient.post("/auth/login", { email, password }),
+};
+
+// Users Routes
+export const usersApi = {
+  getUsers: () => apiClient.get("/users"),
+  getUserById: (userId: string) => apiClient.get(`/users/${userId}`),
+  createUser: (user: {
+    name: string;
+    email: string;
+    password: string;
+    roles: string[];
+  }) => apiClient.post("/users", user),
+  updateUser: (userId: string, updatedFields: Record<string, any>) =>
+    apiClient.patch(`/users/${userId}`, updatedFields),
+  deleteUser: (userId: string) => apiClient.delete(`/users/${userId}`),
+};
+
+// Products Routes
+export const productsApi = {
+  getProducts: () => apiClient.get("/products"),
+  getProductById: (productId: string) =>
+    apiClient.get(`/products/${productId}`),
+  createProduct: (product: {
+    name: string;
+    description: string;
+    price: number;
+    images: string[];
+    stock: number;
+  }) => apiClient.post("/products", product),
+  updateProduct: (productId: string, updatedFields: Record<string, any>) =>
+    apiClient.patch(`/products/${productId}`, updatedFields),
+  deleteProduct: (productId: string) =>
+    apiClient.delete(`/products/${productId}`),
+};
+
+// Orders Routes
+export const ordersApi = {
+  getOrders: () => apiClient.get("/orders"),
+  getOrderById: (orderId: string) => apiClient.get(`/orders/${orderId}`),
+  createOrder: (order: {
+    customerId: string;
+    items: { productId: string; quantity: number }[];
+  }) => apiClient.post("/orders", order),
+  getOrdersByCustomerId: (customerId: string) =>
+    apiClient.get(`/orders/customer/${customerId}`),
+};
 export default apiClient;
-  

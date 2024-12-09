@@ -218,7 +218,6 @@ export default function Example() {
   return (
     <div className="bg-white">
       {/* Mobile menu */}
-      <DataFetchingComponent />
 
       <main>
         {/* Hero */}

@@ -1,35 +1,25 @@
-import React, { useEffect } from 'react';
-import { useContext } from 'react';
-import { productsApi } from '../api/apiClient';
-import { ProductContext } from './ProductProvider';
+import React, { useEffect } from "react";
+import { useProductContext } from "./ProductProvider";
+import { productsApi } from "../api/apiClient";
 
 const DataFetchingComponent: React.FC = () => {
-    const context = useContext(ProductContext);
+  const { dispatch } = useProductContext();
 
-    if (!context) {
-        throw new Error('DataFetchingComponent must be used within a ProductProvider');
-    }
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await productsApi.getProducts();
+        dispatch({ type: "SET_PRODUCTS", payload: response.data });
+        console.log("Fetched products:", response.data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
 
-    const { products,setProducts } = context;
+    fetchProducts();
+  }, [dispatch]);
 
-    useEffect(() => {
-        console.log(products)  
-        const fetchProducts = async () => {
-            try {
-                const response = await productsApi.getProducts();
-                setProducts(response.data);
-                // console.log(response.data)
-                // console.log(setProducts)
-            } catch (error) {
-                console.error('Failed to fetch products:', error);
-            }
-        };
-        
-        fetchProducts();
-
-    }, []);
-
-    return null; // This component doesn't render anything
+  return null; // No UI rendering
 };
 
 export default DataFetchingComponent;

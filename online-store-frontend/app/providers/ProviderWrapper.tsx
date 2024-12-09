@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { createContext } from "react";
 import { CartProvider } from "./CartProvider";
 import { ProductProvider } from "./ProductProvider";
@@ -15,6 +15,7 @@ const ProviderWrapper: React.FC<ProviderWrapperProps> = ({ children }) => {
     <NavbarProvider>
       <CartProvider>
         <ProductProvider>
+          <DataFetchingComponent />
           <UserProvider>{children}</UserProvider>
         </ProductProvider>
       </CartProvider>

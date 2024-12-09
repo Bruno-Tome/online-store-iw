@@ -13,13 +13,10 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       gridTemplateRows: {
-        '[auto,auto,1fr]': 'auto auto 1fr',
+        "[auto,auto,1fr]": "auto auto 1fr",
       },
-      
     },
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
 export default config;

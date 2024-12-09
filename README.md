@@ -273,14 +273,15 @@ npm run build
     - Provides a list of registered users with options to view details, edit information, or delete accounts.
 
 ## To Do
-### Context Store
-- [ ] Create Provider Wrappers
-- [ ] Create Provider for Cart
-  - [ ] Create a context to store the cart state
-- [ ] Create Provider for Products
-  - [ ] Create a context for the product data (List of products, current product)
-- [ ] Create Provider for Orders
-  - [ ] Create a context for the order data (List of orders, current order) 
+### Context Store => 
+Important: Update the context use the useReducer hook to fix context providers
+- [x] Create Provider Wrappers
+- [x] Create Provider for Cart
+  - [x] Create a context to store the cart state
+- [x] Create Provider for Products
+  - [x] Create a context for the product data (List of products, current product)
+- [x] Create Provider for Orders
+  - [x] Create a context for the order data (List of orders, current order) 
   - [ ] Create a context for the current order being done
 - [ ] Create Provider for Auth
   - [ ] Create a context to store the user data
