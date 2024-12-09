@@ -1,11 +1,13 @@
 "use client";
-import { createContext, ReactNode, useContext, useReducer } from "react";
+import { createContext, memo, ReactNode, useContext, useReducer } from "react";
+import { Product } from "./ProductProvider";
 
 interface CartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
+  data: Product;
 }
 
 interface CartState {
@@ -21,7 +23,9 @@ type CartAction =
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case "ADD_ITEM":
-      return { ...state, items: [...state.items, action.payload] };
+      const newState = { ...state, items: [...state.items, action.payload] };
+      console.log(newState);
+      return newState;
     case "REMOVE_ITEM":
       return {
         ...state,
@@ -37,22 +41,53 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 interface CartContextType {
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
+  addProductToCart: (product: Product) => void;
+  removeProductFromCart: (productId: string) => void;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(
   undefined,
 );
 
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+const CartProvider = ({ children }: { children: ReactNode }) => {
   const initialState: CartState = { items: [] };
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const addProductToCart = (product: Product) => {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: {
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        data: product,
+      },
+    });
+  };
+  const removeProductFromCart = (productId: string) => {
+    dispatch({ type: "REMOVE_ITEM", payload: productId });
+  };
+
+  const clearCart = () => {
+    dispatch({ type: "CLEAR_CART" });
+  };
 
   return (
-    <CartContext.Provider value={{ state, dispatch }}>
+    <CartContext.Provider
+      value={{
+        state,
+        dispatch,
+        addProductToCart,
+        removeProductFromCart,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
+export default memo(CartProvider);
 
 export const useCartContext = () => {
   const context = useContext(CartContext);

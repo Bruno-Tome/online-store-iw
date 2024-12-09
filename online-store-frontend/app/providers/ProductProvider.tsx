@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
+import { productsApi } from "../api/apiClient";
 
 // Define Product Type
 export interface Product {
@@ -53,6 +54,9 @@ const productReducer = (
 interface ProductContextType {
   state: ProductState;
   dispatch: React.Dispatch<ProductAction>;
+  fetchProducts: () => Promise<void>;
+  setProduct: (productId: string) => Promise<void>;
+  fetchProductById: (productId: string) => Promise<void>;
 }
 
 // Create Context
@@ -61,9 +65,38 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Provider Component
 const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
+  const fetchProducts = async () => {
+    try {
+      const response = await productsApi.getProducts();
+      dispatch({ type: "SET_PRODUCTS", payload: response.data });
+      console.log("Fetched products:", response.data);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
+  const setProduct = async (productId: string) => {
+    try {
+      const response = await productsApi.getProductById(productId);
+      dispatch({ type: "SET_SELECTED_PRODUCT", payload: response.data });
+    } catch (error) {
+      console.error("Failed to fetch product:", error);
+    }
+  };
+
+  const fetchProductById = async (productId: string) => {
+    try {
+      const response = await productsApi.getProductById(productId);
+      dispatch({ type: "SET_SELECTED_PRODUCT", payload: response.data });
+    } catch (error) {
+      console.error("Failed to fetch product:", error);
+    }
+  };
 
   return (
-    <ProductContext.Provider value={{ state, dispatch }}>
+    <ProductContext.Provider
+      value={{ state, dispatch, fetchProducts, setProduct, fetchProductById }}
+    >
       {children}
     </ProductContext.Provider>
   );

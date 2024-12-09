@@ -4,12 +4,11 @@ import { useRouter } from "next/navigation";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
-  const productContext = useProductContext();
-  const { dispatch } = productContext;
+  const { setProduct } = useProductContext();
 
   const onClick = () => {
-    router.push(`/product/${product._id}`);
-    dispatch({ type: "SET_SELECTED_PRODUCT", payload: product });
+    router.push(`/product/${product._id}`, undefined, { shallow: true });
+    setProduct(product._id);
   };
   return (
     <li

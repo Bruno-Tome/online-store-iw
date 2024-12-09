@@ -1,10 +1,12 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
+import { authApi, usersApi } from "../api/apiClient";
 
 // Define User Type
 interface User {
   id: string;
   name: string;
   email: string;
+  password: string;
 }
 
 // Define State Type
@@ -36,6 +38,8 @@ const userReducer = (state: UserState, action: UserAction): UserState => {
 interface UserContextType {
   state: UserState;
   dispatch: React.Dispatch<UserAction>;
+  login: (user: User) => void;
+  logout: () => void;
 }
 
 // Create Context
@@ -44,16 +48,33 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 // Provider Component
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
-
+  const login = async (user: User) => {
+    try {
+      const response = await authApi.login(user.email, user.password);
+      dispatch({ type: "LOGIN", payload: user });
+    } catch (error) {
+      console.error("Error logging in", error);
+    }
+  };
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
+    <UserContext.Provider
+      value={{
+        state,
+        dispatch,
+        login,
+        logout,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
 
 // Custom Hook for Consuming Context
-export const useUser = (): UserContextType => {
+export const useUserContext = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {
     throw new Error("useUser must be used within a UserProvider");

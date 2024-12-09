@@ -3,6 +3,7 @@
 import { Fragment, useState } from "react";
 import { useProductContext } from "./providers/ProductProvider";
 import ProductCard from "./components/TrendingProducts";
+import Link from "next/link";
 
 const offers = [
   {
@@ -21,25 +22,6 @@ const offers = [
     href: "#",
   },
 ];
-// const trendingProducts = [
-//   {
-//     id: 1,
-//     name: "Machined Pen",
-//     color: "Black",
-//     price: "$35",
-//     href: "/product",
-//     imageSrc:
-//       "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg",
-//     imageAlt:
-//       "Black machined steel pen with hexagonal grip and small white logo at top.",
-//     availableColors: [
-//       { name: "Black", colorBg: "#111827" },
-//       { name: "Brass", colorBg: "#FDE68A" },
-//       { name: "Chrome", colorBg: "#E5E7EB" },
-//     ],
-//   },
-//   // More products...
-// ];
 const collections = [
   {
     name: "Desk and Office",
@@ -89,8 +71,8 @@ const testimonials = [
   },
 ];
 
-export default function Example() {
-  const { state, dispatch } = useProductContext();
+export default function Home() {
+  const { state } = useProductContext();
 
   const trendingProducts = state.products;
   return (
@@ -108,7 +90,8 @@ export default function Example() {
               >
                 {offers.map((offer) => (
                   <li key={offer.name} className="flex flex-col">
-                    <a
+                    <Link
+                      shallow
                       href={offer.href}
                       className="relative flex flex-1 flex-col justify-center bg-white px-4 py-6 text-center focus:z-10"
                     >
@@ -116,7 +99,7 @@ export default function Example() {
                       <p className="font-semibold text-gray-900">
                         {offer.description}
                       </p>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

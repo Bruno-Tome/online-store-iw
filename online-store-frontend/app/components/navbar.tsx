@@ -11,6 +11,7 @@ import {
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useNavbar } from "../providers/NavbarProvider";
+import Link from "next/link";
 
 const user = {
   name: "Tom Cook",
@@ -18,24 +19,6 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
-// let navigation = [
-//   { name: "Home", href: "/", current: true },
-//   { name: "Product", href: "/product", current: false },
-//   { name: "Cart", href: "/cart", current: false },
-//   { name: "Checkout", href: "/checkout", current: false },
-// ];
-// const setNavigation = (
-//   path:string
-// ) => {
-//   console.log(path);
-//   navigation = navigation.map((item) => {
-//     if (item.href === path) {
-//       return { ...item, current: true };
-//     } else {
-//       return { ...item, current: false };
-//     }
-//   });
-// }
 const userNavigation = [
   { name: "Your Profile", href: "/profile" },
   { name: "Orders", href: "/user/orders" },
@@ -67,7 +50,8 @@ export default function Navbar() {
               <div className="hidden lg:ml-10 lg:block">
                 <div className="flex space-x-4">
                   {navigation.map((item) => (
-                    <a
+                    <Link
+                      shallow
                       key={item.name}
                       href={item.href}
                       aria-current={item.current ? "page" : undefined}
@@ -80,7 +64,7 @@ export default function Navbar() {
                       )}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -122,12 +106,14 @@ export default function Navbar() {
                   >
                     {userNavigation.map((item) => (
                       <MenuItem key={item.name}>
-                        <a
+                        <Link
+                          shallow
+                          key={item.name}
                           href={item.href}
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                          onClick={() => setNavigation(item.href)}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       </MenuItem>
                     ))}
                   </MenuItems>
@@ -142,8 +128,9 @@ export default function Navbar() {
             {navigation.map((item) => (
               <DisclosureButton
                 key={item.name}
-                as="a"
+                as={Link}
                 href={item.href}
+                shallow
                 aria-current={item.current ? "page" : undefined}
                 className={classNames(
                   item.current
@@ -186,7 +173,7 @@ export default function Navbar() {
               {userNavigation.map((item) => (
                 <DisclosureButton
                   key={item.name}
-                  as="a"
+                  as={Link}
                   href={item.href}
                   className="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-500 hover:bg-opacity-75"
                 >
