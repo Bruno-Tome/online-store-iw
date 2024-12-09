@@ -69,7 +69,6 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     try {
       const response = await productsApi.getProducts();
       dispatch({ type: "SET_PRODUCTS", payload: response.data });
-      console.log("Fetched products:", response.data);
     } catch (error) {
       console.error("Failed to fetch products:", error);
     }

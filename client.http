@@ -27,7 +27,7 @@ Authorization: Bearer {{authToken}}
 
 {
    "name": "John Doe",
-   "email": "john.doe4@example.com",
+   "email": "john.doe@example.com",
    "password": "password123",
    "roles": ["admin"]
 }

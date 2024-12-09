@@ -23,9 +23,11 @@ type CartAction =
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case "ADD_ITEM":
-      const newState = { ...state, items: [...state.items, action.payload] };
-      console.log(newState);
-      return newState;
+      const items = [...state.items];
+      if (!items.find((item) => item.id === action.payload.id)) {
+        return { ...state, items: [...items, action.payload] };
+      }
+
     case "REMOVE_ITEM":
       return {
         ...state,
