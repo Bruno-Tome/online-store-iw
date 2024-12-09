@@ -2,7 +2,7 @@ import React, { createContext, useReducer, ReactNode, useContext } from "react";
 
 // Define Product Type
 export interface Product {
-  _id: number;
+  _id: string;
   description: string;
   images: string[];
   stock: number;
@@ -13,7 +13,7 @@ export interface Product {
 // Define State Type
 export interface ProductState {
   products: Product[];
-  selectedProduct: Product | null;
+  selectedProduct: Product;
 }
 
 // Define Action Types
@@ -24,7 +24,14 @@ type ProductAction =
 // Initial State
 const initialState: ProductState = {
   products: [],
-  selectedProduct: null,
+  selectedProduct: {
+    _id: "",
+    description: "",
+    images: [],
+    stock: 0,
+    name: "",
+    price: 0,
+  },
 };
 
 // Reducer Function
@@ -72,3 +79,37 @@ export const useProductContext = () => {
 };
 
 export { ProductProvider };
+/*
+import React from 'react';
+import { useProductContext } from './context/ProductContext';
+
+const ProductList: React.FC = () => {
+    const { state, dispatch } = useProductContext();
+
+    const handleProductSelect = (product: Product) => {
+        dispatch({ type: 'SET_SELECTED_PRODUCT', payload: product });
+    };
+
+    return (
+        <div>
+            <h1>Product List</h1>
+            {state.products.map((product) => (
+                <div key={product._id} onClick={() => handleProductSelect(product)}>
+                    <h2>{product.name}</h2>
+                    <p>{product.description}</p>
+                    <p>${product.price}</p>
+                </div>
+            ))}
+            {state.selectedProduct && (
+                <div>
+                    <h2>Selected Product</h2>
+                    <p>{state.selectedProduct.name}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default ProductList;
+
+*/

@@ -5,6 +5,7 @@ import { ProductProvider } from "./ProductProvider";
 import { UserProvider } from "./UserProvider";
 import { NavbarProvider } from "./NavbarProvider";
 import DataFetchingComponent from "./ProductDataFetching";
+import { OrderProvider } from "./OrdersProvider";
 
 interface ProviderWrapperProps {
   children: React.ReactNode;
@@ -13,12 +14,14 @@ interface ProviderWrapperProps {
 const ProviderWrapper: React.FC<ProviderWrapperProps> = ({ children }) => {
   return (
     <NavbarProvider>
-      <CartProvider>
+      <UserProvider>
         <ProductProvider>
-          <DataFetchingComponent />
-          <UserProvider>{children}</UserProvider>
+          <CartProvider>
+            <DataFetchingComponent />
+            <OrderProvider>{children}</OrderProvider>
+          </CartProvider>
         </ProductProvider>
-      </CartProvider>
+      </UserProvider>
     </NavbarProvider>
   );
 };

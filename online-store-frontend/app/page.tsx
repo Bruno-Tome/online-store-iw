@@ -1,95 +1,9 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from "@headlessui/react";
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingCartIcon,
-  UserIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import DataFetchingComponent from "./providers/ProductDataFetching";
+import { useProductContext } from "./providers/ProductProvider";
+import ProductCard from "./components/TrendingProducts";
 
-const currencies = ["CAD", "USD", "AUD", "EUR", "GBP"];
-const navigation = {
-  categories: [
-    {
-      name: "Women",
-      featured: [
-        { name: "Sleep", href: "#" },
-        { name: "Swimwear", href: "#" },
-        { name: "Underwear", href: "#" },
-      ],
-      collection: [
-        { name: "Everything", href: "#" },
-        { name: "Core", href: "#" },
-        { name: "New Arrivals", href: "#" },
-        { name: "Sale", href: "#" },
-      ],
-      categories: [
-        { name: "Basic Tees", href: "#" },
-        { name: "Artwork Tees", href: "#" },
-        { name: "Bottoms", href: "#" },
-        { name: "Underwear", href: "#" },
-        { name: "Accessories", href: "#" },
-      ],
-      brands: [
-        { name: "Full Nelson", href: "#" },
-        { name: "My Way", href: "#" },
-        { name: "Re-Arranged", href: "#" },
-        { name: "Counterfeit", href: "#" },
-        { name: "Significant Other", href: "#" },
-      ],
-    },
-    {
-      name: "Men",
-      featured: [
-        { name: "Casual", href: "#" },
-        { name: "Boxers", href: "#" },
-        { name: "Outdoor", href: "#" },
-      ],
-      collection: [
-        { name: "Everything", href: "#" },
-        { name: "Core", href: "#" },
-        { name: "New Arrivals", href: "#" },
-        { name: "Sale", href: "#" },
-      ],
-      categories: [
-        { name: "Artwork Tees", href: "#" },
-        { name: "Pants", href: "#" },
-        { name: "Accessories", href: "#" },
-        { name: "Boxers", href: "#" },
-        { name: "Basic Tees", href: "#" },
-      ],
-      brands: [
-        { name: "Significant Other", href: "#" },
-        { name: "My Way", href: "#" },
-        { name: "Counterfeit", href: "#" },
-        { name: "Re-Arranged", href: "#" },
-        { name: "Full Nelson", href: "#" },
-      ],
-    },
-  ],
-  pages: [
-    { name: "Company", href: "#" },
-    { name: "Stores", href: "#" },
-  ],
-};
 const offers = [
   {
     name: "Download the app",
@@ -107,25 +21,25 @@ const offers = [
     href: "#",
   },
 ];
-const trendingProducts = [
-  {
-    id: 1,
-    name: "Machined Pen",
-    color: "Black",
-    price: "$35",
-    href: "/product",
-    imageSrc:
-      "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg",
-    imageAlt:
-      "Black machined steel pen with hexagonal grip and small white logo at top.",
-    availableColors: [
-      { name: "Black", colorBg: "#111827" },
-      { name: "Brass", colorBg: "#FDE68A" },
-      { name: "Chrome", colorBg: "#E5E7EB" },
-    ],
-  },
-  // More products...
-];
+// const trendingProducts = [
+//   {
+//     id: 1,
+//     name: "Machined Pen",
+//     color: "Black",
+//     price: "$35",
+//     href: "/product",
+//     imageSrc:
+//       "https://tailwindui.com/plus/img/ecommerce-images/home-page-02-product-01.jpg",
+//     imageAlt:
+//       "Black machined steel pen with hexagonal grip and small white logo at top.",
+//     availableColors: [
+//       { name: "Black", colorBg: "#111827" },
+//       { name: "Brass", colorBg: "#FDE68A" },
+//       { name: "Chrome", colorBg: "#E5E7EB" },
+//     ],
+//   },
+//   // More products...
+// ];
 const collections = [
   {
     name: "Desk and Office",
@@ -174,47 +88,11 @@ const testimonials = [
     attribution: "Chris Paul, Phoenix",
   },
 ];
-const footerNavigation = {
-  products: [
-    { name: "Bags", href: "#" },
-    { name: "Tees", href: "#" },
-    { name: "Objects", href: "#" },
-    { name: "Home Goods", href: "#" },
-    { name: "Accessories", href: "#" },
-  ],
-  customerService: [
-    { name: "Contact", href: "#" },
-    { name: "Shipping", href: "#" },
-    { name: "Returns", href: "#" },
-    { name: "Warranty", href: "#" },
-    { name: "Secure Payments", href: "#" },
-    { name: "FAQ", href: "#" },
-    { name: "Find a store", href: "#" },
-  ],
-  company: [
-    { name: "Who we are", href: "#" },
-    { name: "Sustainability", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Careers", href: "#" },
-    { name: "Terms & Conditions", href: "#" },
-    { name: "Privacy", href: "#" },
-  ],
-  legal: [
-    { name: "Terms of Service", href: "#" },
-    { name: "Return Policy", href: "#" },
-    { name: "Privacy Policy", href: "#" },
-    { name: "Shipping Policy", href: "#" },
-  ],
-  bottomLinks: [
-    { name: "Accessibility", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-  ],
-};
 
 export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { state, dispatch } = useProductContext();
 
+  const trendingProducts = state.products;
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -308,49 +186,8 @@ export default function Example() {
                   role="list"
                   className="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-x-8 lg:space-x-0"
                 >
-                  {trendingProducts.map((product) => (
-                    <li
-                      key={product.id}
-                      className="inline-flex w-64 flex-col text-center lg:w-auto"
-                    >
-                      <div className="group relative">
-                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200">
-                          <img
-                            alt={product.imageAlt}
-                            src={product.imageSrc}
-                            className="h-full w-full object-cover object-center group-hover:opacity-75"
-                          />
-                        </div>
-                        <div className="mt-6">
-                          <p className="text-sm text-gray-500">
-                            {product.color}
-                          </p>
-                          <h3 className="mt-1 font-semibold text-gray-900">
-                            <a href={product.href}>
-                              <span className="absolute inset-0" />
-                              {product.name}
-                            </a>
-                          </h3>
-                          <p className="mt-1 text-gray-900">{product.price}</p>
-                        </div>
-                      </div>
-
-                      <h4 className="sr-only">Available colors</h4>
-                      <ul
-                        role="list"
-                        className="mt-auto flex items-center justify-center space-x-3 pt-6"
-                      >
-                        {product.availableColors.map((color) => (
-                          <li
-                            key={color.name}
-                            style={{ backgroundColor: color.colorBg }}
-                            className="h-4 w-4 rounded-full border border-black border-opacity-10"
-                          >
-                            <span className="sr-only">{color.name}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
+                  {trendingProducts.map((product, index) => (
+                    <ProductCard key={index} product={product} />
                   ))}
                 </ul>
               </div>
