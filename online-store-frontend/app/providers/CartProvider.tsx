@@ -1,7 +1,15 @@
 "use client";
-import { createContext, memo, ReactNode, useContext, useReducer } from "react";
+import {
+  createContext,
+  memo,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import { Product } from "./ProductProvider";
-
+import usePersistState from "./usePersistState";
 interface CartItem {
   id: string;
   name: string;
@@ -17,28 +25,8 @@ interface CartState {
 type CartAction =
   | { type: "ADD_ITEM"; payload: CartItem }
   | { type: "REMOVE_ITEM"; payload: string }
-  | { type: "CLEAR_CART" };
-
-// Reducer Function
-const cartReducer = (state: CartState, action: CartAction): CartState => {
-  switch (action.type) {
-    case "ADD_ITEM":
-      const items = [...state.items];
-      if (!items.find((item) => item.id === action.payload.id)) {
-        return { ...state, items: [...items, action.payload] };
-      }
-
-    case "REMOVE_ITEM":
-      return {
-        ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
-      };
-    case "CLEAR_CART":
-      return { ...state, items: [] };
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-};
+  | { type: "CLEAR_CART" }
+  | { type: "INITIALIZE"; payload: CartState };
 
 interface CartContextType {
   state: CartState;
@@ -47,14 +35,46 @@ interface CartContextType {
   removeProductFromCart: (productId: string) => void;
   clearCart: () => void;
 }
-
 export const CartContext = createContext<CartContextType | undefined>(
   undefined,
 );
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const initialState: CartState = { items: [] };
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  // Reducer Function
+  const [cart, setCart] = usePersistState("cart", initialState); // Retrieves persisted data
+  const cartReducer = (state: CartState, action: CartAction): CartState => {
+    switch (action.type) {
+      case "ADD_ITEM":
+        const items = [...state.items];
+
+        if (!items.find((item) => item.id === action.payload.id)) {
+          const newState = { ...state, items: [...items, action.payload] };
+          setCart(newState);
+          return newState;
+        }
+
+      case "REMOVE_ITEM":
+        const newState = {
+          ...state,
+          items: state.items.filter((item) => item.id !== action.payload),
+        };
+        setCart(newState);
+        return newState;
+      case "CLEAR_CART":
+        setCart({ items: [] });
+        return { ...state, items: [] };
+      case "INITIALIZE":
+        return action.payload;
+      default:
+        throw new Error(`Unhandled action type: ${action.type}`);
+    }
+  };
+
+  const [state, dispatch] = useReducer(cartReducer, cart); // Initializes context with persisted data
+  useEffect(() => {
+    dispatch({ type: "INITIALIZE", payload: cart });
+  }, [cart]);
   const addProductToCart = (product: Product) => {
     dispatch({
       type: "ADD_ITEM",

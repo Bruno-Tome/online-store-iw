@@ -1,5 +1,12 @@
-import React, { createContext, useReducer, ReactNode, useContext } from "react";
+import React, {
+  createContext,
+  useReducer,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 import { authApi, usersApi } from "../api/apiClient";
+import usePersistState from "./usePersistState";
 
 // Define User Type
 interface User {
@@ -15,23 +22,14 @@ interface UserState {
 }
 
 // Define Action Types
-type UserAction = { type: "LOGIN"; payload: User } | { type: "LOGOUT" };
+type UserAction =
+  | { type: "LOGIN"; payload: User }
+  | { type: "LOGOUT" }
+  | { type: "INITIALIZE"; payload: UserState };
 
 // Initial State
 const initialState: UserState = {
   user: null,
-};
-
-// Reducer Function
-const userReducer = (state: UserState, action: UserAction): UserState => {
-  switch (action.type) {
-    case "LOGIN":
-      return { ...state, user: action.payload };
-    case "LOGOUT":
-      return { ...state, user: null };
-    default:
-      throw new Error(`Unhandled action type: ${(action as UserAction).type}`);
-  }
 };
 
 // Context Type
@@ -47,11 +45,32 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Provider Component
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(userReducer, initialState);
+  const [userData, setUserData] = usePersistState("userData", initialState);
+
+  // Reducer Function
+  const userReducer = (state: UserState, action: UserAction): UserState => {
+    switch (action.type) {
+      case "LOGIN":
+        const newState = { ...state, user: action.payload };
+        setUserData(newState);
+        return newState;
+      case "LOGOUT":
+        setUserData(initialState);
+        return { ...state, user: null };
+      case "INITIALIZE":
+        return action.payload;
+      default:
+        throw new Error(
+          `Unhandled action type: ${(action as UserAction).type}`,
+        );
+    }
+  };
+
+  const [state, dispatch] = useReducer(userReducer, userData);
   const login = async (user: User) => {
     try {
       const response = await authApi.login(user.email, user.password);
-      dispatch({ type: "LOGIN", payload: user });
+      dispatch({ type: "LOGIN", payload: response.data });
     } catch (error) {
       console.error("Error logging in", error);
     }
@@ -59,6 +78,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     dispatch({ type: "LOGOUT" });
   };
+
   return (
     <UserContext.Provider
       value={{
