@@ -56,11 +56,26 @@ export class ProductsService implements OnModuleInit {
   }
 
   async delete(id: string): Promise<Product> {
+    const product = await this.productModel.findById(id);
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    if (product.orderCount > 0) {
+      throw new Error('Cannot delete a product that has associated orders');
+    }
+
     return this.productModel.findByIdAndDelete(id).exec();
   }
   async updateStock(id: string, stock: number): Promise<Product> {
     return this.productModel
       .findByIdAndUpdate(id, { stock }, { new: true })
+      .exec();
+  }
+
+  async updateOrderCount(id: string, count: number): Promise<Product> {
+    return this.productModel
+      .findByIdAndUpdate(id, { $inc: { orderCount: count } }, { new: true })
       .exec();
   }
   async deleteAll(): Promise<any> {

@@ -39,11 +39,16 @@ export class OrdersService {
     // Update product stock
     for (const item of items) {
       const product = await this.productsService.findOne(item.productId);
+
       if (!product || product.stock < item.quantity) {
         throw new ForbiddenException(
           `Product ${item.productId} does not exist or insufficient stock.`,
         );
       } else {
+        await this.productsService.updateOrderCount(
+          item.productId,
+          item.quantity,
+        );
         await this.productsService.updateStock(
           item.productId,
           product.stock - item.quantity,
@@ -66,6 +71,27 @@ export class OrdersService {
 
   async update(updateOrderDto: UpdateOrderDto): Promise<Order> {
     const { id, ...data } = updateOrderDto;
+    // Update product stock
+    const order = await this.findOne(id);
+    if (!order) {
+      throw new ForbiddenException(`Order ${id} does not exist.`);
+    }
+
+    for (const item of data.items) {
+      const product = await this.productsService.findOne(item.productId);
+      const oldItem = order.items.find((i) => i.productId === item.productId);
+      if (oldItem) {
+        await this.productsService.updateStock(
+          item.productId,
+          product.stock + oldItem.quantity - item.quantity,
+        );
+        await this.productsService.updateOrderCount(
+          item.productId,
+          item.quantity - oldItem.quantity,
+        );
+      }
+    }
+
     return this.orderModel
       .findByIdAndUpdate(
         id,
