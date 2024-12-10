@@ -1,4 +1,20 @@
-# online-store-iw
+# Online Store Project
+
+# Table of Contents
+
+1. [Project Report](#project-report)
+2. [Requirements](#requirements)
+3. [Stored data](#stored-data)
+4. [Project Description](#project-description)
+5. [Comments About the Code](#comments-about-the-code)
+6. [Test Plan](#test-plan)
+7. [API Documentation](#api-documentation)
+8. [HTTP Client](#http-client)
+9. [Build Procedures](#build-procedures)
+10. [Running the Frontend Locally](#running-the-frontend-locally)
+11. [Running the Backend Locally](#running-the-backend-locally)
+12. [To Do](#to-do)
+
 Online store repo for the group assignment
 
 Online Store built using Next.js, Nest, TailwindUi and Mongo
@@ -8,8 +24,9 @@ Figma link with navigation diagram: https://www.figma.com/design/JvARrYxnhTTfzOW
 # Project Report
 
 ## Group Identification
-- **Group Name**: [Insert Group Name]
-- **Members**: 
+
+- **Group Name**: [The 🐐s]
+- **Members**:
   - Felipe Cecato - 12547785
   - Bruno Tomé Rosa - 10276654
   - Gustavo Barbosa Sanchez - 11802440
@@ -17,10 +34,23 @@ Figma link with navigation diagram: https://www.figma.com/design/JvARrYxnhTTfzOW
 ---
 
 ## Requirements
+
 The initial requirements for this online store project were provided in the assignment. However, the following additional requirements were implemented:
+
 1. **User Authentication**: Implemented using NextAuth.js for secure user login and session management.
 2. **Cart Functionality**: Ability to add, remove, and update items in the cart, stored locally using `localStorage`.
-
+3. **Order Management**: Users can view their order history and order details.
+4. **Admin Panel**: Includes pages for managing products, orders, and users.
+5. **Responsive Design**: Ensured the application is responsive and works well on different devices.
+6. **Testing**: Implemented unit and integration tests using Jest and React Testing Library.
+7. **API Documentation**: Provided Swagger documentation for the backend API.
+8. **HTTP Client**: Included a guide on using the Rest HTTP Client extension for testing API endpoints.
+9. **Docker Compose**: Configured a Docker Compose environment for running the backend, frontend, and MongoDB services together.
+10. **Context API**: Implemented a context store to manage global state and share data between components.
+11. **Componentization**: Created reusable components for the UI elements and pages.
+12. **Route Guards**: Implemented route guards for admin pages to restrict access to unauthorized users.
+13. **Profile Page**: Added a profile page for users to view and update their account information.
+14. **Stock Management**: Displayed product stock information in the admin product management page.
 
 ## Stored data
 
@@ -28,19 +58,21 @@ The initial requirements for this online store project were provided in the assi
 - Products
 - Orders
 
-
 ## Project Description
+
 This project is an e-commerce web application built using **Next.js** and **Tailwind UI**. The application allows users to browse products, add them to a cart, and proceed to checkout. It also includes a backend API to manage products, users, and orders.
 
 ### Key Features:
+
 - **Next.js for Server-Side Rendering (SSR)**: Provides fast load times and better SEO by pre-rendering pages on the server.
 - **Tailwind CSS for Styling**: Utilized Tailwind UI components for responsive and modern UI design.
 
 ---
 
 ## Comments About the Code
+
 - **Folder Structure**: The project follows the standard Next.js folder structure. Components are organized in the `/components` folder, while pages are placed inside their respective folder.
-- **Code Documentation**: Each function is documented using JSDoc for better readability. For example:
+<!-- - **Code Documentation**: Each function is documented using JSDoc for better readability. For example:
   ```js
   /**
    * Adds a product to the cart.
@@ -49,21 +81,28 @@ This project is an e-commerce web application built using **Next.js** and **Tail
   const addToCart = (product) => {
     // Implementation here
   };
-  ```
+  ``` -->
 - **Reusable Components**: The UI components are built to be reusable across multiple pages (e.g., `ProductCard`, `CartItem`, `Button`).
 
 ---
 
 ## Test Plan
-We will implement both unit and integration tests using **Jest** and **React Testing Library**.
+
+We will implement both unit and integration tests using **Jest**.
 
 ### Unit Tests:
+
 - **Product Component**: Verifies the rendering of product details.
 - **Cart Functionality**: Tests add, update, and remove operations.
+- **Order Management**: Ensures the correct display of order details.
 
 ### Integration Tests:
+
 - **Product Page**: Ensures the correct display of product details and interactions.
+- **Cart Page**: Verifies the cart functionality, including adding, updating, and removing items.
+- **Order History**: Tests the display of order history and details.
 - **Checkout Process**: Verifies the payment process from cart to Stripe integration.
+
 ---
 
 ## API Documentation
@@ -71,11 +110,13 @@ We will implement both unit and integration tests using **Jest** and **React Tes
 The backend API is built using **Nest.js** and provides endpoints to manage products, users, and orders. To access the swagger documentation, run the backend server and navigate to `http://localhost:3000/api`.
 
 ---
+
 ## HTTP Client
 
 The HTTP client used in this project is the Rest HTTP Client extension for Visual Studio Code. This extension allows us to send HTTP requests directly from the editor, making it easier to test the backend API endpoints and share the requests with the team.
 
 ### Installation:
+
 1. Install the **Rest HTTP Client** extension from the Visual Studio Code Marketplace.
 2. Open the file with the `.http` extension (e.g., `client.http`).
 3. Click on the **Send Request** button next to the request you want to execute.
@@ -84,7 +125,9 @@ The HTTP client used in this project is the Rest HTTP Client extension for Visua
 ---
 
 ## Build Procedures
+
 ### Prerequisites:
+
 1. Install Node.js (version 18.x or higher).
 2. Install npm (included with Node.js installation).
 
@@ -95,17 +138,18 @@ This guide provides instructions to run the Docker Compose environment, which in
 ---
 
 ### Prerequisites
+
 1. **Install Docker**  
    Ensure Docker and Docker Compose are installed on your system:
    - [Docker Installation Guide](https://docs.docker.com/get-docker/)
    - [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
 
-
-
 ### Steps to Run the Environment
 
 #### 1. **Start All Services**
+
 To run all services together:
+
 ```bash
 docker-compose up --build
 ```
@@ -121,29 +165,38 @@ docker-compose up --build
 If you want to run a specific service, use the `docker-compose up` command with the service name.
 
 ##### a. **Run the Backend**
+
 ```bash
 docker-compose up --build backend
 ```
+
 - Exposed at: `http://localhost:3000`
 - Automatically connects to the MongoDB instance.
 
 ##### b. **Run the Front-end**
+
 ```bash
 docker-compose up --build front-end
 ```
+
 - Exposed at: `http://localhost:4000`
 
 ##### c. **Run MongoDB**
+
 ```bash
 docker-compose up mongo
 ```
+
 - Accessible at: `mongodb://localhost:27017`
 
 #### 3. **Stop Services**
+
 To stop the environment, press `Ctrl+C` in the terminal running `docker-compose up`. Alternatively, you can stop all services with:
+
 ```bash
 docker-compose down
 ```
+
 This will remove containers but retain volumes (like database data).
 
 ---
@@ -152,6 +205,7 @@ This will remove containers but retain volumes (like database data).
 
 1. **Persistent MongoDB Data**  
    Data stored in MongoDB is persisted in the `mongo-data` volume. If you want to remove this data, run:
+
    ```bash
    docker volume rm project-root_mongo-data
    ```
@@ -168,7 +222,8 @@ This will remove containers but retain volumes (like database data).
 ---
 
 ## Running the Frontend Locally
-1. ** CD into the frontend folder
+
+1. \*\* CD into the frontend folder
 2. **Install dependencies**:
    ```bash
    npm install
@@ -182,7 +237,8 @@ This will remove containers but retain volumes (like database data).
 6. **Open your browser** and navigate to `http://localhost:4000` to view the application. (note: the port may vary depending on your configuration, if running directly on your machine, the port will be 5000)
 
 ## Running the Backend Locally
-1. ** CD into the backend folder
+
+1. \*\* CD into the backend folder
 2. **Install dependencies**:
    ```bash
    npm install
@@ -197,6 +253,7 @@ This will remove containers but retain volumes (like database data).
    Navigate to `http://localhost:3000` to view the application.
 
 ### Installation Steps:
+
 1. Clone the repository:
 2. Install dependencies:
    ```bash
@@ -204,8 +261,9 @@ This will remove containers but retain volumes (like database data).
    ```
 3. Set up environment variables:
    Create a `.env.local` file with the following variables:
+
    ```bash
- 
+
    ```
 
 4. Start the development server:
@@ -214,107 +272,89 @@ This will remove containers but retain volumes (like database data).
    ```
 
 ### Build for production:
+
 ```bash
 npm run build
 ```
-<!-- 
+
 ### Running tests:
-1. For unit and integration tests:
+
+1. For unit and integration tests, in each repo:
+
    ```bash
    npm run test
    ```
-2. For end-to-end tests:
-   ```bash
-   npm run cypress:open
-   ``` -->
 
----
----
-## Pages to Be Done
+   <!-- 2. For end-to-end tests:
+      ```bash
+      npm run cypress:open -->
 
-<s>1. **Home Page**  
-   - Displays featured products and promotional content</s>
+   ```
 
-  <s>2. **Product Listing Page**   - Shows all available products with filters for category, price, and availability</s>.
-
-  <s>3. **Product Detail Page**   - Provides detailed information about a single product, including images, description, and reviews</s>.
-
-  <s>4. **Cart Page**   - Shows items added to the cart with options to update quantities or remove items</s>.
-
-
-<s>5. **Checkout Page**  
-   - Collects user information and payment details to complete the order.</s>
-
-<s>6. **Order Confirmation Page**  
-   - Displays a confirmation message after a successful order, along with order details.</s>
-
-<s>7. **User Login Page**  
-   - Allows users to log into their accounts.</s>
-
-<s?>8. **User Profile Page**  
-   - Shows user account details and past orders.</s>
-
-<s>9. **Order History Page**  
-    - Lists previous orders with details such as order date, total, and status.</s>
-
-<s>10. **Error Page (404)**  
-    - Displays a message when a page is not found.</s>
+   ```
 
 ### Admin Pages
 
+11. **Product Management Page**
 
-11. **Product Management Page**  
     - Allows admin to view, add, edit, or delete products in the store.
 
-12. **Order Management Page**  
+12. **Order Management Page**
+
     - Lists all orders with details, statuses, and options to update order status or handle returns.
 
-13. **User Management Page**  
+13. **User Management Page**
     - Provides a list of registered users with options to view details, edit information, or delete accounts.
 
 ## To Do
-### Context Store => 
+
+### Context Store =>
+
 Important: Update the context use the useReducer hook to fix context providers
+
 - [x] Create Provider Wrappers
 - [x] Create Provider for Cart
   - [x] Create a context to store the cart state
 - [x] Create Provider for Products
   - [x] Create a context for the product data (List of products, current product)
 - [x] Create Provider for Orders
-  - [x] Create a context for the order data (List of orders, current order) 
-  - [ ] Create a context for the current order being done
+  - [x] Create a context for the order data (List of orders, current order)
+  - [x] Create a context for the current order being done
 - [ ] Create Provider for Auth
   - [ ] Create a context to store the user data
   - [ ] Create a context for the login status
   - [ ] Use Auth provider to wrap the app and routes that require authentication
 
 ### API interface
-- [ ] integrate api client with context update calls 
+
+- [x] integrate api client with context update calls
 
 ### Components and integration
 
-- [ ] Componentize the app
-  - [ ] Store
-      - [ ] Create a component for the Navbar
-      - [ ] Create a component for the Product Card
-        - [ ] Fetch products from the API
-      - [ ] Create a component for the Cart Item
-        - [ ] Fetch cart items from the context
+- [x] Componentize the app
+  - [x] Store
+    - [x] Create a component for the Navbar
+    - [x] Create a component for the Product Card
+      - [x] Fetch products from the API
+    - [x] Create a component for the Cart Item
+      - [x] Fetch cart items from the context
     - [ ] Profile
       - [ ] Create a component for the Profile Page and Update
         - [ ] Fetch user data from the context and update with API
-  - [ ] Admin 
-    - [ ] Create shareable components for the Admin pages
-    - [ ] Componentize Orders
-      - [ ] Fetch orders from the API
-      - [ ] Update order with PopUp
-    - [ ] Componentize Users
-      - [ ] Fetch users from the API
-      - [ ] Update user with PopUp
-    - [ ] Componentize Products
-      - [ ] Fetch products from the API
-      - [ ] Update user with PopUp
-
+- [ ] Admin
+  - [ ] Create shareable components for the Admin pages
+  - [ ] Componentize Orders
+    - [ ] Fetch orders from the API
+    - [ ] Update order with PopUp
+  - [ ] Componentize Users
+    - [ ] Fetch users from the API
+    - [ ] Update user with PopUp
+  - [ ] Componentize Products
+    - [ ] Fetch products from the API
+    - [ ] make sure to show stock
+    - [ ] Update products with PopUp
+  - [ ] Implement route guards for admin pages
 
 ## Comments
-The project successfully fulfills the requirements set out for an online store with additional features like user authentication,   and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.
+
+The project successfully fulfills the requirements set out for an online store with additional features like user authentication, and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.
