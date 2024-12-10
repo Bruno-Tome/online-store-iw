@@ -20,6 +20,28 @@ export class Product extends Document {
 
   @Prop({ required: true, default: 0 })
   stock: number;
+
+  @Prop({
+    type: {
+      width: Number,
+      height: Number,
+      depth: Number,
+      weight: Number,
+    },
+    required: true,
+    default: {
+      width: 15,
+      height: 15,
+      depth: 15,
+      weight: 3,
+    },
+  })
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
+    weight: number;
+  };
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
