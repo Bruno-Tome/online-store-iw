@@ -331,11 +331,14 @@ Important: Update the context use the useReducer hook to fix context providers
 
 ### Components and integration
 
+#### Front End
+
 - [x] Componentize the app
   - [x] Store
     - [x] Create a component for the Navbar
     - [x] Create a component for the Product Card
       - [x] Fetch products from the API
+      - [ ] Make variable quantity of products in the cart
     - [x] Create a component for the Cart Item
       - [x] Fetch cart items from the context
     - [ ] Profile
@@ -354,6 +357,21 @@ Important: Update the context use the useReducer hook to fix context providers
     - [ ] make sure to show stock
     - [ ] Update products with PopUp
   - [ ] Implement route guards for admin pages
+  - [x] Persist Cart Data and User data
+
+#### Backend
+
+- [ ] Implement additional data for users
+  - [ ] CEP
+  - [ ] adress
+  - [ ] phone
+  - [ ] email
+- [ ] Implement additional data for products
+  - [ ] Products sold
+  - [ ] Dimensions
+- [ ] Create a personal implementation
+  - [ ] Create a quotation for a product
+  - [ ] Use quotation on Order
 
 ## Comments
 
