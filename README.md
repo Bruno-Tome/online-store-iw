@@ -367,8 +367,9 @@ Important: Update the context use the useReducer hook to fix context providers
   - [ ] phone
   - [ ] email
 - [ ] Implement additional data for products
-  - [ ] Products sold
+  - [x] Products sold
   - [ ] Dimensions
+- [ ] Implement Quotation Service
 - [ ] Create a personal implementation
   - [ ] Create a quotation for a product
   - [ ] Use quotation on Order

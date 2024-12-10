@@ -71,11 +71,11 @@ Authorization: Bearer {{authToken}}
 }
 
 ### GET Product by ID
-GET {{baseUrl}}/products/674e3d556cff29ac806a6f67 HTTP/1.1
+GET {{baseUrl}}/products/6757776fcccd060ca2493b97 HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ### PATCH Update Product
-PATCH {{baseUrl}}/products/674e3d556cff29ac806a6f67 HTTP/1.1
+PATCH {{baseUrl}}/products/6757776fcccd060ca2493b97 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -103,11 +103,11 @@ Authorization: Bearer {{authToken}}
    "customerId": "674f7ae18a1fcfb155458efb",
    "items": [
        {
-           "productId": "674e466348eeabf9ee2865d6",
+           "productId": "6757776fcccd060ca2493ba9",
            "quantity": 5 
        },
        {
-           "productId": "674e466548eeabf9ee2865d8",
+           "productId": "6757776fcccd060ca2493b97",
            "quantity": 5
        }
    ]
@@ -121,3 +121,97 @@ Authorization: Bearer {{authToken}}
 ### List of Orders by Customer ID
 GET {{baseUrl}}/orders/customer/674f7ae18a1fcfb155458efb HTTP/1.1
 Authorization: Bearer {{authToken}}
+
+
+### Quotations Routes
+
+### Calculate Quotation
+
+POST {{baseUrl}}/quotation/calculate HTTP/1.1
+Content-Type: application/json
+
+{
+   "from": {"postal_code":"12345678"},
+   "to":{"postal_code":"87654321"} ,
+
+   "products": [
+         {
+            "width": 11,
+            "height": 17,
+            "length": 11,
+            "weight": 0.3,
+            "insuranceValue": 10.1,
+            "quantity": 1
+         },
+         {
+            "width": 16,
+            "height": 25,
+            "length": 11,
+            "weight": 0.3,
+            "insuranceValue": 55.05,
+            "quantity": 2
+         },
+         {
+            "width": 22,
+            "height": 30,
+            "length": 11,
+            "weight": 1,
+            "insuranceValue": 30,
+            "quantity": 1
+         }
+   ]
+}
+
+
+### Calculate Quotation directly from Melhor Envio API
+POST https://melhorenvio.com.br/api/v2/me/shipment/calculate HTTP/1.1
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZWFiN2E0NmM5NmNkY2JlNzA0MGI2OTM5YjE4YmM1YWYzMGJiYmVmZGU3ZmNlZTg0OGQ3NDU1YTY4ZmQ0NWE1NzJmNTZkNTAwYTA3MzhiM2UiLCJpYXQiOjE3MzM4NjgxMDguNTQzODkxLCJuYmYiOjE3MzM4NjgxMDguNTQzODkyLCJleHAiOjE3NjU0MDQxMDguNTI0NzQzLCJzdWIiOiI5ZGIxYmE4Yy03ZDEzLTQzZDItYjYzNi1iNjNlYmY0ZTYxOTEiLCJzY29wZXMiOlsiY2FydC1yZWFkIiwiY2FydC13cml0ZSIsImNvbXBhbmllcy1yZWFkIiwiY29tcGFuaWVzLXdyaXRlIiwiY291cG9ucy1yZWFkIiwiY291cG9ucy13cml0ZSIsIm5vdGlmaWNhdGlvbnMtcmVhZCIsIm9yZGVycy1yZWFkIiwicHJvZHVjdHMtcmVhZCIsInByb2R1Y3RzLWRlc3Ryb3kiLCJwcm9kdWN0cy13cml0ZSIsInB1cmNoYXNlcy1yZWFkIiwic2hpcHBpbmctY2FsY3VsYXRlIiwic2hpcHBpbmctY2FuY2VsIiwic2hpcHBpbmctY2hlY2tvdXQiLCJzaGlwcGluZy1jb21wYW5pZXMiLCJzaGlwcGluZy1nZW5lcmF0ZSIsInNoaXBwaW5nLXByZXZpZXciLCJzaGlwcGluZy1wcmludCIsInNoaXBwaW5nLXNoYXJlIiwic2hpcHBpbmctdHJhY2tpbmciLCJlY29tbWVyY2Utc2hpcHBpbmciLCJ0cmFuc2FjdGlvbnMtcmVhZCIsInVzZXJzLXJlYWQiLCJ1c2Vycy13cml0ZSIsIndlYmhvb2tzLXJlYWQiLCJ3ZWJob29rcy13cml0ZSIsIndlYmhvb2tzLWRlbGV0ZSIsInRkZWFsZXItd2ViaG9vayJdfQ.x-lng4BKnFvPX0zNboHDPBGGhdwP4e0nko5Le13gdUbsPRbF1ZZnqXia3b6y-Hybp3__VK3fWLy_ZGhkWmaa_NVyIs19XPgJXbPZ0WwNCjL3ZZxLV2EQWwLP9qvIyLCUQTxoHLVQmszvWFancYrxOdH8pYB-LpDxealW-FlB2YC6jXPngeENCDho42j6KpwKfVxrU2WRs8exsq9BWg0dpaO1ZK9uWETHaCjQjlFsjTvGBS3i25oZILCI24vsbWN98XmUP4Ym20ohYL9bJ_84T2_83ICNRazct24bNg5w2BtbFiH8lEYC68-JqwHe95O5evD9VPkWrOCXGC3eMUfz1MDkOvxDaIXKdSolkrLyAGiXK8E-L77u252Ok-Gg3I1PLOLnPXZqYodGQ1eO9MojxSkAooRK_dWzZv9plJlDk8iJwkFwaQYtszVqijRFhHMrFH3XrS4oJLNLdgPsKsZ8bOzJlS65nKeGfp1RCnd7NyLPxl4ueupMu5TpVc825vRzd0Of6ra0KMuxl8wqDbU0JUSa6vNSTpySP122LXfkhjIAuT1m4APH-wDW-Io-WPsiEPWu7diMBEg_kAD_E036hcLZUU3OuXVASXJl5G0wqu3flnB4iVY3QPrG6zxL7pJedKLFyVBzTGPTle30rho40nz62ZiZIfdxk3wkbw2JRB4
+Content-Type: application/json
+User-Agent: bruno.tome@gmail.com
+
+{
+  "from": {
+    "postal_code": "96020360"
+  },
+  "to": {
+    "postal_code": "01018020"
+  },
+  "products": [
+    {
+      "id": "x",
+      "width": 11,
+      "height": 17,
+      "length": 11,
+      "weight": 0.3,
+      "insurance_value": 10.1,
+      "quantity": 1
+    },
+    {
+      "id": "y",
+      "width": 16,
+      "height": 25,
+      "length": 11,
+      "weight": 0.3,
+      "insurance_value": 55.05,
+      "quantity": 2
+    },
+    {
+      "id": "z",
+      "width": 22,
+      "height": 30,
+      "length": 11,
+      "weight": 1,
+      "insurance_value": 30,
+      "quantity": 1
+    }
+  ],
+
+    "options": {
+        "insurance_value": 1180.87,
+        "receipt": false,
+        "own_hand": false
+    },
+    "services": "1,2,3,4,7,11"
+
+}
