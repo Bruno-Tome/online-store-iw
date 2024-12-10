@@ -34,10 +34,8 @@ export class OrdersService {
   //     }
   //   }
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
-    const { items, customerId, quotation } = createOrderDto;
-
     // Update product stock
-    for (const item of items) {
+    for (const item of createOrderDto.items) {
       const product = await this.productsService.findOne(item.productId);
 
       if (!product || product.stock < item.quantity) {
@@ -56,7 +54,7 @@ export class OrdersService {
       }
     }
 
-    const order = new this.orderModel({ customerId, items, quotation });
+    const order = new this.orderModel(createOrderDto);
     return order.save();
   }
   async findAll(): Promise<Order[]> {

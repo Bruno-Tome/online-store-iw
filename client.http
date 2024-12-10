@@ -27,9 +27,12 @@ Authorization: Bearer {{authToken}}
 
 {
    "name": "John Doe",
-   "email": "john.doe@example.com",
+   "email": "john.doe10@example.com",
    "password": "password123",
-   "roles": ["admin"]
+   "roles": ["admin"],
+   "cep": "96020360",
+   "address": "Rua dos Andradas",
+   "phone": "5555555555"
 }
 
 ### GET User by ID

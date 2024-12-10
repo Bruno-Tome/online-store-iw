@@ -361,11 +361,10 @@ Important: Update the context use the useReducer hook to fix context providers
 
 #### Backend
 
-- [ ] Implement additional data for users
-  - [ ] CEP
-  - [ ] adress
-  - [ ] phone
-  - [ ] email
+- [x] Implement additional data for users
+  - [x] CEP
+  - [x] adress
+  - [x] phone
 - [x] Implement additional data for products
   - [x] Products sold
   - [x] Dimensions
