@@ -1,6 +1,6 @@
 ### Variables
 @baseUrl = http://localhost:3000
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzMjYzMDE5LCJleHAiOjE3MzMyNjY2MTl9.jzy8kJszh3tgu8bI3902jvUVIPFKQLBuIo0EMNIxCec  # Replace with a valid token if needed
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzODcwMjEzLCJleHAiOjE3MzM4NzM4MTN9.W1gjhRPgbfclayyjrt_DfReCAfiNNUHo60BYAs1SCGk  # Replace with a valid token if needed
 
 
 ### Auth Routes
@@ -103,14 +103,18 @@ Authorization: Bearer {{authToken}}
    "customerId": "674f7ae18a1fcfb155458efb",
    "items": [
        {
-           "productId": "6757776fcccd060ca2493ba9",
-           "quantity": 5 
+           "productId": "6757776fcccd060ca2493b9f",
+           "quantity": 1
        },
        {
-           "productId": "6757776fcccd060ca2493b97",
-           "quantity": 5
+           "productId": "6757776fcccd060ca2493ba5",
+           "quantity": 1
        }
-   ]
+   ],
+   "quotation": {
+    "id": "1",
+    "price": 50
+   }
 }
 
 ### GET Order by ID

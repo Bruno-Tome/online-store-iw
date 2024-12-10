@@ -366,12 +366,12 @@ Important: Update the context use the useReducer hook to fix context providers
   - [ ] adress
   - [ ] phone
   - [ ] email
-- [ ] Implement additional data for products
+- [x] Implement additional data for products
   - [x] Products sold
   - [x] Dimensions
 - [x] Implement Quotation Service
-- [ ] Create a personal implementation
-  - [ ] Use quotation on Order
+- [x] Create a personal implementation
+  - [x] Use quotation on Order
 
 ## Comments
 

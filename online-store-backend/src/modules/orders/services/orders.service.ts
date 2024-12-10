@@ -34,7 +34,7 @@ export class OrdersService {
   //     }
   //   }
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
-    const { items, customerId } = createOrderDto;
+    const { items, customerId, quotation } = createOrderDto;
 
     // Update product stock
     for (const item of items) {
@@ -56,7 +56,7 @@ export class OrdersService {
       }
     }
 
-    const order = new this.orderModel({ customerId, items });
+    const order = new this.orderModel({ customerId, items, quotation });
     return order.save();
   }
   async findAll(): Promise<Order[]> {
