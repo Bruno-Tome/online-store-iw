@@ -1,6 +1,5 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
 import { useApi } from "./ApiProvider";
-// import { productsApi } from "../api/apiClient";
 
 // Define Product Type
 export interface Product {
@@ -28,7 +27,8 @@ export interface ProductState {
 // Define Action Types
 type ProductAction =
   | { type: "SET_PRODUCTS"; payload: Product[] }
-  | { type: "SET_SELECTED_PRODUCT"; payload: Product };
+  | { type: "SET_SELECTED_PRODUCT"; payload: Product }
+  | { type: "ADD_PRODUCT"; payload: Product };
 
 // Initial State
 const initialState: ProductState = {
@@ -53,13 +53,15 @@ const initialState: ProductState = {
 // Reducer Function
 const productReducer = (
   state: ProductState,
-  action: ProductAction,
+  action: ProductAction
 ): ProductState => {
   switch (action.type) {
     case "SET_PRODUCTS":
       return { ...state, products: action.payload };
     case "SET_SELECTED_PRODUCT":
       return { ...state, selectedProduct: action.payload };
+    case "ADD_PRODUCT":
+      return { ...state, products: [...state.products, action.payload] };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -72,6 +74,7 @@ interface ProductContextType {
   fetchProducts: () => Promise<void>;
   setProduct: (productId: string) => Promise<void>;
   fetchProductById: (productId: string) => Promise<void>;
+  addProduct: (newProduct: Omit<Product, "_id">) => Promise<void>;
 }
 
 // Create Context
@@ -81,6 +84,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
   const { productsApi } = useApi();
+
   const fetchProducts = async () => {
     try {
       const response = await productsApi.getProducts();
@@ -108,9 +112,25 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  const addProduct = async (newProduct: Omit<Product, "_id">) => {
+    try {
+      const response = await productsApi.createProduct(newProduct);
+      dispatch({ type: "ADD_PRODUCT", payload: response.data });
+    } catch (error) {
+      console.error("Failed to add product:", error);
+    }
+  };
+
   return (
     <ProductContext.Provider
-      value={{ state, dispatch, fetchProducts, setProduct, fetchProductById }}
+      value={{
+        state,
+        dispatch,
+        fetchProducts,
+        setProduct,
+        fetchProductById,
+        addProduct, // Adicionado aqui
+      }}
     >
       {children}
     </ProductContext.Provider>
@@ -127,37 +147,3 @@ export const useProductContext = () => {
 };
 
 export { ProductProvider };
-/*
-import React from 'react';
-import { useProductContext } from './context/ProductContext';
-
-const ProductList: React.FC = () => {
-    const { state, dispatch } = useProductContext();
-
-    const handleProductSelect = (product: Product) => {
-        dispatch({ type: 'SET_SELECTED_PRODUCT', payload: product });
-    };
-
-    return (
-        <div>
-            <h1>Product List</h1>
-            {state.products.map((product) => (
-                <div key={product._id} onClick={() => handleProductSelect(product)}>
-                    <h2>{product.name}</h2>
-                    <p>{product.description}</p>
-                    <p>${product.price}</p>
-                </div>
-            ))}
-            {state.selectedProduct && (
-                <div>
-                    <h2>Selected Product</h2>
-                    <p>{state.selectedProduct.name}</p>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default ProductList;
-
-*/
