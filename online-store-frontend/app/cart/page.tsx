@@ -29,8 +29,6 @@ export default function CartPage() {
     }
   }, [cartState.items]);
   const quote = cartState.quote;
-  console.log("quotations", cartState.quotations);
-  console.log("quote", cartState.quote);
   const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
   return (
     <div className="bg-white">

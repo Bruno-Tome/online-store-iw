@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../providers/UserProvider";
+import Link from "next/link";
 
 /*
   This example requires some changes to your config:
@@ -118,12 +119,13 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{" "}
-            <a
-              href="#"
+            <Link
+              href="/register"
+              shallow
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
               Start a 14 day free trial
-            </a>
+            </Link>
           </p>
         </div>
       </div>

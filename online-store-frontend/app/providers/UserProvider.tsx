@@ -12,7 +12,7 @@ import { useApi } from "./ApiProvider";
 // Define User Type
 export interface User {
   id: string;
-  username: string;
+  name: string;
   password: string;
   accessToken: string;
   roles: string[];
@@ -26,16 +26,16 @@ export interface UserState {
 }
 
 interface Profile {
-  _id: string;
+  _id?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   CEP?: string;
   phone?: string;
-  adress?: string;
-  roles: string[];
-  __v: number;
-  createdAt: string;
+  address?: string;
+  roles?: string[];
+  __v?: number;
+  createdAt?: string;
 }
 
 // Define Action Types
@@ -50,7 +50,7 @@ type UserAction =
 export const initialUserState: UserState = {
   user: {
     id: "",
-    username: "",
+    name: "",
     password: "",
     accessToken: "",
     roles: [],
@@ -71,7 +71,9 @@ interface UserContextType {
   }) => Promise<boolean>;
   logout: () => void;
   fetchProfile: () => void;
+  updateProfile: (profile: Profile) => void;
   fetchUsers: () => void;
+  register: (user: Profile) => Promise<boolean>;
   // createUser
   // updateUser
   // deleteUser
@@ -97,7 +99,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           ...state,
           user: {
             id: "",
-            username: "",
+            name: "",
             password: "",
             accessToken: "",
             roles: [],
@@ -146,7 +148,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const fetchProfile = async () => {
     try {
       const response = await usersApi.getUserById(state.user.id);
-      dispatch({ type: "LOGIN", payload: response.data });
+      dispatch({ type: "FETCH_PROFILE", payload: response.data });
     } catch (error) {
       console.error("Error fetching profile", error);
     }
@@ -160,7 +162,23 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       console.error("Error fetching users", error);
     }
   };
-
+  const updateProfile = async (profile: Profile) => {
+    try {
+      const response = await usersApi.updateUser(state.user.id, profile);
+      dispatch({ type: "FETCH_PROFILE", payload: response.data });
+    } catch (error) {
+      console.error("Error updating profile", error);
+    }
+  };
+  const register = async (user: Profile) => {
+    try {
+      await usersApi.createUser(user);
+      return true;
+    } catch (error) {
+      console.error("Error registering user", error);
+      return false;
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -170,6 +188,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         logout,
         fetchProfile,
         fetchUsers,
+        updateProfile,
+        register,
       }}
     >
       {children}
