@@ -32,7 +32,7 @@ export class CreateProductDto {
   dimensions: {
     width: number;
     height: number;
-    depth: number;
+    length: number;
     weight: number;
   };
 }

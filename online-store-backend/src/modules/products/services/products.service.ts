@@ -23,6 +23,12 @@ export class ProductsService implements OnModuleInit {
           stock: 10,
           images: ['https://picsum.photos/200', 'https://picsum.photos/200'],
           description: 'This is a product description',
+          dimensions: {
+            width: 10,
+            height: 10,
+            length: 10,
+            weight: 10,
+          },
         } as CreateProductDto;
 
         for (let i = 0; i < 10; i++) {
