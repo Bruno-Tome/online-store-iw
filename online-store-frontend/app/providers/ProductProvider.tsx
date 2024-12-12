@@ -3,7 +3,7 @@ import { useApi } from "./ApiProvider";
 
 // Define Product Type
 export interface Product {
-  _id: string;
+  _id?: string;
   description: string;
   images: string[];
   stock: number;
@@ -53,7 +53,7 @@ const initialState: ProductState = {
 // Reducer Function
 const productReducer = (
   state: ProductState,
-  action: ProductAction
+  action: ProductAction,
 ): ProductState => {
   switch (action.type) {
     case "SET_PRODUCTS":
@@ -74,7 +74,8 @@ interface ProductContextType {
   fetchProducts: () => Promise<void>;
   setProduct: (productId: string) => Promise<void>;
   fetchProductById: (productId: string) => Promise<void>;
-  addProduct: (newProduct: Omit<Product, "_id">) => Promise<void>;
+  addProduct: (newProduct: Product) => Promise<void>;
+  deleteProduct: (productId: string) => Promise<void>;
 }
 
 // Create Context
@@ -115,7 +116,7 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const addProduct = async (newProduct: Omit<Product, "_id">) => {
     try {
       const response = await productsApi.createProduct(newProduct);
-      dispatch({ type: "ADD_PRODUCT", payload: response.data });
+      await fetchProducts();
     } catch (error) {
       console.error("Failed to add product:", error);
     }

@@ -88,7 +88,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### DELETE Product
-DELETE {{baseUrl}}/products/674e3c3937c3d3cdf17bfabc HTTP/1.1
+DELETE {{baseUrl}}/products/675b06f2bb40648d1f2888ba HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ### Orders Routes
