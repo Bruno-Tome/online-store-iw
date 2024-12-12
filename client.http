@@ -109,15 +109,15 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-   "customerId": "675b314d9c4a8a867a022d9b",
+   "customerId": "675b3fde92ce90de501ed449",
    "items": [
        {
-           "productId": "675b314d9c4a8a867a022d67",
-           "quantity": 1
+           "productId": "675b3fde92ce90de501ed413",
+           "quantity": 5
        },
        {
-           "productId": "675b314d9c4a8a867a022d6c",
-           "quantity": 1
+           "productId": "675b3fde92ce90de501ed413",
+           "quantity": 5
        }
    ],
    "quotation": {

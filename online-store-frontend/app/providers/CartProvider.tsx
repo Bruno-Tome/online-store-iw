@@ -48,7 +48,7 @@ type CartAction =
 interface CartContextType {
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
-  addProductToCart: (product: Product) => void;
+  addProductToCart: (product: Product, quantity: number) => void;
   removeProductFromCart: (productId: string) => void;
   quoteProducts: () => void;
   setQuote: (quote: Quote) => void;
@@ -80,20 +80,17 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     switch (action.type) {
       case "ADD_ITEM":
         const items = [...state.items];
-
-        if (!items.find((item) => item.id === action.payload.id)) {
-          const newState = { ...state, items: [...items, action.payload] };
-          setCart(newState);
-          return newState;
-        }
+        const addItemState = { ...state, items: [...items, action.payload] };
+        setCart(addItemState);
+        return addItemState;
 
       case "REMOVE_ITEM":
-        const newState = {
+        const removeItemState = {
           ...state,
           items: state.items.filter((item) => item.id !== action.payload),
         };
-        setCart(newState);
-        return newState;
+        setCart(removeItemState);
+        return removeItemState;
       case "CLEAR_CART":
         setCart({
           items: [],
@@ -146,14 +143,14 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     dispatch({ type: "INITIALIZE", payload: cart });
   }, [cart]);
-  const addProductToCart = (product: Product) => {
+  const addProductToCart = (product: Product, quantity: number) => {
     dispatch({
       type: "ADD_ITEM",
       payload: {
         id: product._id,
         name: product.name,
         price: product.price,
-        quantity: 1,
+        quantity: quantity,
         data: product,
       },
     });

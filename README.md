@@ -346,7 +346,7 @@ Important: Update the context use the useReducer hook to fix context providers
       - [x] Create a component for the Profile Page and Update
         - [x] Fetch user data from the context and update with API
 
-- [ ] Admin
+- [x] Admin
 
   - [x] Create shareable components for the Admin pages
   - [x] Componentize Orders
@@ -359,7 +359,7 @@ Important: Update the context use the useReducer hook to fix context providers
     - [x] Fetch products from the API
     - [x] make sure to show stock
     - [x] Create Products
-    - [ ] Update products with PopUp
+    - [x] Update products with PopUp
   - [x] Implement route guards for admin pages
   - [x] Persist Cart Data and User data
 
@@ -375,7 +375,7 @@ Important: Update the context use the useReducer hook to fix context providers
 - [x] Implement Quotation Service
 - [x] Create a personal implementation
   - [x] Use quotation on Order
-- [ ] Update Tests
+- [x] Update Tests
 
 ## Comments
 

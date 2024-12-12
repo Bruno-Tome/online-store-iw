@@ -29,7 +29,10 @@ export default function CartPage() {
     }
   }, [cartState.items]);
   const quote = cartState.quote;
-  const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
+  const subtotal = cartState.items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -72,6 +75,9 @@ export default function CartPage() {
 
                         <p className="mt-1 text-sm font-medium text-gray-900">
                           {product.price}
+                        </p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">
+                          Quantity: {product.quantity}
                         </p>
                       </div>
 

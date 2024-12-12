@@ -87,7 +87,7 @@ export default function CheckoutPage() {
                   <h3>{product.name}</h3>
                 </div>
                 <p className="flex-none text-base font-medium">
-                  ${product.price.toFixed(2)}
+                  ${(product.quantity * product.price).toFixed(2)}
                 </p>
               </li>
             ))}
