@@ -6,6 +6,7 @@ import { useOrderContext } from "../providers/OrdersProvider";
 import { useUserContext } from "../providers/UserProvider";
 import { Button } from "@headlessui/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const steps = [
   { name: "Cart", href: "#", status: "complete" },
@@ -16,7 +17,8 @@ export default function CheckoutPage() {
   const { state: cartState, clearCart } = useCartContext();
   const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
   const { state: userState } = useUserContext();
-  const { state: orderState, createOrder } = useOrderContext();
+  const { createOrder } = useOrderContext();
+  const [error, setError] = useState<boolean | Error>(false);
   const router = useRouter();
   const order = {
     items: cartState.items.map((item) => ({
@@ -34,13 +36,28 @@ export default function CheckoutPage() {
       await createOrder(order);
       router.push("/order-confirmation", undefined, { shallow: true });
       clearCart();
-    } catch (error) {
+    } catch (error: any) {
+      setError(error);
       console.error("Error creating order", error);
     }
   };
 
   return (
     <div>
+      {error === false ? (
+        <></>
+      ) : (
+        <div>
+          <div
+            className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+            role="alert"
+          >
+            <p className="font-bold">An error ocurred</p>
+            <p>There was an error creating the order. </p>
+            <p>{error.response.data.message}</p>
+          </div>
+        </div>
+      )}
       <h1 className="sr-only">Order information</h1>
 
       <section

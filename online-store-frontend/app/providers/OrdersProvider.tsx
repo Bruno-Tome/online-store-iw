@@ -105,6 +105,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       dispatch({ type: "SET_SELECTED_ORDER", payload: response.data });
     } catch (error) {
       console.error("Error creating order:", error);
+      throw error;
     }
   };
 

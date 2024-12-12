@@ -48,14 +48,14 @@ function OrderManagementComponent() {
             name, amount, date, and status.
           </p>
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+        {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Add Order
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -88,9 +88,9 @@ function OrderManagementComponent() {
                     Date
                   </th>
 
-                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                  {/* <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -111,7 +111,7 @@ function OrderManagementComponent() {
                       )}
                     </td>
 
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
                         href="#"
                         className="text-indigo-600 hover:text-indigo-900"
@@ -119,7 +119,7 @@ function OrderManagementComponent() {
                         Edit
                         <span className="sr-only">, Order {order.orderId}</span>
                       </a>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

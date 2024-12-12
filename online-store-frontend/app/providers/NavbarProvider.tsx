@@ -14,7 +14,6 @@ export const NavbarProvider: React.FC<{ children: React.ReactNode }> = ({
   const [navigation, setNavigationState] = useState([
     { name: "Home", href: "/", current: false },
     { name: "Cart", href: "/cart", current: false },
-    { name: "Checkout", href: "/checkout", current: false },
   ]);
 
   const pathname = usePathname();

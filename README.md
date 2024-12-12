@@ -334,6 +334,7 @@ Important: Update the context use the useReducer hook to fix context providers
 #### Front End
 
 - [x] Componentize the app
+
   - [x] Store
     - [x] Create a component for the Navbar
     - [x] Create a component for the Product Card
@@ -344,19 +345,21 @@ Important: Update the context use the useReducer hook to fix context providers
     - [ ] Profile
       - [ ] Create a component for the Profile Page and Update
         - [ ] Fetch user data from the context and update with API
+
 - [ ] Admin
-  - [ ] Create shareable components for the Admin pages
-  - [ ] Componentize Orders
-    - [ ] Fetch orders from the API
-    - [ ] Update order with PopUp
-  - [ ] Componentize Users
-    - [ ] Fetch users from the API
-    - [ ] Update user with PopUp
-  - [ ] Componentize Products
-    - [ ] Fetch products from the API
-    - [ ] make sure to show stock
+
+  - [x] Create shareable components for the Admin pages
+  - [x] Componentize Orders
+    - [x] Fetch orders from the API
+  - [x] Componentize Users
+
+    - [x] Fetch users from the API
+
+  - [x] Componentize Products
+    - [x] Fetch products from the API
+    - [x] make sure to show stock
     - [ ] Update products with PopUp
-  - [ ] Implement route guards for admin pages
+  - [x] Implement route guards for admin pages
   - [x] Persist Cart Data and User data
 
 #### Backend
@@ -371,6 +374,7 @@ Important: Update the context use the useReducer hook to fix context providers
 - [x] Implement Quotation Service
 - [x] Create a personal implementation
   - [x] Use quotation on Order
+- [ ] Update Tests
 
 ## Comments
 
