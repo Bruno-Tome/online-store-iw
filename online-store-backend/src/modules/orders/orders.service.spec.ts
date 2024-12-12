@@ -4,7 +4,6 @@ import {
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-  NotFoundException,
 } from '@nestjs/common';
 import { OrdersService } from './services/orders.service';
 import { ProductsService } from '../products/services/products.service';
@@ -28,7 +27,7 @@ class MockOrderModel {
   save = jest.fn(async function () {
     return this.data;
   });
-  create = jest.fn();
+  create = jest.fn(() => this.data);
   find = jest.fn();
   findById = jest.fn();
 }
@@ -111,35 +110,27 @@ describe('OrdersService', () => {
   });
 
   describe('create', () => {
-    // it('should create an order and update product stock', async () => {
-    //   mockProductsService.findOne.mockImplementationOnce(() => mockProduct1);
-    //   mockProductsService.findOne.mockImplementationOnce(() => mockProduct2);
+    it('should create an order and update product stock', async () => {
+      mockProductsService.findOne.mockImplementation(() => mockProduct1);
+      mockProductsService.findOne.mockImplementation(() => mockProduct2);
 
-    //   mockProductsService.updateStock.mockResolvedValueOnce({
-    //     ...mockProduct1,
-    //     stock: 8,
-    //   });
-    //   mockProductsService.updateStock.mockResolvedValueOnce({
-    //     ...mockProduct2,
-    //     stock: 2,
-    //   });
-    //   console.log('mocOrder', mockOrder.items);
+      mockProductsService.updateStock.mockResolvedValue({
+        ...mockProduct1,
+        stock: 8,
+      });
+      mockProductsService.updateStock.mockResolvedValue({
+        ...mockProduct2,
+        stock: 2,
+      });
 
-    //   const spy = jest.spyOn(orderService, 'create');
-    //   const result = await orderService.create(mockOrder);
+      const spy = jest.spyOn(orderService, 'create');
+      const result = await orderService.create(mockOrder);
 
-    //   expect(productsService.findOne).toHaveBeenCalledTimes(2);
-    //   expect(productsService.updateStock).toHaveBeenCalledWith(
-    //     'product-id-1',
-    //     8,
-    //   );
-    //   expect(productsService.updateStock).toHaveBeenCalledWith(
-    //     'product-id-2',
-    //     2,
-    //   );
-    //   expect(spy).toHaveBeenCalledWith(mockOrder);
-    //   expect(result).toEqual(mockOrder);
-    // });
+      expect(productsService.findOne).toHaveBeenCalledTimes(4);
+      expect(productsService.updateStock).toHaveBeenCalledTimes(2);
+      expect(spy).toHaveBeenCalledWith(mockOrder);
+      expect(result).toEqual(mockOrder);
+    });
 
     it('should throw an error if product stock is insufficient', async () => {
       const mockOrder = new Order({

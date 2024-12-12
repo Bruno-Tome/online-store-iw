@@ -13,26 +13,6 @@ export class OrdersService {
     private productsService: ProductsService,
   ) {}
 
-  //  Seed data for order, if no order exists
-  //   async onModuleInit() {
-  //     try {
-  //       const res = await this.findAll();
-  //       if (res.length === 0) {
-  //         const newOrder = {
-  //           customerId: '1',
-  //           items: [
-  //             {
-  //               productId: '1',
-  //               quantity: 1,
-  //             },
-  //           ],
-  //         } as CreateOrderDto;
-  //         const response = await this.create(newOrder);
-  //       }
-  //     } catch (error) {
-  //       throw error;
-  //     }
-  //   }
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     // Update product stock
 
@@ -56,14 +36,13 @@ export class OrdersService {
     }
     const order = new this.orderModel(createOrderDto);
     order.total = 0;
+    for (const item of createOrderDto.items) {
+      const productPrice = (await this.productsService.findOne(item.productId))
+        .price;
 
-    for (const item of order.items) {
-      const productPrice = await this.productsService
-        .findOne(item.productId)
-        .then((p) => p.price);
       order.total += productPrice * item.quantity;
     }
-    order.total = order.total + order.quotation.price;
+    order.total = order.total + createOrderDto.quotation.price;
     return order.save();
   }
   async findAll(): Promise<Order[]> {
