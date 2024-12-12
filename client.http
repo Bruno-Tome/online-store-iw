@@ -1,6 +1,6 @@
 ### Variables
 @baseUrl = http://localhost:3000
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzM0MDE1NzE2LCJleHAiOjE3MzQwMTkzMTZ9.y2SYeVANduCoUBki9ca3TWXvy0TTNjde-LPId-qVgrU  # Replace with a valid token if needed
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlF1ZWlqbyIsInN1YiI6IjY3NGY3YWUxOGExZmNmYjE1NTQ1OGVmYiIsInJvbGVzIjpbImFkbWluIl0sImlhdCI6MTczNDAyMjg3OCwiZXhwIjoxNzM0MDI2NDc4fQ.8d123k6GmjiKo3YoDiZZhtp_GvUvF3XlVe8rn6NLd_E  # Replace with a valid token if needed
 
 
 ### Auth Routes
@@ -70,7 +70,13 @@ Authorization: Bearer {{authToken}}
    "description": "Product Description",
    "price": 200.0,
    "images": ["https://picsum.photos/200", "https://picsum.photos/200"] ,
-   "stock": 100
+   "stock": 100,
+   "dimensions": {
+       "width": 10,
+       "height": 15,
+       "length": 10,
+       "weight": 0.3
+   }
 }
 
 ### GET Product by ID
@@ -88,7 +94,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### DELETE Product
-DELETE {{baseUrl}}/products/675b06f2bb40648d1f2888ba HTTP/1.1
+DELETE {{baseUrl}}/products/675b16ec43eb1307c33cd546 HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ### Orders Routes

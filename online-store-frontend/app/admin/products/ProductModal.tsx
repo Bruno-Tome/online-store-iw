@@ -16,15 +16,13 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
     name: "",
     price: 0,
     stock: 0,
-    category: "",
     imageUrl: "",
     description: "",
-	dimensions: {
-		height: 0,
-		width: 0,
-		weight: 0,
-		lenght: 0,
-	},
+
+    height: 0,
+    width: 0,
+    weight: 0,
+    lenght: 0,
   });
 
   const handleInputChange = (e) => {
@@ -43,10 +41,10 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
       orderCount: 0,
       images: [`${newProduct.imageUrl}`],
       dimensions: {
-        width: 100,
-        height: 100,
-        weight: 100,
-        lenght: 100,
+        width: newProduct.width,
+        height: newProduct.height,
+        weight: newProduct.width,
+        lenght: newProduct.width,
       },
     };
 
@@ -58,15 +56,13 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
       name: "",
       price: 0,
       stock: 0,
-      category: "",
       imageUrl: "",
       description: "",
-	  dimensions: {
-		height: 0,
-		width: 0,
-		weight: 0,
-		lenght: 0,
-		},
+
+      height: 0,
+      width: 0,
+      weight: 0,
+      lenght: 0,
     }); // Reset form
   };
   return (
@@ -111,18 +107,7 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Category
-              </label>
-              <input
-                type="text"
-                name="category"
-                value={newProduct.category}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Image URL
@@ -146,55 +131,54 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               ></textarea>
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Height
               </label>
               <input
                 type="number"
                 name="height"
-                value={newProduct.dimensions.height}
+                value={newProduct.height}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Width
               </label>
               <input
                 type="number"
                 name="width"
-                value={newProduct.dimensions.width}
+                value={newProduct.width}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Weight
               </label>
               <input
                 type="number"
                 name="weight"
-                value={newProduct.dimensions.weight}
+                value={newProduct.weight}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Lenght
               </label>
               <input
                 type="number"
                 name="lenght"
-                value={newProduct.dimensions.lenght}
+                value={newProduct.lenght}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-
           </form>
           <div className="flex justify-end">
             <button

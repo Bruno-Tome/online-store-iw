@@ -54,9 +54,9 @@ export class OrdersService {
         );
       }
     }
-
     const order = new this.orderModel(createOrderDto);
     order.total = 0;
+
     for (const item of order.items) {
       const productPrice = await this.productsService
         .findOne(item.productId)
