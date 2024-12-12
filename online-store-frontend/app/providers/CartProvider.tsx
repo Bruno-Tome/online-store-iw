@@ -10,6 +10,8 @@ import {
 } from "react";
 import { Product } from "./ProductProvider";
 import usePersistState from "./usePersistState";
+import { set } from "store";
+import { QuotationResponse, useApi } from "./ApiProvider";
 interface CartItem {
   id: string;
   name: string;
@@ -20,19 +22,36 @@ interface CartItem {
 
 interface CartState {
   items: CartItem[];
+  quote: Quote;
+  quotations: QuotationResponse[];
+}
+
+interface Quote {
+  id: any;
+  name: string;
+  price: string;
+  delivery_time: number;
+  company: {
+    name: string;
+  };
 }
 
 type CartAction =
   | { type: "ADD_ITEM"; payload: CartItem }
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "CLEAR_CART" }
-  | { type: "INITIALIZE"; payload: CartState };
+  | { type: "INITIALIZE"; payload: CartState }
+  | { type: "QUOTE_PRODUCTS"; payload: QuotationResponse[] }
+  | { type: "SELECT_QUOTE"; payload: Quote }
+  | { type: "CLEAR_QUOTE" };
 
 interface CartContextType {
   state: CartState;
   dispatch: React.Dispatch<CartAction>;
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (productId: string) => void;
+  quoteProducts: () => void;
+  setQuote: (quote: Quote) => void;
   clearCart: () => void;
 }
 export const CartContext = createContext<CartContextType | undefined>(
@@ -40,7 +59,21 @@ export const CartContext = createContext<CartContextType | undefined>(
 );
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const initialState: CartState = { items: [] };
+  const { ordersApi, quotationApi } = useApi();
+
+  const initialState: CartState = {
+    items: [],
+    quote: {
+      id: "",
+      name: "",
+      price: "",
+      delivery_time: 0,
+      company: {
+        name: "",
+      },
+    },
+    quotations: [],
+  };
   // Reducer Function
   const [cart, setCart] = usePersistState("cart", initialState); // Retrieves persisted data
   const cartReducer = (state: CartState, action: CartAction): CartState => {
@@ -62,8 +95,46 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         setCart(newState);
         return newState;
       case "CLEAR_CART":
-        setCart({ items: [] });
+        setCart({
+          items: [],
+          quote: {
+            id: "",
+            name: "",
+            price: "0",
+            delivery_time: 0,
+            company: {
+              name: "",
+            },
+          },
+          quotations: [],
+        });
         return { ...state, items: [] };
+      case "QUOTE_PRODUCTS":
+        setCart({
+          ...state,
+          quotations: action.payload,
+          quote: {
+            id: "",
+            name: "",
+            price: "0",
+            delivery_time: 0,
+            company: { name: "" },
+          },
+        });
+
+        return {
+          ...state,
+          quotations: action.payload,
+          quote: {
+            id: "",
+            name: "",
+            price: "0",
+            delivery_time: 0,
+            company: { name: "" },
+          },
+        };
+      case "SELECT_QUOTE":
+        return { ...state, quote: action.payload };
       case "INITIALIZE":
         return action.payload;
       default:
@@ -94,7 +165,33 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = () => {
     dispatch({ type: "CLEAR_CART" });
   };
+  const quoteProducts = async () => {
+    const products = state.items.map((item) => {
+      return {
+        width: item.data.dimensions.width,
+        height: item.data.dimensions.height,
+        length: item.data.dimensions.lenght,
+        weight: item.data.dimensions.weight,
+        insuranceValue: item.data.price,
+        quantity: item.quantity,
+      };
+    });
+    const quotation = {
+      from: {
+        postal_code: "12345678",
+      },
+      to: {
+        postal_code: "87654321",
+      },
+      products: products,
+    };
+    const quotes = await (await quotationApi.quotation(quotation)).data;
 
+    dispatch({ type: "QUOTE_PRODUCTS", payload: quotes });
+  };
+  const setQuote = (quote: Quote) => {
+    dispatch({ type: "SELECT_QUOTE", payload: quote });
+  };
   return (
     <CartContext.Provider
       value={{
@@ -102,6 +199,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         dispatch,
         addProductToCart,
         removeProductFromCart,
+        quoteProducts,
+        setQuote,
         clearCart,
       }}
     >

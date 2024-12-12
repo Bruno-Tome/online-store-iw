@@ -3,17 +3,21 @@
 import { useOrderContext } from "@/app/providers/OrdersProvider";
 import { useUserContext } from "@/app/providers/UserProvider";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserOrders() {
   const { state, fetchOrdersByCustomerId } = useOrderContext();
   const {
     state: { user },
   } = useUserContext();
+  const [hasLoaded, setHasLoaded] = useState(false);
   const orders = state.orders;
   useEffect(() => {
-    fetchOrdersByCustomerId(user.id);
-  }, [orders]);
+    if (!hasLoaded) {
+      fetchOrdersByCustomerId(user.id);
+      setHasLoaded(true);
+    }
+  }, []);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:pb-24">

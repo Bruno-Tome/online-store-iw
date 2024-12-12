@@ -7,9 +7,30 @@ import {
 } from "@heroicons/react/20/solid";
 import { useCartContext } from "../providers/CartProvider";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 export default function CartPage() {
-  const { state: cartState, removeProductFromCart } = useCartContext();
+  const {
+    state: cartState,
+    removeProductFromCart,
+    quoteProducts,
+    setQuote,
+  } = useCartContext();
+  const [hasLoaded, setHasLoaded] = useState(false);
+  useMemo(() => {
+    if (!hasLoaded) {
+      quoteProducts();
+      setHasLoaded(true);
+    }
+  }, [cartState.items]);
+  useMemo(() => {
+    if (hasLoaded) {
+      quoteProducts();
+    }
+  }, [cartState.items]);
+  const quote = cartState.quote;
+  console.log("quotations", cartState.quotations);
+  console.log("quote", cartState.quote);
   const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
   return (
     <div className="bg-white">
@@ -91,6 +112,10 @@ export default function CartPage() {
                 </li>
               ))}
             </ul>
+            <div className="flex items-center justify-between">
+              <dt className="text-sm text-gray-600">Subtotal</dt>
+              <dd className="text-sm font-medium text-gray-900">{subtotal}</dd>
+            </div>
           </section>
 
           {/* Order summary */}
@@ -98,69 +123,72 @@ export default function CartPage() {
             aria-labelledby="summary-heading"
             className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
           >
-            <h2
+            <h3
               id="summary-heading"
               className="text-lg font-medium text-gray-900"
             >
-              Order summary
-            </h2>
-
+              Select a Shipping Option
+            </h3>
             <dl className="mt-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <dt className="text-sm text-gray-600">Subtotal</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {" "}
-                  {subtotal}
-                </dd>
-              </div>
-              {/* <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                <dt className="flex items-center text-sm text-gray-600">
-                  <span>Shipping estimate</span>
-                  <Link
-                    shallow
-                    href="#"
-                    className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">
-                      Learn more about how shipping is calculated
-                    </span>
-                    <QuestionMarkCircleIcon
-                      aria-hidden="true"
-                      className="h-5 w-5"
-                    />
-                  </Link>
-                </dt>
-                <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-              </div>
-              <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                <dt className="flex text-sm text-gray-600">
-                  <span>Tax estimate</span>
-                  <Link
-                    shallow
-                    href="#"
-                    className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">
-                      Learn more about how tax is calculated
-                    </span>
-                    <QuestionMarkCircleIcon
-                      aria-hidden="true"
-                      className="h-5 w-5"
-                    />
-                  </Link>
-                </dt>
-                <dd className="text-sm font-medium text-gray-900">$8.32</dd>
-              </div> */}
+              {cartState.quotations?.map((quoteItem, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col space-y-2 border-b pb-4"
+                  style={
+                    quoteItem.id === quote.id
+                      ? {
+                          // borderColor: "#2563EB",
+                          // borderWidth: "2px",
+                          // borderStyle: "solid",
+                          backgroundColor: "#f3f4f6",
+                        }
+                      : undefined
+                  }
+                  onClick={() => setQuote(quoteItem)}
+                >
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Service</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {quoteItem.name}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Price</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {quoteItem.currency} {quoteItem.price}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Discount</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {quoteItem.currency} {quoteItem.discount}
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Delivery Time</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {quoteItem.delivery_time} days
+                    </dd>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <dt className="text-sm text-gray-600">Company</dt>
+                    <dd className="text-sm font-medium text-gray-900">
+                      {quoteItem.company.name}
+                    </dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
+            <dl className="mt-6 space-y-4">
               <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                 <dt className="text-base font-medium text-gray-900">
                   Order total
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  {subtotal}
+                  {subtotal + Number(quote.price)}
                 </dd>
               </div>
             </dl>
-
             <div className="mt-6">
               <Link
                 shallow

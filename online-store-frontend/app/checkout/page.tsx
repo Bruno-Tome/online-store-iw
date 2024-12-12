@@ -1,23 +1,11 @@
 "use client";
-import {
-  CheckIcon,
-  ClockIcon,
-  QuestionMarkCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/20/solid";
 
-import { ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import {
-  Popover,
-  PopoverBackdrop,
-  PopoverButton,
-  PopoverPanel,
-} from "@headlessui/react";
 import Link from "next/link";
 import { useCartContext } from "../providers/CartProvider";
 import { useOrderContext } from "../providers/OrdersProvider";
 import { useUserContext } from "../providers/UserProvider";
-import { ordersApi } from "../api/apiClient";
+import { Button } from "@headlessui/react";
+import { useRouter } from "next/navigation";
 
 const steps = [
   { name: "Cart", href: "#", status: "complete" },
@@ -25,24 +13,32 @@ const steps = [
   { name: "Confirmation", href: "#", status: "upcoming" },
 ];
 export default function CheckoutPage() {
-  const { state: cartState } = useCartContext();
+  const { state: cartState, clearCart } = useCartContext();
   const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
   const { state: userState } = useUserContext();
   const { state: orderState, createOrder } = useOrderContext();
+  const router = useRouter();
   const order = {
     items: cartState.items.map((item) => ({
       productId: item.id,
       quantity: 1,
     })),
+    quotation: {
+      id: cartState.quote.id,
+      price: cartState.quote.price,
+    },
     customerId: userState.user ? userState.user.id : "",
   };
   const createOrderClick = async () => {
     try {
       await createOrder(order);
+      router.push("/order-confirmation", undefined, { shallow: true });
+      clearCart();
     } catch (error) {
       console.error("Error creating order", error);
     }
   };
+
   return (
     <div>
       <h1 className="sr-only">Order information</h1>
@@ -79,7 +75,35 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
+          <dl className="mt-6 space-y-4">
+            <div className="flex flex-col space-y-2 border-b pb-4">
+              <div className="flex items-center justify-between">
+                <dt className="text-sm text-gray-600">Service</dt>
+                <dd className="text-sm font-medium text-gray-900">
+                  {cartState.quote.name}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-sm text-gray-600">Price</dt>
+                <dd className="text-sm font-medium text-gray-900">
+                  R$ {cartState.quote.price}
+                </dd>
+              </div>
 
+              <div className="flex items-center justify-between">
+                <dt className="text-sm text-gray-600">Delivery Time</dt>
+                <dd className="text-sm font-medium text-gray-900">
+                  {cartState.quote.delivery_time} days
+                </dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-sm text-gray-600">Company</dt>
+                <dd className="text-sm font-medium text-gray-900">
+                  {cartState.quote.company.name}
+                </dd>
+              </div>
+            </div>
+          </dl>
           <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
             <div className="flex items-center justify-between">
               <dt className="text-gray-600">Subtotal</dt>
@@ -95,12 +119,15 @@ export default function CheckoutPage() {
       </section>
 
       <div className="mt-10 border-t border-gray-200 pt-6 sm:flex sm:items-center sm:justify-between">
-        <Link
-          href="/order-confirmation"
+        <Button
+          // href="/order-confirmation"
+          onClick={() => {
+            createOrderClick();
+          }}
           className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:order-last sm:ml-6 sm:w-auto"
         >
           Continue
-        </Link>
+        </Button>
         <p className="mt-4 text-center text-sm text-gray-500 sm:mt-0 sm:text-left">
           You won't be charged until the next step.
         </p>

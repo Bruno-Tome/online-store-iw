@@ -76,4 +76,7 @@ export class QuoteDataDto {
   @ValidateNested({ each: true })
   @Type(() => Product)
   products: Product[];
+
+  @IsString()
+  services: string = '1,2,3,4,7,11';
 }

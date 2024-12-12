@@ -63,6 +63,7 @@ interface OrderContextType {
   createOrder: (order: {
     customerId: string;
     items: OrderItem[];
+    quotation: { id: string; price: string };
   }) => Promise<void>;
 }
 
@@ -97,10 +98,11 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const createOrder = async (order: {
     customerId: string;
     items: OrderItem[];
+    quotation: { id: string; price: string };
   }) => {
     try {
       const response = await ordersApi.createOrder(order);
-      dispatch({ type: "ADD_ORDER", payload: response.data });
+      dispatch({ type: "SET_SELECTED_ORDER", payload: response.data });
     } catch (error) {
       console.error("Error creating order:", error);
     }

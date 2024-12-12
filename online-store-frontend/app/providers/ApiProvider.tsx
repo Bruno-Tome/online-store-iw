@@ -6,6 +6,57 @@ import { InternalAxiosRequestConfig } from "axios";
 import usePersistState from "../providers/usePersistState";
 import { initialUserState } from "./UserProvider";
 const BASE_URL = "http://localhost:3000";
+export interface QuotationResponse {
+  id: number;
+  name: string;
+  price: string;
+  custom_price: string;
+  discount: string;
+  currency: string;
+  delivery_time: number;
+  delivery_range: {
+    min: number;
+    max: number;
+  };
+  custom_delivery_time: number;
+  custom_delivery_range: {
+    min: number;
+    max: number;
+  };
+  packages: {
+    price: string;
+    discount: string;
+    format: string;
+    weight: string;
+    insurance_value: string;
+    products: {
+      id: string;
+      quantity: number;
+    }[];
+    dimensions: {
+      height: number;
+      width: number;
+      length: number;
+    };
+  }[];
+  additional_services: {
+    receipt: boolean;
+    own_hand: boolean;
+    collect: boolean;
+  };
+  additional: {
+    unit: {
+      price: number;
+      delivery: number;
+    };
+  };
+  company: {
+    id: number;
+    name: string;
+    picture: string;
+  };
+}
+[];
 
 interface ApiContextType {
   client: any;
@@ -13,6 +64,24 @@ interface ApiContextType {
   usersApi: any;
   productsApi: any;
   ordersApi: any;
+  quotationApi: {
+    quotation: (quotation: {
+      from: {
+        postal_code: string;
+      };
+      to: {
+        postal_code: string;
+      };
+      products: {
+        width: number;
+        height: number;
+        length: number;
+        weight: number;
+        insuranceValue: number;
+        quantity: number;
+      }[];
+    }) => Promise<AxiosResponse<QuotationResponse[]>>;
+  };
 }
 const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
@@ -118,10 +187,35 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     getOrdersByCustomerId: (customerId: string) =>
       apiClient.get(`/orders/customer/${customerId}`),
   };
-
+  const quotationApi = {
+    quotation: (quotation: {
+      from: {
+        postal_code: string;
+      };
+      to: {
+        postal_code: string;
+      };
+      products: {
+        width: number;
+        height: number;
+        length: number;
+        weight: number;
+        insuranceValue: number;
+        quantity: number;
+      }[];
+    }): Promise<AxiosResponse<QuotationResponse[]>> =>
+      apiClient.post("/quotation/calculate", quotation),
+  };
   return (
     <ApiContext.Provider
-      value={{ client, authApi, usersApi, productsApi, ordersApi }}
+      value={{
+        client,
+        authApi,
+        usersApi,
+        productsApi,
+        ordersApi,
+        quotationApi,
+      }}
     >
       {children}
     </ApiContext.Provider>

@@ -13,6 +13,7 @@ export class QuotationService {
 
   async quote(quoteData: QuoteDataDto): Promise<any> {
     try {
+      quoteData.services = '1,2,3,4';
       const response = (await this.api.post(
         '/shipment/calculate',
         quoteData,

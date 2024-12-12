@@ -11,6 +11,12 @@ export interface Product {
   name: string;
   price: number;
   orderCount: number;
+  dimensions: {
+    height: number;
+    width: number;
+    weight: number;
+    lenght: number;
+  };
 }
 
 // Define State Type
@@ -35,6 +41,12 @@ const initialState: ProductState = {
     name: "",
     price: 0,
     orderCount: 0,
+    dimensions: {
+      height: 0,
+      width: 0,
+      weight: 0,
+      lenght: 0,
+    },
   },
 };
 
