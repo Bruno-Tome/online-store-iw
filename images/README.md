@@ -38,7 +38,20 @@ On the profile page, users can manage their account details, including personal 
 
 ![Profile Page Screenshot](profilePage.png)
 
-## Product Management
+## Product Management Page
+
+This page is for administrators or store owners to manage products. It includes functionalities to add, edit, or remove products.
+
+![Product Management Page Screenshot](productManagement.png)
+
 ## User Management
+
+The user management page displays a list of all users registered in the system. Administrators can view user details, such as names, emails, and roles.
+
+![User Management Page Screenshot](userManagement.png)
+
 ## Order Management
 
+The order management page lists all the orders placed by users. Administrators can view order details, including the customer ID, order ID, amount and date of each order.
+
+![Order Management Page Screenshot](orderManagement.png)
