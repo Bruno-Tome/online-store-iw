@@ -8,54 +8,19 @@ import ProductModal from "./ProductModal";
 function ProductManagement() {
   const {
     state: { products },
+    deleteProduct,  // Supondo que a função de dispatch seja fornecida pelo contexto
   } = useProductContext();
 
   const [showModal, setShowModal] = useState(false);
-  // const [newProduct, setNewProduct] = useState({
-  //   name: "",
-  //   price: 0,
-  //   stock: 0,
-  //   category: "",
-  //   imageUrl: "",
-  //   description: "",
-  // });
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setNewProduct({ ...newProduct, [name]: value });
-  // };
-
-  // const handleAddProduct = () => {
-  //   if (!newProduct.name || !newProduct.price || !newProduct.stock) {
-  //     alert("Please fill in all required fields (name, price, and stock).");
-  //     return;
-  //   }
-
-  //   const updatedProduct = {
-  //     ...newProduct,
-  //     orderCount: 0,
-  //     images: [`${newProduct.imageUrl}`],
-  //     dimensions: {
-  //       width: 100,
-  //       height: 100,
-  //       weight: 100,
-  //       lenght: 100,
-  //     },
-  //   };
-
-  //   // Dispatch action to add the product
-  //   addProduct(updatedProduct);
-
-  //   setShowModal(false); // Close modal
-  //   setNewProduct({
-  //     name: "",
-  //     price: 0,
-  //     stock: 0,
-  //     category: "",
-  //     imageUrl: "",
-  //     description: "",
-  //   }); // Reset form
-  // };
+  const handleRemoveProduct = (productId) => {
+    // Função para remover o produto
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (confirmDelete) {
+      // Supondo que a ação de remover o produto seja implementada no dispatch
+      deleteProduct(productId);
+    }
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -113,6 +78,9 @@ function ProductManagement() {
                   <th className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
                   </th>
+                  <th className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                    <span className="sr-only">Remove</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -150,6 +118,14 @@ function ProductManagement() {
                       >
                         Edit<span className="sr-only">, {product.name}</span>
                       </a>
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      <button
+                        onClick={() => handleRemoveProduct(product.productId)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Remove<span className="sr-only">, {product.name}</span>
+                      </button>
                     </td>
                   </tr>
                 ))}
