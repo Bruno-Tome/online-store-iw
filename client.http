@@ -109,14 +109,14 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-   "customerId": "674f7ae18a1fcfb155458efb",
+   "customerId": "675b314d9c4a8a867a022d9b",
    "items": [
        {
-           "productId": "6757776fcccd060ca2493b9f",
+           "productId": "675b314d9c4a8a867a022d67",
            "quantity": 1
        },
        {
-           "productId": "6757776fcccd060ca2493ba5",
+           "productId": "675b314d9c4a8a867a022d6c",
            "quantity": 1
        }
    ],
