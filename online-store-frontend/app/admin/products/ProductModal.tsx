@@ -3,7 +3,12 @@
 import { useProductContext } from "@/app/providers/ProductProvider";
 import { useState } from "react";
 
-function ProductModal({ showModal, setShowModal }) {
+interface ProductModalProps {
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+}
+
+function ProductModal({ showModal, setShowModal }: ProductModalProps) {
   const { addProduct } = useProductContext();
 
   //   const [showModal, setShowModal] = useState(false);
