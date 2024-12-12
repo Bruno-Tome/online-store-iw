@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import isAdmin from "@/app/providers/isAdmin";
 import { Product, useProductContext } from "@/app/providers/ProductProvider";
@@ -8,17 +8,20 @@ import ProductModal from "./ProductModal";
 function ProductManagement() {
   const {
     state: { products },
-    deleteProduct,  // Supondo que a função de dispatch seja fornecida pelo contexto
+    fetchProducts,
+    deleteProduct, // Supondo que a função de dispatch seja fornecida pelo contexto
   } = useProductContext();
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleRemoveProduct = (productId) => {
+  const handleRemoveProduct = async (productId: string) => {
     // Função para remover o produto
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?",
+    );
     if (confirmDelete) {
       // Supondo que a ação de remover o produto seja implementada no dispatch
-      deleteProduct(productId);
+      await deleteProduct(productId);
     }
   };
 
@@ -84,10 +87,10 @@ function ProductManagement() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {products.map((product) => (
-                  <tr key={product.productId}>
+                {products.map((product, index) => (
+                  <tr key={index}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      {product.productId}
+                      {product._id}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.name}
@@ -103,7 +106,7 @@ function ProductManagement() {
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <img
-                        src={product.imageUrl}
+                        src={product.images[0]}
                         alt={product.name}
                         className="w-10 h-10 object-cover"
                       />
@@ -121,7 +124,7 @@ function ProductManagement() {
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
-                        onClick={() => handleRemoveProduct(product.productId)}
+                        onClick={() => handleRemoveProduct(product._id)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Remove<span className="sr-only">, {product.name}</span>
