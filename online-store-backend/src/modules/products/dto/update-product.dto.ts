@@ -12,14 +12,15 @@ import {
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
   @IsNumber()
+  @IsOptional()
   @Min(0)
   price: number;
 
@@ -28,6 +29,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   images: string[];
 
   @IsNumber()
+  @IsOptional()
   @Min(0)
   stock: number;
 

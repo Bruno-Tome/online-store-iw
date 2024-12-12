@@ -25,21 +25,21 @@ export class Product extends Document {
     type: {
       width: Number,
       height: Number,
-      depth: Number,
+      length: Number,
       weight: Number,
     },
     required: true,
     default: {
       width: 15,
       height: 15,
-      depth: 15,
-      weight: 3,
+      length: 15,
+      weight: 0.5,
     },
   })
   dimensions: {
     width: number;
     height: number;
-    depth: number;
+    length: number;
     weight: number;
   };
 }
