@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../providers/UserProvider";
+import { useState } from "react";
 
 /*
   This example requires some changes to your config:
@@ -20,6 +21,7 @@ import { useUserContext } from "../providers/UserProvider";
 export default function Register() {
   const { register } = useUserContext();
   const router = useRouter();
+  const [errorState, setError] = useState<boolean | Error>(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -29,7 +31,6 @@ export default function Register() {
     const CEP = e.target.cep.value;
     const address = e.target.address.value;
     const phone = e.target.phone.value;
-
     const didRegister = await register({
       name,
       email,
@@ -39,8 +40,10 @@ export default function Register() {
       address,
       phone,
     });
-    if (didRegister) {
+    if (didRegister === true) {
       router.push("/login", undefined, { shallow: true });
+    } else {
+      setError(didRegister);
     }
   };
   return (
@@ -64,7 +67,20 @@ export default function Register() {
             Create an Account
           </h2>
         </div>
-
+        {errorState === false ? (
+          <></>
+        ) : (
+          <div>
+            <div
+              className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">An error ocurred</p>
+              <p>There was an error during login:</p>
+              <p>{errorState.response.data.message}</p>
+            </div>
+          </div>
+        )}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>

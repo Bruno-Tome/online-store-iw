@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../providers/UserProvider";
 import Link from "next/link";
+import { useState } from "react";
 
 /*
   This example requires some changes to your config:
@@ -21,17 +22,24 @@ import Link from "next/link";
 export default function Login() {
   const { login } = useUserContext();
   const router = useRouter();
+  const [errorState, setError] = useState<boolean | Error>(false);
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
-    const didLogin = await login({
-      email,
-      password,
-    });
-    if (didLogin) {
-      router.push("/", undefined, { shallow: true });
+    try {
+      e.preventDefault();
+      const email = e.target.email.value;
+      const password = e.target.password.value;
+      const didLogin = await login({
+        email,
+        password,
+      });
+      if (didLogin === true) {
+        router.push("/", undefined, { shallow: true });
+      } else {
+        setError(didLogin);
+      }
+    } catch (error: any) {
+      setError(error);
+      console.error("Error logging in", error);
     }
   };
   return (
@@ -55,7 +63,20 @@ export default function Login() {
             Sign in to your account
           </h2>
         </div>
-
+        {errorState === false ? (
+          <></>
+        ) : (
+          <div>
+            <div
+              className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+              role="alert"
+            >
+              <p className="font-bold">An error ocurred</p>
+              <p>There was an error during registering</p>
+              <p>User already exists</p>
+            </div>
+          </div>
+        )}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>

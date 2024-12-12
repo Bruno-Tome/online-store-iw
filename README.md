@@ -342,9 +342,9 @@ Important: Update the context use the useReducer hook to fix context providers
       - [ ] Make variable quantity of products in the cart
     - [x] Create a component for the Cart Item
       - [x] Fetch cart items from the context
-    - [ ] Profile
-      - [ ] Create a component for the Profile Page and Update
-        - [ ] Fetch user data from the context and update with API
+    - [x] Profile
+      - [x] Create a component for the Profile Page and Update
+        - [x] Fetch user data from the context and update with API
 
 - [ ] Admin
 
@@ -358,6 +358,7 @@ Important: Update the context use the useReducer hook to fix context providers
   - [x] Componentize Products
     - [x] Fetch products from the API
     - [x] make sure to show stock
+    - [x] Create Products
     - [ ] Update products with PopUp
   - [x] Implement route guards for admin pages
   - [x] Persist Cart Data and User data
