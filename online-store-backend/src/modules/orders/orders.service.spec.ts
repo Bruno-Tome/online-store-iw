@@ -26,7 +26,43 @@ const mockProductsService = {
   findOne: jest.fn(),
   updateStock: jest.fn(),
 };
+const mockOrder = {
+  customerId: 'customer-id-1',
+  items: [
+    { productId: 'product-id-1', quantity: 2 },
+    { productId: 'product-id-2', quantity: 3 },
+  ],
+};
 
+const mockProduct1 = { id: 'product-id-1', stock: 10 };
+const mockProduct2 = { id: 'product-id-2', stock: 5 };
+
+class Order {
+  customerId: string;
+  items: { productId: string; quantity: number }[];
+  createdAt: Date;
+  quotation: { id: string; price: number };
+  total: number;
+  constructor({
+    customerId,
+    items,
+    createdAt,
+    quotation,
+    total,
+  }: {
+    customerId: string;
+    items: { productId: string; quantity: number }[];
+    createdAt: Date;
+    quotation: { id: string; price: number };
+    total: number;
+  }) {
+    this.customerId = customerId;
+    this.items = items;
+    this.createdAt = createdAt;
+    this.quotation = quotation;
+    this.total = total;
+  }
+}
 describe('OrdersService', () => {
   let orderService: OrdersService;
   let productsService: ProductsService;
@@ -57,17 +93,6 @@ describe('OrdersService', () => {
 
   describe('create', () => {
     it('should create an order and update product stock', async () => {
-      const mockOrder = {
-        customerId: 'customer-id-1',
-        items: [
-          { productId: 'product-id-1', quantity: 2 },
-          { productId: 'product-id-2', quantity: 3 },
-        ],
-      };
-
-      const mockProduct1 = { id: 'product-id-1', stock: 10 };
-      const mockProduct2 = { id: 'product-id-2', stock: 5 };
-
       mockProductsService.findOne.mockImplementationOnce(() => mockProduct1);
       mockProductsService.findOne.mockImplementationOnce(() => mockProduct2);
 

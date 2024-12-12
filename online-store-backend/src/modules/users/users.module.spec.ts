@@ -2,25 +2,55 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { UsersService } from './services/users.service';
 import { UsersController } from './controllers/users.controller';
-import { User } from './schemas/user.schema';
+class User {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  roles: [string];
+  CEP: string;
+  address: string;
+  phone: string;
+  createdAt?: Date;
+  constructor({ _id, name, email, password, roles, CEP, address, phone }) {
+    this._id = _id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.roles = roles;
+    this.CEP = CEP;
+    this.address = address;
+    this.phone = phone;
+  }
+}
+let usersMockedData = [
+  {
+    _id: '1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    password: 'password',
+
+    roles: ['user'],
+    CEP: '13562160',
+
+    address: 'Rua Teste, 123',
+    phone: '19999999999',
+  },
+  {
+    _id: '2',
+    name: 'Jane Doe',
+    email: 'jane@example.com',
+    password: 'password',
+    roles: ['user', 'admin'],
+    CEP: '13562160',
+    address: 'Rua Teste, 123',
+    phone: '19999999999',
+  },
+] as User[];
 
 describe('UsersModule', () => {
   let usersService: UsersService;
   let usersController: UsersController;
-  let usersMockedData = [
-    {
-      _id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: 'password',
-    },
-    {
-      _id: '2',
-      name: 'Jane Doe',
-      email: 'jane@example.com',
-      password: 'password',
-    },
-  ];
 
   const mockUserModel = {
     // Simulate the `create` method with a mock implementation
@@ -107,11 +137,7 @@ describe('UsersModule', () => {
 
   describe('create', () => {
     it('should create a user', async () => {
-      const createUserDto = {
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: 'password',
-      };
+      const createUserDto = usersMockedData[0];
       const result = await usersController.create(createUserDto);
 
       expect(result).toEqual({
@@ -126,20 +152,7 @@ describe('UsersModule', () => {
     it('should return an array of users', async () => {
       const result = await usersController.findAll();
 
-      expect(result).toEqual([
-        {
-          _id: '1',
-          name: 'John Doe',
-          email: 'john@example.com',
-          password: 'password',
-        },
-        {
-          _id: '2',
-          name: 'Jane Doe',
-          email: 'jane@example.com',
-          password: 'password',
-        },
-      ]);
+      expect(result).toEqual(usersMockedData);
       expect(mockUserModel.findAll).toHaveBeenCalled();
     });
   });
@@ -148,41 +161,28 @@ describe('UsersModule', () => {
     it('should return a user by ID', async () => {
       const result = await usersController.findOne('1');
 
-      expect(result).toEqual({
-        _id: '1',
-        name: 'John Doe',
-        email: 'john@example.com',
-        password: 'password',
-      });
+      expect(result).toEqual(usersMockedData[0]);
       expect(mockUserModel.findOne).toHaveBeenCalledWith('1');
     });
   });
 
   describe('update', () => {
     it('should update a user by ID', async () => {
-      const updateUserDto = { name: 'Updated Name' };
+      const updateUserDto = usersMockedData[0];
+      updateUserDto.name = 'Updated Name';
       const result = await usersController.update('1', updateUserDto);
 
-      expect(result).toEqual({
-        _id: '1',
-        name: 'Updated Name',
-        email: 'john@example.com',
-        password: 'password',
-      });
+      expect(result).toEqual(usersMockedData[0]);
       expect(mockUserModel.update).toHaveBeenCalledWith('1', updateUserDto);
     });
   });
 
   describe('delete', () => {
     it('should remove a user by ID', async () => {
+      const expectedResult = usersMockedData[0];
       const result = await usersController.delete('1');
 
-      expect(result).toEqual({
-        _id: '1',
-        name: 'Updated Name',
-        email: 'john@example.com',
-        password: 'password',
-      });
+      expect(result).toEqual(expectedResult);
       expect(mockUserModel.delete).toHaveBeenCalledWith('1');
     });
   });
