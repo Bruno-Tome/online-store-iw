@@ -1,144 +1,19 @@
 "use client";
 
 import { useOrderContext } from "@/app/providers/OrdersProvider";
-
-const orders = [
-  {
-    number: "WU88191111",
-    date: "January 22, 2021",
-    datetime: "2021-01-22",
-    invoiceHref: "#",
-    total: "$238.00",
-    products: [
-      {
-        id: 1,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 2,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 3,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      // More products...
-    ],
-  },
-  {
-    number: "WU88191111",
-    date: "January 22, 2021",
-    datetime: "2021-01-22",
-    invoiceHref: "#",
-    total: "$238.00",
-    products: [
-      {
-        id: 1,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 2,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 3,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      // More products...
-    ],
-  },
-  {
-    number: "WU88191111",
-    date: "January 22, 2021",
-    datetime: "2021-01-22",
-    invoiceHref: "#",
-    total: "$238.00",
-    products: [
-      {
-        id: 1,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 2,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      {
-        id: 3,
-        name: "Machined Pen and Pencil Set",
-        href: "#",
-        price: "$70.00",
-        status: "Delivered Jan 25, 2021",
-        imageSrc:
-          "https://tailwindui.com/plus/img/ecommerce-images/order-history-page-02-product-01.jpg",
-        imageAlt:
-          "Detail of mechanical pencil tip with machined black steel shaft and chrome lead tip.",
-      },
-      // More products...
-    ],
-  },
-  // More orders...
-];
+import { useUserContext } from "@/app/providers/UserProvider";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function UserOrders() {
-  const { state, fetchOrders } = useOrderContext();
+  const { state, fetchOrdersByCustomerId } = useOrderContext();
+  const {
+    state: { user },
+  } = useUserContext();
   const orders = state.orders;
-  console.log(orders);
+  useEffect(() => {
+    fetchOrdersByCustomerId(user.id);
+  }, [orders]);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:pb-24">
@@ -157,7 +32,7 @@ export default function UserOrders() {
 
           <div className="space-y-20">
             {orders.map((order) => (
-              <div key={order.id}>
+              <div key={order._id}>
                 <h3 className="sr-only">
                   Order placed on{" "}
                   <time dateTime={order.datetime}>{order.date}</time>
@@ -205,14 +80,9 @@ export default function UserOrders() {
                         scope="col"
                         className="hidden w-1/5 py-3 pr-8 font-normal sm:table-cell"
                       >
-                        Price
+                        Quantity
                       </th>
-                      <th
-                        scope="col"
-                        className="hidden py-3 pr-8 font-normal sm:table-cell"
-                      >
-                        Status
-                      </th>
+
                       <th
                         scope="col"
                         className="w-0 py-3 text-right font-normal"
@@ -222,37 +92,32 @@ export default function UserOrders() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 border-b border-gray-200 text-sm sm:border-t">
-                    {order.products.map((product) => (
-                      <tr key={product.id}>
+                    {order.items.map((product) => (
+                      <tr key={product.productId}>
                         <td className="py-6 pr-8">
                           <div className="flex items-center">
-                            <img
-                              alt={product.imageAlt}
-                              src={product.imageSrc}
-                              className="mr-6 h-16 w-16 rounded object-cover object-center"
-                            />
                             <div>
                               <div className="font-medium text-gray-900">
-                                {product.name}
+                                {product.productId}
                               </div>
                               <div className="mt-1 sm:hidden">
-                                {product.price}
+                                {product.quantity}
                               </div>
                             </div>
                           </div>
                         </td>
+
                         <td className="hidden py-6 pr-8 sm:table-cell">
-                          {product.price}
-                        </td>
-                        <td className="hidden py-6 pr-8 sm:table-cell">
-                          {product.status}
+                          {product.quantity}
                         </td>
                         <td className="whitespace-nowrap py-6 text-right font-medium">
-                          <a href={product.href} className="text-indigo-600">
+                          <Link
+                            shallow
+                            href={"/product/" + product.productId}
+                            className="text-indigo-600"
+                          >
                             View
-                            <span className="hidden lg:inline"> Product</span>
-                            <span className="sr-only">, {product.name}</span>
-                          </a>
+                          </Link>
                         </td>
                       </tr>
                     ))}

@@ -1,6 +1,6 @@
 ### Variables
 @baseUrl = http://localhost:3000
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzOTU1ODUyLCJleHAiOjE3MzM5NTk0NTJ9.uAGVsk6FsRs885xGZvTLgHVwHebwX6kAX2kz9g7x-eU  # Replace with a valid token if needed
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzOTY3NTUwLCJleHAiOjE3MzM5NzExNTB9.l5BSthl37P6heM6uQv3Wp5sEsOEQeJ9Gt8-oZ_sPV5c  # Replace with a valid token if needed
 
 
 ### Auth Routes

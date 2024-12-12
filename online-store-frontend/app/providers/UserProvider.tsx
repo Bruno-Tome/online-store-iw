@@ -7,21 +7,22 @@ import React, {
 } from "react";
 
 import usePersistState from "./usePersistState";
-import { useApi } from "../api/ApiProvider";
+import { useApi } from "./ApiProvider";
 
 // Define User Type
-interface User {
+export interface User {
   id: string;
   username: string;
   password: string;
   accessToken: string;
   roles: string[];
-  profile?: Object;
+  profile?: Profile;
 }
 
 // Define State Type
-interface UserState {
+export interface UserState {
   user: User;
+  users: Profile[];
 }
 
 interface Profile {
@@ -42,18 +43,19 @@ type UserAction =
   | { type: "LOGIN"; payload: User }
   | { type: "LOGOUT" }
   | { type: "INITIALIZE"; payload: UserState }
-  | { type: "FETCH_PROFILE"; payload: Profile };
+  | { type: "FETCH_PROFILE"; payload: Profile }
+  | { type: "FETCH_USERS"; payload: Profile[] };
 
 // Initial State
-const initialState: UserState = {
+export const initialUserState: UserState = {
   user: {
     id: "",
     username: "",
     password: "",
     accessToken: "",
     roles: [],
-    profile: {},
   },
+  users: [],
 };
 
 // Context Type
@@ -69,6 +71,10 @@ interface UserContextType {
   }) => Promise<boolean>;
   logout: () => void;
   fetchProfile: () => void;
+  fetchUsers: () => void;
+  // createUser
+  // updateUser
+  // deleteUser
 }
 
 // Create Context
@@ -76,7 +82,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Provider Component
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [userData, setUserData] = usePersistState("userData", initialState);
+  const [userData, setUserData] = usePersistState("userData", initialUserState);
   const { usersApi, authApi } = useApi();
   // Reducer Function
   const userReducer = (state: UserState, action: UserAction): UserState => {
@@ -86,7 +92,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUserData(newState);
         return newState;
       case "LOGOUT":
-        setUserData(initialState);
+        setUserData(initialUserState);
         return {
           ...state,
           user: {
@@ -95,11 +101,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
             password: "",
             accessToken: "",
             roles: [],
-            profile: {},
           },
         };
       case "FETCH_PROFILE":
         return { ...state, user: { ...state.user, profile: action.payload } };
+
+      case "FETCH_USERS":
+        return { ...state, users: action.payload };
 
       case "INITIALIZE":
         return action.payload;
@@ -143,6 +151,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       console.error("Error fetching profile", error);
     }
   };
+  const fetchUsers = async () => {
+    try {
+      const users = (await usersApi.getUsers()).data as Profile[];
+      console.log(users);
+      dispatch({ type: "FETCH_USERS", payload: users });
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -151,6 +169,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         fetchProfile,
+        fetchUsers,
       }}
     >
       {children}

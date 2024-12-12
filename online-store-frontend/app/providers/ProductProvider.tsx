@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
+import { useApi } from "./ApiProvider";
 // import { productsApi } from "../api/apiClient";
-import { useApi } from "../api/ApiProvider";
 
 // Define Product Type
 export interface Product {
@@ -10,6 +10,7 @@ export interface Product {
   stock: number;
   name: string;
   price: number;
+  orderCount: number;
 }
 
 // Define State Type
@@ -33,6 +34,7 @@ const initialState: ProductState = {
     stock: 0,
     name: "",
     price: 0,
+    orderCount: 0,
   },
 };
 

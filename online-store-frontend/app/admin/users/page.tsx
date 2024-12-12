@@ -1,6 +1,8 @@
 "use client";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import isAdmin from "@/app/providers/isAdmin";
+import { useUserContext } from "@/app/providers/UserProvider";
+import { useEffect } from "react";
 
 const people = [
   { name: "John Walton", email: "johnwalton@example.com", role: "Member" },
@@ -12,7 +14,18 @@ const people = [
   },
 ];
 
-function Example() {
+function UserList() {
+  const {
+    state,
+
+    fetchUsers,
+  } = useUserContext();
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const users = state.users;
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -65,27 +78,31 @@ function Example() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {people.map((person) => (
-                  <tr key={person.email}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      {person.name}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.email}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.role}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        Edit<span className="sr-only">, {person.name}</span>
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                {!!users &&
+                  users.map((person) => (
+                    <tr key={person._id}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {person.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {person.email}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {person.roles.toString()}
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                        <a
+                          href="#"
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Edit
+                          <span className="sr-only">
+                            , {person.name} {person.email}
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -94,4 +111,4 @@ function Example() {
     </div>
   );
 }
-export default isAdmin(Example);
+export default isAdmin(UserList);

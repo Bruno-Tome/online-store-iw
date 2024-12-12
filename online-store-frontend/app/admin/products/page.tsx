@@ -1,6 +1,7 @@
 "use client";
 import AdminNavbar from "@/app/components/AdminNavbar";
 import isAdmin from "@/app/providers/isAdmin";
+import { useProductContext } from "@/app/providers/ProductProvider";
 
 const products = [
   {
@@ -38,6 +39,10 @@ const products = [
 ];
 
 function ProductManagement() {
+  const {
+    state: { products },
+  } = useProductContext();
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -94,8 +99,9 @@ function ProductManagement() {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Category
+                    Amount Bought
                   </th>
+
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -115,9 +121,9 @@ function ProductManagement() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {products.map((product) => (
-                  <tr key={product.productId}>
+                  <tr key={product._id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      {product.productId}
+                      {product._id}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.name}
@@ -129,11 +135,11 @@ function ProductManagement() {
                       {product.stock}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.category}
+                      {product.orderCount}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <img
-                        src={product.imageUrl}
+                        src={product.images[0]}
                         alt={product.name}
                         className="w-10 h-10 object-cover"
                       />

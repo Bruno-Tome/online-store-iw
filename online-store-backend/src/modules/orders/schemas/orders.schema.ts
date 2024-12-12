@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-
+import { Product } from '../../products/schemas/products.schema';
 @Schema()
 export class Order extends Document {
   @Prop({ required: true })
@@ -27,6 +27,9 @@ export class Order extends Document {
     id: string;
     price: number;
   };
+
+  @Prop({ required: true, default: 0 })
+  total: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

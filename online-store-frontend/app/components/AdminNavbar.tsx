@@ -10,17 +10,17 @@ export default function AdminNavbar() {
               <h1 className="text-black font-bold text-lg">Admin Dashboard</h1>
             </div>
             <div className="ml-10 flex space-x-4">
-              <Link href="/admin/order" shallow>
+              <Link href="/admin/orders" shallow>
                 <p className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                   Orders
                 </p>
               </Link>
-              <Link href="/admin/product" shallow>
+              <Link href="/admin/products" shallow>
                 <p className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                   Products
                 </p>
               </Link>
-              <Link href="/admin/user" shallow>
+              <Link href="/admin/users" shallow>
                 <p className="text-gray-800 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                   Users
                 </p>

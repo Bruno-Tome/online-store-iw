@@ -1,8 +1,7 @@
 "use client";
 
 import React, { createContext, ReactNode, useReducer, useContext } from "react";
-
-import { useApi } from "../api/ApiProvider";
+import { useApi } from "./ApiProvider";
 
 // Order Item and Order Types
 interface OrderItem {
@@ -11,10 +10,16 @@ interface OrderItem {
 }
 
 interface Order {
-  id: string;
+  _id: string;
   customerId: string;
   items: OrderItem[];
   createdAt: string;
+  total: number;
+  quotation: {
+    _id: string;
+    price: number;
+    id: string;
+  };
 }
 
 interface OrderState {
@@ -105,6 +110,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const fetchOrdersByCustomerId = async (customerId: string) => {
     try {
       const response = await ordersApi.getOrdersByCustomerId(customerId);
+
       dispatch({ type: "SET_ORDERS", payload: response.data });
     } catch (error) {
       console.error("Error fetching orders by customer ID:", error);

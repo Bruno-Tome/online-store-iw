@@ -6,7 +6,7 @@ import { NavbarProvider } from "./NavbarProvider";
 import DataFetchingComponent from "./ProductDataFetching";
 import { OrderProvider } from "./OrdersProvider";
 import CartProvider from "./CartProvider";
-import { ApiProvider } from "../api/ApiProvider";
+import { ApiProvider } from "./ApiProvider";
 
 interface ProviderWrapperProps {
   children: React.ReactNode;

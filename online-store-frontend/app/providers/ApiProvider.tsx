@@ -4,6 +4,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 // Request interceptor to add Authorization header dynamically
 import { InternalAxiosRequestConfig } from "axios";
 import usePersistState from "../providers/usePersistState";
+import { initialUserState } from "./UserProvider";
 const BASE_URL = "http://localhost:3000";
 
 interface ApiContextType {
@@ -15,35 +16,10 @@ interface ApiContextType {
 }
 const ApiContext = createContext<ApiContextType | undefined>(undefined);
 
-// Define User Type
-interface User {
-  id: string;
-  username: string;
-  password: string;
-  accessToken: string;
-  roles: string[];
-  profile?: Object;
-}
-
-// Define State Type
-interface UserState {
-  user: User;
-}
-// Initial State
-const initialState: UserState = {
-  user: {
-    id: "",
-    username: "",
-    password: "",
-    accessToken: "",
-    roles: [],
-    profile: {},
-  },
-};
 export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [userData] = usePersistState("userData", initialState);
+  const [userData] = usePersistState("userData", initialUserState);
   const [authToken, setAuthToken] = useState(userData.user.accessToken); // Initial token
   useEffect(() => {
     setAuthToken(userData.user.accessToken);
@@ -142,7 +118,6 @@ export const ApiProvider: React.FC<{ children: React.ReactNode }> = ({
     getOrdersByCustomerId: (customerId: string) =>
       apiClient.get(`/orders/customer/${customerId}`),
   };
-  useEffect(() => {}, []);
 
   return (
     <ApiContext.Provider

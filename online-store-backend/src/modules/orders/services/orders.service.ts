@@ -35,6 +35,7 @@ export class OrdersService {
   //   }
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     // Update product stock
+
     for (const item of createOrderDto.items) {
       const product = await this.productsService.findOne(item.productId);
 
@@ -55,6 +56,14 @@ export class OrdersService {
     }
 
     const order = new this.orderModel(createOrderDto);
+    order.total = 0;
+    for (const item of order.items) {
+      const productPrice = await this.productsService
+        .findOne(item.productId)
+        .then((p) => p.price);
+      order.total += productPrice * item.quantity;
+    }
+    order.total = order.total + order.quotation.price;
     return order.save();
   }
   async findAll(): Promise<Order[]> {

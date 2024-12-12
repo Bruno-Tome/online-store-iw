@@ -24,7 +24,16 @@ const orders = [
 ];
 import AdminNavbar from "@/app/components/AdminNavbar";
 import isAdmin from "@/app/providers/isAdmin";
+import { useOrderContext } from "@/app/providers/OrdersProvider";
+import { useEffect } from "react";
 function OrderManagementComponent() {
+  const {
+    state: { orders, selectedOrder },
+    fetchOrders,
+  } = useOrderContext();
+  useEffect(() => {
+    fetchOrders();
+  }, []);
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -64,7 +73,7 @@ function OrderManagementComponent() {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Customer Name
+                    Customer Id
                   </th>
                   <th
                     scope="col"
@@ -78,12 +87,7 @@ function OrderManagementComponent() {
                   >
                     Date
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Status
-                  </th>
+
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
                   </th>
@@ -91,22 +95,22 @@ function OrderManagementComponent() {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {orders.map((order) => (
-                  <tr key={order.orderId}>
+                  <tr key={order._id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      {order.orderId}
+                      {order._id}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {order.customerName}
+                      {order.customerId}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {order.amount}
+                      {order.total}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {order.date}
+                      {Intl.DateTimeFormat("pt-BR").format(
+                        new Date(order.createdAt),
+                      )}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {order.status}
-                    </td>
+
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
                         href="#"
