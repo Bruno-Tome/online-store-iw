@@ -1,4 +1,6 @@
+"use client";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import isAdmin from "@/app/providers/isAdmin";
 
 const people = [
   { name: "John Walton", email: "johnwalton@example.com", role: "Member" },
@@ -10,7 +12,7 @@ const people = [
   },
 ];
 
-export default function Example() {
+function Example() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -92,3 +94,4 @@ export default function Example() {
     </div>
   );
 }
+export default isAdmin(Example);

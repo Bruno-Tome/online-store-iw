@@ -1,4 +1,6 @@
+"use client";
 import AdminNavbar from "@/app/components/AdminNavbar";
+import isAdmin from "@/app/providers/isAdmin";
 
 const products = [
   {
@@ -35,7 +37,7 @@ const products = [
   },
 ];
 
-export default function ProductManagement() {
+function ProductManagement() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -157,3 +159,4 @@ export default function ProductManagement() {
     </div>
   );
 }
+export default isAdmin(ProductManagement);

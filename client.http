@@ -1,6 +1,6 @@
 ### Variables
 @baseUrl = http://localhost:3000
-@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzODcwMjEzLCJleHAiOjE3MzM4NzM4MTN9.W1gjhRPgbfclayyjrt_DfReCAfiNNUHo60BYAs1SCGk  # Replace with a valid token if needed
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwic3ViIjoiNjc0ZjdhZTE4YTFmY2ZiMTU1NDU4ZWZiIiwicm9sZXMiOlsiYWRtaW4iXSwiaWF0IjoxNzMzOTU1ODUyLCJleHAiOjE3MzM5NTk0NTJ9.uAGVsk6FsRs885xGZvTLgHVwHebwX6kAX2kz9g7x-eU  # Replace with a valid token if needed
 
 
 ### Auth Routes
@@ -36,7 +36,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### GET User by ID
-GET {{baseUrl}}/users/USER_ID HTTP/1.1
+GET {{baseUrl}}/users/674f7ae18a1fcfb155458efb HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ### PATCH Update User

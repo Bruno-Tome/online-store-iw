@@ -80,6 +80,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const fetchOrderById = async (orderId: string) => {
     try {
       const response = await ordersApi.getOrderById(orderId);
+
       dispatch({ type: "SET_SELECTED_ORDER", payload: response.data });
     } catch (error) {
       console.error("Error fetching order by ID:", error);

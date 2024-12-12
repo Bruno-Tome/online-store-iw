@@ -1,3 +1,7 @@
+"use client";
+
+import { useOrderContext } from "@/app/providers/OrdersProvider";
+
 const orders = [
   {
     number: "WU88191111",
@@ -131,7 +135,10 @@ const orders = [
   // More orders...
 ];
 
-export default function Example() {
+export default function UserOrders() {
+  const { state, fetchOrders } = useOrderContext();
+  const orders = state.orders;
+  console.log(orders);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:pb-24">
@@ -150,7 +157,7 @@ export default function Example() {
 
           <div className="space-y-20">
             {orders.map((order) => (
-              <div key={order.number}>
+              <div key={order.id}>
                 <h3 className="sr-only">
                   Order placed on{" "}
                   <time dateTime={order.datetime}>{order.date}</time>

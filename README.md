@@ -320,10 +320,10 @@ Important: Update the context use the useReducer hook to fix context providers
 - [x] Create Provider for Orders
   - [x] Create a context for the order data (List of orders, current order)
   - [x] Create a context for the current order being done
-- [ ] Create Provider for Auth
-  - [ ] Create a context to store the user data
-  - [ ] Create a context for the login status
-  - [ ] Use Auth provider to wrap the app and routes that require authentication
+- [x] Create Provider for Auth
+  - [x] Create a context to store the user data
+  - [x] Create a context for the login status
+  - [x] Use Auth provider to wrap the app and routes that require authentication
 
 ### API interface
 

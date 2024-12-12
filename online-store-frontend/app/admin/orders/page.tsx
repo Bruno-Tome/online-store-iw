@@ -1,3 +1,4 @@
+"use client";
 const orders = [
   {
     orderId: "1001",
@@ -22,7 +23,8 @@ const orders = [
   },
 ];
 import AdminNavbar from "@/app/components/AdminNavbar";
-export default function OrderManagement() {
+import isAdmin from "@/app/providers/isAdmin";
+function OrderManagementComponent() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <AdminNavbar />
@@ -124,3 +126,5 @@ export default function OrderManagement() {
     </div>
   );
 }
+
+export default isAdmin(OrderManagementComponent);

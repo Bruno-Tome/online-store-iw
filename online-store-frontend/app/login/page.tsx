@@ -1,3 +1,8 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useUserContext } from "../providers/UserProvider";
+
 /*
   This example requires some changes to your config:
   
@@ -12,7 +17,22 @@
   }
   ```
 */
-export default function Example() {
+export default function Login() {
+  const { login } = useUserContext();
+  const router = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    const didLogin = await login({
+      email,
+      password,
+    });
+    if (didLogin) {
+      router.push("/", undefined, { shallow: true });
+    }
+  };
   return (
     <>
       {/*
@@ -36,7 +56,7 @@ export default function Example() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -52,6 +72,7 @@ export default function Example() {
                   required
                   autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                  onInput={(e) => console.log(e.target)}
                 />
               </div>
             </div>
