@@ -12,7 +12,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
   const { state: productState, editProduct } = useProductContext();
   const product = productState.selectedProduct;
   //   const [showModal, setShowModal] = useState(false);
-  const [newProduct, setNewProduct] = useState({
+  const [updatedProductData, setProductData] = useState({
     name: "",
     price: 0,
     stock: 0,
@@ -27,11 +27,15 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewProduct({ ...newProduct, [name]: value });
+    setProductData({ ...updatedProductData, [name]: value });
   };
 
   const handleEditProduct = () => {
-    if (!newProduct.name || !newProduct.price || !newProduct.stock) {
+    if (
+      !updatedProductData.name ||
+      !updatedProductData.price ||
+      !updatedProductData.stock
+    ) {
       alert("Please fill in all required fields (name, price, and stock).");
       return;
     }
@@ -39,19 +43,24 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
     const updatedProduct = {
       ...product,
       orderCount: 0,
-      images: [`${newProduct.imageUrl}`],
+      name: updatedProductData.name,
+      price: updatedProductData.price,
+      stock: updatedProductData.stock,
 
-      width: 100,
-      height: 100,
-      weight: 100,
-      lenght: 100,
+      images: [`${updatedProductData.imageUrl}`],
+      dimensions: {
+        width: updatedProductData.width,
+        height: updatedProductData.height,
+        weight: updatedProductData.weight,
+        lenght: updatedProductData.lenght,
+      },
     };
 
     // Dispatch action to add the product
-    editProduct(updatedProduct._id, updatedProduct);
+    editProduct(updatedProduct);
 
     setShowModal(false); // Close modal
-    setNewProduct({
+    setProductData({
       name: "",
       price: 0,
       stock: 0,
@@ -77,7 +86,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="text"
                 name="name"
-                value={newProduct.name}
+                value={updatedProductData.name}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -89,7 +98,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="text"
                 name="price"
-                value={newProduct.price}
+                value={updatedProductData.price}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -101,7 +110,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="number"
                 name="stock"
-                value={newProduct.stock}
+                value={updatedProductData.stock}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -114,7 +123,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="text"
                 name="imageUrl"
-                value={newProduct.imageUrl}
+                value={updatedProductData.imageUrl}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -125,7 +134,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               </label>
               <textarea
                 name="description"
-                value={newProduct.description}
+                value={updatedProductData.description}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               ></textarea>
@@ -137,7 +146,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="number"
                 name="height"
-                value={newProduct.height}
+                value={updatedProductData.height}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -149,7 +158,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="number"
                 name="width"
-                value={newProduct.width}
+                value={updatedProductData.width}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -161,7 +170,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="number"
                 name="weight"
-                value={newProduct.weight}
+                value={updatedProductData.weight}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
@@ -173,7 +182,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
               <input
                 type="number"
                 name="lenght"
-                value={newProduct.lenght}
+                value={updatedProductData.lenght}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />

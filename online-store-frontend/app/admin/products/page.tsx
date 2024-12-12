@@ -120,9 +120,8 @@ function ProductManagement() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.description}
                     </td>
-                    {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
-                        href="#"
                         className="text-indigo-600 hover:text-indigo-900"
                         onClick={() => {
                           setShowEditModal(true);
@@ -132,10 +131,12 @@ function ProductManagement() {
                       >
                         Edit<span className="sr-only">, {product.name}</span>
                       </a>
-                    </td> */}
+                    </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
-                        onClick={() => handleRemoveProduct(product._id)}
+                        onClick={() =>
+                          handleRemoveProduct(product._id as string)
+                        }
                         className="text-red-600 hover:text-red-900"
                       >
                         Remove<span className="sr-only">, {product.name}</span>

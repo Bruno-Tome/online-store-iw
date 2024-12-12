@@ -125,7 +125,10 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const editProduct = async (newProduct: Product) => {
     try {
-      const response = await productsApi.updateProduct(newProduct, newProduct);
+      const response = await productsApi.updateProduct(
+        newProduct._id,
+        newProduct,
+      );
       await fetchProducts();
     } catch (error) {
       console.error("Failed to add product:", error);

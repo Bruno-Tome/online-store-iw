@@ -28,7 +28,7 @@ services:
       
       dockerfile: Dockerfile
     ports:
-      - '4000:3000'
+      - '4000:4000'
     networks:
       - app-network  # Attach to the custom network
     volumes:
