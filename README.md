@@ -27,8 +27,8 @@ Figma link with navigation diagram: https://www.figma.com/design/JvARrYxnhTTfzOW
 
 - **Group Name**: [The 🐐s]
 - **Members**:
-  - Felipe Cecato - 12547785
   - Bruno Tomé Rosa - 10276654
+  - Felipe Cecato - 12547785
   - Gustavo Barbosa Sanchez - 11802440
 
 ---
@@ -386,4 +386,3 @@ Important: Update the context use the useReducer hook to fix context providers
 ## Comments
 
 The project successfully fulfills the requirements set out for an online store with additional features like user authentication, and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.
-
