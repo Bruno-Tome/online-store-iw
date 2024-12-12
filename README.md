@@ -62,6 +62,12 @@ The initial requirements for this online store project were provided in the assi
 
 This project is an e-commerce web application built using **Next.js** and **Tailwind UI**. The application allows users to browse products, add them to a cart, and proceed to checkout. It also includes a backend API to manage products, users, and orders.
 
+## Preview
+
+You can see a preview of the pages at the following link:
+
+![Pages preview](images/README.md)
+
 ### Key Features:
 
 - **Next.js for Server-Side Rendering (SSR)**: Provides fast load times and better SEO by pre-rendering pages on the server.
@@ -381,6 +387,3 @@ Important: Update the context use the useReducer hook to fix context providers
 
 The project successfully fulfills the requirements set out for an online store with additional features like user authentication, and a comprehensive test suite. The use of modern technologies such as Next.js and Tailwind CSS made development efficient, while ensuring a great user experience.
 
-## Preview
-
-![Pages' preview](images/README.md)
