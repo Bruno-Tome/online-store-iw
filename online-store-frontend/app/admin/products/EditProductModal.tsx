@@ -42,11 +42,9 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
 
     const updatedProduct = {
       ...product,
-      orderCount: 0,
       name: updatedProductData.name,
       price: updatedProductData.price,
       stock: updatedProductData.stock,
-
       images: [`${updatedProductData.imageUrl}`],
       dimensions: {
         width: updatedProductData.width,
