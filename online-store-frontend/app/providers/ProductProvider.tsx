@@ -1,3 +1,4 @@
+'use client'
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
 import { useApi } from "./ApiProvider";
 
@@ -92,7 +93,7 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       const response = await productsApi.getProducts();
       dispatch({ type: "SET_PRODUCTS", payload: response.data });
     } catch (error) {
-      console.error("Failed to fetch products:", error);
+      // console.error("Failed to fetch products:", error);
     }
   };
 

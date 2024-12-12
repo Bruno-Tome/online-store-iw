@@ -43,8 +43,7 @@ function ProductManagement() {
             Product Management
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all products in your store, including their name, price,
-            stock, category, image, and description.
+            A list of all products in your store and their details.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
