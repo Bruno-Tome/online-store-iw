@@ -33,5 +33,5 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
 
   @IsObject()
   @IsOptional()
-  dimensions: { width: number; height: number; depth: number; weight: number };
+  dimensions: { width: number; height: number; length: number; weight: number };
 }
