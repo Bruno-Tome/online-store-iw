@@ -15,7 +15,10 @@ const steps = [
 ];
 export default function CheckoutPage() {
   const { state: cartState, clearCart } = useCartContext();
-  const subtotal = cartState.items.reduce((acc, item) => acc + item.price, 0);
+  const subtotal = cartState.items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
   const { state: userState } = useUserContext();
   const { createOrder } = useOrderContext();
   const [error, setError] = useState<boolean | Error>(false);
@@ -23,7 +26,7 @@ export default function CheckoutPage() {
   const order = {
     items: cartState.items.map((item) => ({
       productId: item.id,
-      quantity: 1,
+      quantity: item.quantity,
     })),
     quotation: {
       id: cartState.quote.id,
@@ -93,43 +96,46 @@ export default function CheckoutPage() {
             ))}
           </ul>
           <dl className="mt-6 space-y-4">
-            <div className="flex flex-col space-y-2 border-b pb-4">
-              <div className="flex items-center justify-between">
-                <dt className="text-sm text-gray-600">Service</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {cartState.quote.name}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-sm text-gray-600">Price</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  R$ {cartState.quote.price}
-                </dd>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <dt className="text-sm text-gray-600">Delivery Time</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {cartState.quote.delivery_time} days
-                </dd>
-              </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-sm text-gray-600">Company</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {cartState.quote.company.name}
-                </dd>
-              </div>
-            </div>
-          </dl>
-          <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
             <div className="flex items-center justify-between">
-              <dt className="text-gray-600">Subtotal</dt>
+              <dt className="text-gray-600">Product Subtotal</dt>
               <dd>${subtotal.toFixed(2)}</dd>
             </div>
+          </dl>
+          <dl className=" space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
+            <dl className="mt-6 space-y-4">
+              <div className="flex flex-col space-y-2 border-b pb-4">
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm text-gray-600">Service</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {cartState.quote.name}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm text-gray-600">Price</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    R$ {cartState.quote.price}
+                  </dd>
+                </div>
 
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm text-gray-600">Delivery Time</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {cartState.quote.delivery_time} days
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm text-gray-600">Company</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {cartState.quote.company.name}
+                  </dd>
+                </div>
+              </div>
+            </dl>
             <div className="flex items-center justify-between border-t border-gray-200 pt-6">
               <dt className="text-base">Total</dt>
-              <dd className="text-base">${subtotal.toFixed(2)}</dd>
+              <dd className="text-base">
+                ${(subtotal + Number(order.quotation.price)).toFixed(2)}
+              </dd>
             </div>
           </dl>
         </div>
