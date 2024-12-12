@@ -37,3 +37,8 @@ After completing the checkout process, users are directed to the order confirmat
 On the profile page, users can manage their account details, including personal information and shipping addresses.
 
 ![Profile Page Screenshot](profilePage.png)
+
+## Product Management
+## User Management
+## Order Management
+
