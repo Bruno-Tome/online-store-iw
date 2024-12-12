@@ -42,7 +42,7 @@ export class OrdersService {
 
       order.total += productPrice * item.quantity;
     }
-    order.total = order.total + createOrderDto.quotation.price;
+    order.total = order.total + Number(createOrderDto.quotation.price);
     return order.save();
   }
   async findAll(): Promise<Order[]> {
