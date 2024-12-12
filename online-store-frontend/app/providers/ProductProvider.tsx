@@ -76,7 +76,7 @@ interface ProductContextType {
   fetchProductById: (productId: string) => Promise<void>;
   editProduct: (newProduct: Product) => Promise<void>;
   addProduct: (newProduct: Product) => Promise<void>;
-  deleteProduct: (productId: string) => Promise<void>;
+  deleteProduct: (productId: string) => Promise<boolean>;
 }
 
 // Create Context
@@ -139,8 +139,10 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     try {
       await productsApi.deleteProduct(productId);
       await fetchProducts();
+      return true;
     } catch (error) {
       console.error("Failed to delete product:", error);
+      return false;
     }
   };
 

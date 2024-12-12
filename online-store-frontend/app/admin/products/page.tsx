@@ -23,7 +23,14 @@ function ProductManagement() {
     );
     if (confirmDelete) {
       // Supondo que a ação de remover o produto seja implementada no dispatch
-      await deleteProduct(productId);
+      try {
+        const resp = await deleteProduct(productId);
+        if (!resp) {
+          window.alert("Cannot delete products with orders");
+        }
+      } catch (error) {
+        window.alert("Error deleting product");
+      }
     }
   };
 
