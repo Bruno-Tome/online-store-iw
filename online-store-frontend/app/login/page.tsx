@@ -3,12 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../providers/UserProvider";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const { login } = useUserContext();
   const router = useRouter();
-  const [errorState, setError] = useState<boolean | Error>(false);
+  const [hasError, setError] = useState<any>(false);
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -21,13 +22,15 @@ export default function Login() {
       if (didLogin === true) {
         router.push("/", undefined, { shallow: true });
       } else {
-        setError(didLogin);
+        setError(true);
       }
     } catch (error: any) {
       setError(error);
+
       console.error("Error logging in", error);
     }
   };
+
   return (
     <>
       {/*
@@ -49,7 +52,7 @@ export default function Login() {
             Sign in to your account
           </h2>
         </div>
-        {errorState === false ? (
+        {!hasError ? (
           <></>
         ) : (
           <div>
@@ -59,7 +62,7 @@ export default function Login() {
             >
               <p className="font-bold">An error ocurred</p>
               <p>There was an error during registering</p>
-              <p>User already exists</p>
+              <p>Password or User incorrect</p>
             </div>
           </div>
         )}
@@ -93,14 +96,6 @@ export default function Login() {
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input

@@ -77,7 +77,7 @@ export default function Register() {
             >
               <p className="font-bold">An error ocurred</p>
               <p>There was an error during login:</p>
-              <p>{errorState.response.data.message}</p>
+              <p>User already exists </p>
             </div>
           </div>
         )}

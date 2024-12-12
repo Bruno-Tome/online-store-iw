@@ -68,12 +68,12 @@ interface UserContextType {
   }: {
     email: string;
     password: string;
-  }) => Promise<boolean | Error>;
+  }) => Promise<boolean>;
   logout: () => void;
   fetchProfile: () => void;
   updateProfile: (profile: Profile) => void;
   fetchUsers: () => void;
-  register: (user: Profile) => Promise<boolean | Error>;
+  register: (user: Profile) => Promise<boolean>;
   // createUser
   // updateUser
   // deleteUser
@@ -138,8 +138,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       dispatch({ type: "LOGIN", payload: response.data });
       return true;
     } catch (error) {
-      console.error("Error logging in", error);
-      return error;
+      console.error("Error logging in api", error);
+      return false;
     }
   };
   const logout = () => {
@@ -176,7 +176,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       return true;
     } catch (error) {
       console.error("Error registering user", error);
-      return error;
+      return false;
     }
   };
   return (

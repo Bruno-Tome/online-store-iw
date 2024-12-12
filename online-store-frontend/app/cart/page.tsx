@@ -133,7 +133,7 @@ export default function CartPage() {
                   key={index}
                   className="flex flex-col space-y-2 border-b pb-4"
                   style={
-                    quoteItem.id === quote.id
+                    quoteItem.id === quote?.id
                       ? {
                           // borderColor: "#2563EB",
                           // borderWidth: "2px",
@@ -183,7 +183,7 @@ export default function CartPage() {
                   Order total
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  {subtotal + Number(quote.price)}
+                  {subtotal + Number(quote?.price)}
                 </dd>
               </div>
             </dl>
