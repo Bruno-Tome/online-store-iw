@@ -9,22 +9,20 @@ interface ProductModalProps {
 }
 
 function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
-  const { editProductById} = useProductContext();
+  const { state: productState, editProduct } = useProductContext();
   const product = productState.selectedProduct;
   //   const [showModal, setShowModal] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: 0,
     stock: 0,
-    category: "",
     imageUrl: "",
     description: "",
-	dimensions: {
-		height: 0,
-		width: 0,
-		weight: 0,
-		lenght: 0,
-	},
+
+    height: 0,
+    width: 0,
+    weight: 0,
+    lenght: 0,
   });
 
   const handleInputChange = (e) => {
@@ -32,41 +30,38 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
     setNewProduct({ ...newProduct, [name]: value });
   };
 
-  const handleAddProduct = () => {
+  const handleEditProduct = () => {
     if (!newProduct.name || !newProduct.price || !newProduct.stock) {
       alert("Please fill in all required fields (name, price, and stock).");
       return;
     }
 
     const updatedProduct = {
-      ...newProduct,
+      ...product,
       orderCount: 0,
       images: [`${newProduct.imageUrl}`],
-      dimensions: {
-        width: 100,
-        height: 100,
-        weight: 100,
-        lenght: 100,
-      },
+
+      width: 100,
+      height: 100,
+      weight: 100,
+      lenght: 100,
     };
 
     // Dispatch action to add the product
-    addProduct(updatedProduct);
+    editProduct(updatedProduct._id, updatedProduct);
 
     setShowModal(false); // Close modal
     setNewProduct({
       name: "",
       price: 0,
       stock: 0,
-      category: "",
       imageUrl: "",
       description: "",
-	  dimensions: {
-		height: 0,
-		width: 0,
-		weight: 0,
-		lenght: 0,
-		},
+
+      height: 0,
+      width: 0,
+      weight: 0,
+      lenght: 0,
     }); // Reset form
   };
   return (
@@ -111,18 +106,7 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Category
-              </label>
-              <input
-                type="text"
-                name="category"
-                value={newProduct.category}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
+
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Image URL
@@ -146,55 +130,54 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               ></textarea>
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Height
               </label>
               <input
                 type="number"
                 name="height"
-                value={newProduct.dimensions.height}
+                value={newProduct.height}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Width
               </label>
               <input
                 type="number"
                 name="width"
-                value={newProduct.dimensions.width}
+                value={newProduct.width}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Weight
               </label>
               <input
                 type="number"
                 name="weight"
-                value={newProduct.dimensions.weight}
+                value={newProduct.weight}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-			<div className="mb-4">
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
                 Lenght
               </label>
               <input
                 type="number"
                 name="lenght"
-                value={newProduct.dimensions.lenght}
+                value={newProduct.lenght}
                 onChange={handleInputChange}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-
           </form>
           <div className="flex justify-end">
             <button
@@ -207,9 +190,9 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
             <button
               type="button"
               className="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
-              onClick={handleAddProduct}
+              onClick={handleEditProduct}
             >
-              Add
+              Edit
             </button>
           </div>
         </div>
@@ -217,4 +200,4 @@ function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
     )
   );
 }
-export default ProductModal;
+export default EditProductModal;

@@ -74,6 +74,7 @@ interface ProductContextType {
   fetchProducts: () => Promise<void>;
   setProduct: (productId: string) => Promise<void>;
   fetchProductById: (productId: string) => Promise<void>;
+  editProduct: (newProduct: Product) => Promise<void>;
   addProduct: (newProduct: Product) => Promise<void>;
   deleteProduct: (productId: string) => Promise<void>;
 }
@@ -121,16 +122,16 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       console.error("Failed to add product:", error);
     }
   };
-  
-  const editProduct = async (newProduct: Omit<Product, "_id">) => {
+
+  const editProduct = async (newProduct: Product) => {
     try {
-      const response = await productsApi.createProduct(newProduct);
+      const response = await productsApi.updateProduct(newProduct, newProduct);
       await fetchProducts();
     } catch (error) {
       console.error("Failed to add product:", error);
     }
   };
-  
+
   const deleteProduct = async (productId: string) => {
     try {
       await productsApi.deleteProduct(productId);
@@ -149,6 +150,7 @@ const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setProduct,
         fetchProductById,
         addProduct, // Adicionado aqui
+        editProduct,
         deleteProduct,
       }}
     >

@@ -4,16 +4,18 @@ import AdminNavbar from "@/app/components/AdminNavbar";
 import isAdmin from "@/app/providers/isAdmin";
 import { Product, useProductContext } from "@/app/providers/ProductProvider";
 import ProductModal from "./ProductModal";
+import EditProductModal from "./EditProductModal";
 
 function ProductManagement() {
   const {
     state: { products },
     fetchProducts,
+    setProduct,
     deleteProduct, // Supondo que a função de dispatch seja fornecida pelo contexto
   } = useProductContext();
 
-  const [showModal, setShowModal] = useState(false);
-
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const handleRemoveProduct = async (productId: string) => {
     // Função para remover o produto
     const confirmDelete = window.confirm(
@@ -42,14 +44,18 @@ function ProductManagement() {
           <button
             type="button"
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowAddModal(true)}
           >
             Add Product
           </button>
         </div>
       </div>
 
-      <ProductModal showModal={showModal} setShowModal={setShowModal} />
+      <ProductModal showModal={showAddModal} setShowModal={setShowAddModal} />
+      <EditProductModal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+      />
       {/* Product Table */}
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -114,14 +120,19 @@ function ProductManagement() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {product.description}
                     </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <a
                         href="#"
                         className="text-indigo-600 hover:text-indigo-900"
+                        onClick={() => {
+                          setShowEditModal(true);
+                          // Supondo que a função de dispatch seja fornecida pelo contexto
+                          setProduct(product._id as string);
+                        }}
                       >
                         Edit<span className="sr-only">, {product.name}</span>
                       </a>
-                    </td>
+                    </td> */}
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
                         onClick={() => handleRemoveProduct(product._id)}
