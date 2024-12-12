@@ -8,9 +8,9 @@ interface ProductModalProps {
   setShowModal: (show: boolean) => void;
 }
 
-function ProductModal({ showModal, setShowModal }: ProductModalProps) {
-  const { addProduct } = useProductContext();
-
+function EditProductModal({ showModal, setShowModal }: ProductModalProps) {
+  const { editProductById} = useProductContext();
+  const product = productState.selectedProduct;
   //   const [showModal, setShowModal] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -19,6 +19,12 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
     category: "",
     imageUrl: "",
     description: "",
+	dimensions: {
+		height: 0,
+		width: 0,
+		weight: 0,
+		lenght: 0,
+	},
   });
 
   const handleInputChange = (e) => {
@@ -55,13 +61,19 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
       category: "",
       imageUrl: "",
       description: "",
+	  dimensions: {
+		height: 0,
+		width: 0,
+		weight: 0,
+		lenght: 0,
+		},
     }); // Reset form
   };
   return (
     showModal && (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 z-10">
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
+          <h2 className="text-lg font-semibold mb-4">Edit Product</h2>
           <form>
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
@@ -134,6 +146,55 @@ function ProductModal({ showModal, setShowModal }: ProductModalProps) {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               ></textarea>
             </div>
+			<div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Height
+              </label>
+              <input
+                type="number"
+                name="height"
+                value={newProduct.dimensions.height}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+			<div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Width
+              </label>
+              <input
+                type="number"
+                name="width"
+                value={newProduct.dimensions.width}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+			<div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Weight
+              </label>
+              <input
+                type="number"
+                name="weight"
+                value={newProduct.dimensions.weight}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+			<div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Lenght
+              </label>
+              <input
+                type="number"
+                name="lenght"
+                value={newProduct.dimensions.lenght}
+                onChange={handleInputChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+            </div>
+
           </form>
           <div className="flex justify-end">
             <button
