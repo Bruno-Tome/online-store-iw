@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, ReactNode, useContext } from "react";
-import { productsApi } from "../api/apiClient";
+// import { productsApi } from "../api/apiClient";
+import { useApi } from "../api/ApiProvider";
 
 // Define Product Type
 export interface Product {
@@ -65,6 +66,7 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Provider Component
 const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
+  const { productsApi } = useApi();
   const fetchProducts = async () => {
     try {
       const response = await productsApi.getProducts();

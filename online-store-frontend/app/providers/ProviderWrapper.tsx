@@ -6,6 +6,7 @@ import { NavbarProvider } from "./NavbarProvider";
 import DataFetchingComponent from "./ProductDataFetching";
 import { OrderProvider } from "./OrdersProvider";
 import CartProvider from "./CartProvider";
+import { ApiProvider } from "../api/ApiProvider";
 
 interface ProviderWrapperProps {
   children: React.ReactNode;
@@ -13,16 +14,18 @@ interface ProviderWrapperProps {
 
 const ProviderWrapper: React.FC<ProviderWrapperProps> = ({ children }) => {
   return (
-    <UserProvider>
-      <ProductProvider>
-        <CartProvider>
-          <DataFetchingComponent />
-          <OrderProvider>
-            <NavbarProvider>{children}</NavbarProvider>
-          </OrderProvider>
-        </CartProvider>
-      </ProductProvider>
-    </UserProvider>
+    <ApiProvider>
+      <UserProvider>
+        <ProductProvider>
+          <CartProvider>
+            <DataFetchingComponent />
+            <OrderProvider>
+              <NavbarProvider>{children}</NavbarProvider>
+            </OrderProvider>
+          </CartProvider>
+        </ProductProvider>
+      </UserProvider>
+    </ApiProvider>
   );
 };
 

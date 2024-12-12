@@ -29,7 +29,7 @@ const userRoutes = [
 ];
 
 const adminNavigation = [
-  { name: "Admin Orders", href: "/admin/order" },
+  { name: "Admin Orders", href: "/admin/orders" },
   { name: "Admin Products", href: "/admin/products" },
   { name: "Admin Users", href: "/admin/users" },
 ];

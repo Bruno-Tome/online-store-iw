@@ -5,8 +5,9 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { authApi, usersApi } from "../api/apiClient";
+
 import usePersistState from "./usePersistState";
+import { useApi } from "../api/ApiProvider";
 
 // Define User Type
 interface User {
@@ -76,7 +77,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 // Provider Component
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserData] = usePersistState("userData", initialState);
-
+  const { usersApi, authApi } = useApi();
   // Reducer Function
   const userReducer = (state: UserState, action: UserAction): UserState => {
     switch (action.type) {

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, ReactNode, useReducer, useContext } from "react";
-import { ordersApi } from "../api/apiClient";
+
+import { useApi } from "../api/ApiProvider";
 
 // Order Item and Order Types
 interface OrderItem {
@@ -65,7 +66,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(orderReducer, initialState);
-
+  const { ordersApi } = useApi();
   // Fetch All Orders
   const fetchOrders = async () => {
     try {
