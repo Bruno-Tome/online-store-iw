@@ -12,13 +12,13 @@ The homepage introduces the user to the main categories of products and any ongo
 
 On the product page, users can view detailed information about a specific product, including images, price and description.
 
+![Product Page Screenshot](productPage.png)
+
 ## Shopping Cart Page
 
 The shopping cart page shows all the products added to the cart. Users can adjust quantities, remove items, or proceed to checkout.
 
 ![Shopping Cart Page Screenshot](shoppingCartPage.png)
-
-![Product Page Screenshot](productPage.png)
 
 ## Checkout Page
 
